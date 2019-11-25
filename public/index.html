@@ -2,30 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>My Website</title>
   </head>
   <body>
-    <h1>Enter company name in the following form</h1>
+    <h3>Enter URL (Companies House / Companycheck)</h3>
 
     <form id="get-data" method="POST" action="/">
-      <input type="text" id="company" name="company" />
+      <input size="80" type="text" id="company" name="company" />
       <input class="button" type="submit" />
     </form>
-    <!-- <input id="website" class="website" type="text">
-  <button class="button">Get data</button> -->
+
+    <div class="loading">
+      <img src="./loader2.jpg" alt="loader" />
+    </div>
 
     <div class="company"></div>
 
+    <div class="clear">Clear</div>
+
     <script>
       document.querySelector("#get-data").addEventListener("submit", retrieve);
-      let companyDetails = document.querySelector(".company");
-      //   let companyWebsite = document.querySelector('.website').value;
+      const clearBtn = document.querySelector(".clear");
+      const companyDetails = document.querySelector(".company");
+      const loader = document.querySelector(".loading");
+
+      clearBtn.addEventListener("click", clear);
 
       function retrieve(e) {
         e.preventDefault();
+
         let xhr = new XMLHttpRequest();
+        loader.style.display = "block";
 
         let data = {
           URL: document.querySelector("#company").value
@@ -39,11 +53,19 @@
         xhr.onload = function() {
           if (this.status == 200) {
             companyDetails.innerHTML = this.responseText;
-            console.log(JSON.parse(this.responseText));
+            console.log(this.responseText);
+            loader.style.display = "none";
+            clearBtn.style.display = "block";
           }
         };
 
         xhr.send(JSON.stringify(data));
+      }
+
+      function clear() {
+        companyDetails.innerHTML = "";
+        document.querySelector("#company").value = "";
+        clearBtn.style.display = "none";
       }
     </script>
   </body>
