@@ -70,3 +70,32 @@ h3 {
   background: red;
   color: #fff;
 }
+
+.ch-1 {
+  position: absolute;
+  width: 60%;
+  height: 140vh;
+  width: 100%;
+  top: 70vh;
+  padding: 3rem;
+}
+
+.ch-2 {
+  position: absolute;
+  width: 60%;
+  height: 100vh;
+  width: 100%;
+  top: 170vh;
+  padding: 3rem;
+}
+
+.ch-1 img {
+  position: absolute;
+  width: 70%;
+  border: 1px solid black;
+}
+.ch-2 img {
+  position: absolute;
+  width: 70%;
+  border: 1px solid black;
+}

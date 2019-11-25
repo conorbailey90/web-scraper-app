@@ -23,10 +23,14 @@ app.post("/", async (req, res) => {
     // Companies House
     if (website.slice(0, 34) == "https://beta.companieshouse.gov.uk") {
       // const browser = await puppeteer.launch({ headless: false });
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+        defaultViewport: { width: 1920, height: 1280 }
+      });
       const page = await browser.newPage();
 
       await page.goto(website, { waitUntil: "networkidle2" });
+
+      await page.screenshot({ path: "./public/CompaniesHouse1.png" });
 
       let company = await page.evaluate(() => {
         let name = document.querySelector(
@@ -72,14 +76,15 @@ app.post("/", async (req, res) => {
 
       company.psc = psc.pscName; // Add person with significant control to company object
 
-      await page.screenshot({ path: "CompaniesHouse.png" });
+      await page.screenshot({ path: "./public/CompaniesHouse2.png" });
       await browser.close();
 
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
     is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. The nature of business
     for this entity is registered as: ${company.natureOfBusiness}. This is a standard risk industry. ${psc.pscName}.`;
       res.send(details);
-      // res.json(company);
+      // res.json({ chss });
+      // res.send(chss);
 
       // Companycheck website
     } else if (website.slice(0, 26) == "https://companycheck.co.uk") {

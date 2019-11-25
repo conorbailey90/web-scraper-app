@@ -24,6 +24,8 @@
     </div>
 
     <div class="company"></div>
+    <div class="ch-1"></div>
+    <div class="ch-2"></div>
 
     <div class="clear">Clear</div>
 
@@ -31,6 +33,8 @@
       document.querySelector("#get-data").addEventListener("submit", retrieve);
       const clearBtn = document.querySelector(".clear");
       const companyDetails = document.querySelector(".company");
+      const chOne = document.querySelector(".ch-1");
+      const chTwo = document.querySelector(".ch-2");
       const loader = document.querySelector(".loading");
 
       clearBtn.addEventListener("click", clear);
@@ -53,6 +57,9 @@
         xhr.onload = function() {
           if (this.status == 200) {
             companyDetails.innerHTML = this.responseText;
+            chOne.innerHTML = `<img src="./CompaniesHouse1.png">`;
+            chTwo.innerHTML = `<img src="./CompaniesHouse2.png">`;
+
             console.log(this.responseText);
             loader.style.display = "none";
             clearBtn.style.display = "block";
@@ -64,6 +71,8 @@
 
       function clear() {
         companyDetails.innerHTML = "";
+        chOne.innerHTML = "";
+        chTwo.innerHTML = "";
         document.querySelector("#company").value = "";
         clearBtn.style.display = "none";
       }
