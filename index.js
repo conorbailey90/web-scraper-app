@@ -175,8 +175,9 @@ app.post("/", async (req, res) => {
       res.send("Not a valid website");
     }
   } catch (e) {
+    console.log(e);
     res.send(
-      "Something went wrong! Please try again and ensure your URL is correct."
+      "Something went wrong! Please ensure your URL is correct and try again."
     );
   }
 });
