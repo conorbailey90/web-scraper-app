@@ -177,7 +177,8 @@ app.post("/", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.send(
-      "Something went wrong! Please ensure your URL is correct and try again."
+      e
+      // "Something went wrong! Please ensure your URL is correct and try again."
     );
   }
 });
