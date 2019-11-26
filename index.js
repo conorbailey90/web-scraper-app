@@ -24,7 +24,8 @@ app.post("/", async (req, res) => {
     if (website.slice(0, 34) == "https://beta.companieshouse.gov.uk") {
       // const browser = await puppeteer.launch({ headless: false });
       const browser = await puppeteer.launch({
-        defaultViewport: { width: 1920, height: 1280 }
+        defaultViewport: { width: 1920, height: 1280 },
+        args: ["--no-sandbox"]
       });
       const page = await browser.newPage();
 
