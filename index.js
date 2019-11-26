@@ -25,7 +25,7 @@ app.post("/", async (req, res) => {
       // const browser = await puppeteer.launch({ headless: false });
       const browser = await puppeteer.launch({
         defaultViewport: { width: 1920, height: 1280 },
-        args: ["--no-sandbox", "--proxy-server=HOSTNAME:PORT"]
+        args: ["--no-sandbox"]
       });
       const page = await browser.newPage();
 
@@ -91,7 +91,7 @@ app.post("/", async (req, res) => {
     } else if (website.slice(0, 26) == "https://companycheck.co.uk") {
       const browser = await puppeteer.launch({
         defaultViewport: { width: 1920, height: 1280 },
-        args: ["--no-sandbox", "--proxy-server=HOSTNAME:PORT"]
+        args: ["--no-sandbox"]
       });
       const page = await browser.newPage();
 
