@@ -70,7 +70,7 @@
 
         xhr.onload = function() {
           if (this.status == 200) {
-            companyDetails.innerHTML = this.responseText;
+            companyDetails.innerHTML = JSON.parse(this.responseText).details;
             if (
               companyDetails.innerHTML ==
                 "Something went wrong! Please ensure your URL is correct and try again." ||

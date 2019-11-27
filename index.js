@@ -16,6 +16,8 @@ app.use(bodyParser.json());
 
 app.use(express.static("public"));
 
+submitCount = 0;
+
 app.post("/", async (req, res) => {
   try {
     let website = req.body.URL;
@@ -89,13 +91,6 @@ app.post("/", async (req, res) => {
           pscDetails = `There are no active persons / entities with significant control registered for this entity on Companies House.`;
         }
 
-        // let pscName =
-        //   document.querySelector("#psc-name-1 > span > b") == null
-        //     ? "There are no persons/entites with significant control registered for this entity on Companies House"
-        //     : `${
-        //         document.querySelector("#psc-name-1 > span > b").innerText
-        //       } is registered as a significant controller of this entity on Companies House.`;
-
         return {
           pscDetails
         };
@@ -106,10 +101,12 @@ app.post("/", async (req, res) => {
       await page.screenshot({ path: "./public/CompaniesHouse2.png" });
       await browser.close();
 
+      submitCount++;
+
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
     is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. The nature of business
     for this entity is registered as: ${company.natureOfBusiness}. This is a standard risk industry. ${company.psc}`;
-      res.send(details);
+      res.json({ details, submitCount });
       // res.json({ chss });
       // res.send(chss);
 
