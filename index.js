@@ -48,7 +48,12 @@ app.post("/", async (req, res) => {
         let status = document.querySelector("#company-status").innerText;
         let address = document.querySelector("#content-container > dl > dd")
           .innerText;
-        let natureOfBusiness = document.querySelector("#sic0").innerText;
+        let natureOfBusiness =
+          document.querySelector("#sic0") == null
+            ? `The nature of business has not been registered for this entity on Companies House`
+            : `As per Companies House the registered nature of business for this entity is ${
+                document.querySelector("#sic0").innerText
+              }. This is a standard risk industry`;
 
         return {
           name,
@@ -66,9 +71,12 @@ app.post("/", async (req, res) => {
       await page.waitForNavigation();
 
       let psc = await page.evaluate(() => {
+        // Establish how many PSC's are listed - converting the string to integer
         const pscTotal = parseInt(
           document.querySelector("#company-pscs").innerText.slice(0, 1)
         );
+
+        // Convert PSC's elements to an array. Remove the first element with slice as this is not a person.
         let pscs = Array.from(
           document.getElementsByClassName("heading-medium")
         ).slice(1);
@@ -78,7 +86,7 @@ app.post("/", async (req, res) => {
         for (let i = 0; i < pscTotal; i++) {
           pscDetails +=
             pscTotal > 1
-              ? `${pscs[i].children[0].innerText.trim()}, `
+              ? `${pscs[i].children[0].innerText.trim()}, ` // Comma added for multipe PSC's
               : `${pscs[i].children[0].innerText.trim()} `;
         }
 
@@ -104,11 +112,9 @@ app.post("/", async (req, res) => {
       submitCount++;
 
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
-    is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. The nature of business
-    for this entity is registered as: ${company.natureOfBusiness}. This is a standard risk industry. ${company.psc}`;
+    is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. ${company.natureOfBusiness}. ${company.psc}`;
+      // res.send(details);
       res.json({ details, submitCount });
-      // res.json({ chss });
-      // res.send(chss);
 
       // Companycheck website
     } else if (website.slice(0, 26) == "https://companycheck.co.uk") {
