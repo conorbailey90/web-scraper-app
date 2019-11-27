@@ -19,6 +19,7 @@ app.use(express.static("public"));
 app.post("/", async (req, res) => {
   try {
     let website = req.body.URL;
+    console.log(website);
 
     // Companies House
     if (website.slice(0, 34) == "https://beta.companieshouse.gov.uk") {
@@ -63,26 +64,51 @@ app.post("/", async (req, res) => {
       await page.waitForNavigation();
 
       let psc = await page.evaluate(() => {
-        let pscName =
-          document.querySelector("#psc-name-1 > span > b") == null
-            ? "There are no persons/entites with significant control registered for this entity on Companies House"
-            : `${
-                document.querySelector("#psc-name-1 > span > b").innerText
-              } is registered as a significant controller of this entity on Companies House.`;
+        const pscTotal = parseInt(
+          document.querySelector("#company-pscs").innerText.slice(0, 1)
+        );
+        let pscs = Array.from(
+          document.getElementsByClassName("heading-medium")
+        ).slice(1);
+
+        let pscDetails = "";
+
+        for (let i = 0; i < pscTotal; i++) {
+          pscDetails +=
+            pscTotal > 1
+              ? `${pscs[i].children[0].innerText.trim()}, `
+              : `${pscs[i].children[0].innerText.trim()} `;
+        }
+
+        pscDetails +=
+          pscTotal > 1
+            ? `are registered as persons/entities with significant control of this entity on Companies House.`
+            : `is registered as a person/entity with significant control of this entity on Companies House.`;
+
+        if (pscTotal == 0) {
+          pscDetails = `There are no active persons / entities with significant control registered for this entity on Companies House.`;
+        }
+
+        // let pscName =
+        //   document.querySelector("#psc-name-1 > span > b") == null
+        //     ? "There are no persons/entites with significant control registered for this entity on Companies House"
+        //     : `${
+        //         document.querySelector("#psc-name-1 > span > b").innerText
+        //       } is registered as a significant controller of this entity on Companies House.`;
 
         return {
-          pscName
+          pscDetails
         };
       });
 
-      company.psc = psc.pscName; // Add person with significant control to company object
+      company.psc = psc.pscDetails; // Add person with significant control to company object
 
       await page.screenshot({ path: "./public/CompaniesHouse2.png" });
       await browser.close();
 
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
     is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. The nature of business
-    for this entity is registered as: ${company.natureOfBusiness}. This is a standard risk industry. ${psc.pscName}.`;
+    for this entity is registered as: ${company.natureOfBusiness}. This is a standard risk industry. ${company.psc}`;
       res.send(details);
       // res.json({ chss });
       // res.send(chss);
@@ -181,8 +207,7 @@ app.post("/", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.send(
-      e
-      // "Something went wrong! Please ensure your URL is correct and try again."
+      "Something went wrong! Please ensure your URL is correct and try again."
     );
   }
 });
