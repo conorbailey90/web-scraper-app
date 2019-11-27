@@ -18,7 +18,10 @@
 }
 .title {
   margin: 0.5rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Galindo", cursive;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
 }
 
 h3 {
