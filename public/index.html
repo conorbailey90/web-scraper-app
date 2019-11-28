@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="./css/style.css" />
     <link
-      href="https://fonts.googleapis.com/css?family=Galindo&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Passion+One&display=swap"
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,12 +12,10 @@
     <title>Company Analysis</title>
   </head>
   <body>
-    <div class="header">
-      <h2 class="title">Company Analysis</h2>
-    </div>
-    <h3>Enter URL (Companies House / Companycheck)</h3>
+    <h2 class="title">Company Analysis</h2>
 
     <form id="get-data" method="POST" action="/">
+      <label>Enter URL (Companies House)</label>
       <input
         size="80"
         type="text"
@@ -90,7 +84,7 @@
             console.log(this.responseText);
             loader.style.display = "none";
             clearBtn.style.display = "block";
-            companyDetails.style.border = `1px solid black`;
+            companyDetails.style.background = `#EEEEEE`;
           }
         };
 

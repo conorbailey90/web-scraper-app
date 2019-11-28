@@ -2,23 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* background: #161616; */
-  /* color: white; */
   font-family: "Montserrat", sans-serif;
 }
 
-.header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 8%;
-  background-color: #161616;
-  color: #fff;
-}
 .title {
-  margin: 0.5rem;
-  font-family: "Galindo", cursive;
+  margin: 1rem;
   letter-spacing: 1px;
   font-size: 1.2rem;
   text-transform: uppercase;
@@ -36,12 +24,34 @@ h3 {
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
+  height: 5rem;
+  padding: 1rem;
+  background: rgb(238, 238, 238);
+}
+
+input[type="submit"] {
+  background-color: #5a5a5a;
+  border: none;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  margin: 0.5rem;
+  border-radius: 20%;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #383838;
+  border: none;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  margin: 0.5rem;
+  border-radius: 20%;
+  color: white;
+  cursor: pointer;
 }
 
 .loading {
   display: none;
   position: absolute;
-  /* width: 100%; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -58,40 +68,38 @@ h3 {
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
-  height: 30%;
+  height: 20%;
   font-size: 0.8rem;
   border: 1px solid rgb(255, 255, 255);
   padding: 0.5rem;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .clear {
   /* display: inline; */
   position: absolute;
-  text-align: center;
+  text-align: right;
   font-size: 0.8rem;
-  top: 61%;
+  top: 51%;
   right: 10%;
-  width: 5rem;
+  width: 2.5rem;
   height: 1rem;
-  border: 1px solid black;
-  background: #fff;
   display: none;
   cursor: pointer;
+  transition: all 0.5s;
 }
 .clear:hover {
   position: absolute;
-  text-align: center;
+  text-align: right;
   font-size: 0.8rem;
-  top: 61%;
+  top: 51%;
   right: 10%;
-  width: 5rem;
+  width: 2.5rem;
   height: 1rem;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
   display: none;
+  transition: all 0.5s;
   cursor: pointer;
-  background: red;
-  color: #fff;
 }
 
 .ch-1 {
@@ -129,6 +137,6 @@ h3 {
 
 #company {
   border: none;
-  border-bottom: 1px solid rgb(0, 0, 0);
-  width: 90%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.322);
+  width: 80%;
 }
