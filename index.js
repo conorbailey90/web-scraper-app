@@ -74,7 +74,7 @@ app.post("/", async (req, res) => {
       let psc = await page.evaluate(() => {
         // Establish how many PSC's are listed - converting the string to integer
         const pscTotal =
-          document.querySelector("#company-pscs").innerText.slice(0, 1) == null
+          document.querySelector("#company-pscs").innerText.slice(0, 1) == null // if element not found, set value to 0
             ? 0
             : parseInt(
                 document.querySelector("#company-pscs").innerText.slice(0, 1)
