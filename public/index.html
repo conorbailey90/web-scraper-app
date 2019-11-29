@@ -33,18 +33,22 @@
     <div class="company"></div>
     <div class="ch-1"></div>
     <div class="ch-2"></div>
-
-    <div class="clear">Clear</div>
+    <div class="buttons">
+      <div class="copy">Copy</div>
+      <div class="clear">Clear</div>
+    </div>
 
     <script>
       document.querySelector("#get-data").addEventListener("submit", retrieve);
       const clearBtn = document.querySelector(".clear");
+      const copyBtn = document.querySelector(".copy");
       const companyDetails = document.querySelector(".company");
       const chOne = document.querySelector(".ch-1");
       const chTwo = document.querySelector(".ch-2");
       const loader = document.querySelector(".loading");
 
       clearBtn.addEventListener("click", clear);
+      copyBtn.addEventListener("click", copyText);
 
       function retrieve(e) {
         e.preventDefault();
@@ -84,11 +88,24 @@
             console.log(this.responseText);
             loader.style.display = "none";
             clearBtn.style.display = "block";
+            copyBtn.style.display = "block";
             companyDetails.style.background = `#EEEEEE`;
           }
         };
 
         xhr.send(JSON.stringify(data));
+      }
+
+      function copyText(e) {
+        let textArea = document.createElement("textarea");
+        document.body.appendChild(textArea);
+        let copyText = document.querySelector(".company").innerText;
+        textArea.value = copyText;
+        let selector = textArea;
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+        alert("Text copied to clipboard");
       }
 
       function clear() {

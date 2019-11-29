@@ -78,11 +78,11 @@ input[type="submit"]:hover {
 .clear {
   /* display: inline; */
   position: absolute;
-  text-align: right;
+  text-align: center;
   font-size: 0.8rem;
   top: 51%;
-  right: 10%;
-  width: 2.5rem;
+  right: 0;
+  width: 50px;
   height: 1rem;
   display: none;
   cursor: pointer;
@@ -90,16 +90,49 @@ input[type="submit"]:hover {
 }
 .clear:hover {
   position: absolute;
-  text-align: right;
+  text-align: center;
   font-size: 0.8rem;
   top: 51%;
-  right: 10%;
-  width: 2.5rem;
+  right: 0;
+  width: 50px;
   height: 1rem;
   border-bottom: 1px solid black;
   display: none;
   transition: all 0.5s;
   cursor: pointer;
+}
+
+.copy {
+  /* display: inline; */
+  position: absolute;
+  text-align: center;
+  font-size: 0.8rem;
+  top: 51%;
+  right: 50px;
+  width: 50px;
+  height: 1rem;
+  display: none;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.copy:hover {
+  text-align: center;
+  font-size: 0.8rem;
+  top: 51%;
+  right: 50px;
+  width: 50px;
+  height: 1rem;
+  border-bottom: 1px solid black;
+  display: none;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.buttons {
+  position: absolute;
+  right: 10%;
+  width: 80%;
+  top: 51%;
 }
 
 .ch-1 {
