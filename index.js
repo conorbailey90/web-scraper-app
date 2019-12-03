@@ -261,6 +261,7 @@ app.get(
           .innerText;
         let incorporation = document.querySelector("#company-creation-date")
           .innerText;
+
         let type = document.querySelector("#company-type").innerText;
         let status = document.querySelector("#company-status").innerText;
         let address = document.querySelector("#content-container > dl > dd")
