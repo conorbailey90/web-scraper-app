@@ -25,6 +25,8 @@ function haltOnTimedout(req, res, next) {
   if (!req.timedout) next();
 }
 
+app.use(haltOnTimedout());
+
 app.post("/", timeout("10s"), haltOnTimedout, async (req, res, next) => {
   try {
     let website = req.body.URL;
