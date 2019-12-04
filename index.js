@@ -21,13 +21,13 @@ app.use(express.static("public"));
 submitCount = 0; // Used to count the amount of submit button link clicks.
 
 // Used to time out long running requests in order to stop them blocking the Heroku Dynos
-function haltOnTimedout(req, res, next) {
-  if (!req.timedout) next();
-}
+// function haltOnTimedout(req, res, next) {
+//   if (!req.timedout) next();
+// }
 
-app.use(haltOnTimedout());
+timeout("10s"), haltOnTimedout, app.use(haltOnTimedout());
 
-app.post("/", timeout("10s"), haltOnTimedout, async (req, res, next) => {
+app.post("/", async (req, res, next) => {
   try {
     let website = req.body.URL;
     console.log(website);
@@ -235,110 +235,104 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.get(
-  "/:companyID",
-  timeout("10s"),
-  haltOnTimedout,
-  async (req, res, next) => {
-    var companyNumber = req.params.companyID;
+app.get("/:companyID", async (req, res, next) => {
+  var companyNumber = req.params.companyID;
 
-    const website = `https://beta.companieshouse.gov.uk/company/${companyNumber}`;
+  const website = `https://beta.companieshouse.gov.uk/company/${companyNumber}`;
 
-    console.log(website);
+  console.log(website);
 
-    try {
-      const browser = await puppeteer.launch({
-        defaultViewport: { width: 1920, height: 1280 },
-        args: ["--no-sandbox"]
-      });
-      const page = await browser.newPage();
+  try {
+    const browser = await puppeteer.launch({
+      defaultViewport: { width: 1920, height: 1280 },
+      args: ["--no-sandbox"]
+    });
+    const page = await browser.newPage();
 
-      await page.goto(website, { waitUntil: "networkidle2" });
+    await page.goto(website, { waitUntil: "networkidle2" });
 
-      let company = await page.evaluate(() => {
-        let name = document.querySelector(
-          "#content-container > div.company-header > p.heading-xlarge"
-        ).innerText;
-        let number = document.querySelector("#company-number > strong")
-          .innerText;
-        let incorporation = document.querySelector("#company-creation-date")
-          .innerText;
+    let company = await page.evaluate(() => {
+      let name = document.querySelector(
+        "#content-container > div.company-header > p.heading-xlarge"
+      ).innerText;
+      let number = document.querySelector("#company-number > strong").innerText;
+      let incorporation = document.querySelector("#company-creation-date")
+        .innerText;
 
-        let type = document.querySelector("#company-type").innerText;
-        let status = document.querySelector("#company-status").innerText;
-        let address = document.querySelector("#content-container > dl > dd")
-          .innerText;
-        let natureOfBusiness =
-          document.querySelector("#sic0") == null
-            ? `The nature of business has not been registered for this entity on Companies House`
-            : `As per Companies House the registered nature of business for this entity is ${
-                document.querySelector("#sic0").innerText
-              }. This is a standard risk industry`;
+      let type = document.querySelector("#company-type").innerText;
+      let status = document.querySelector("#company-status").innerText;
+      let address = document.querySelector("#content-container > dl > dd")
+        .innerText;
+      let natureOfBusiness =
+        document.querySelector("#sic0") == null
+          ? `The nature of business has not been registered for this entity on Companies House`
+          : `As per Companies House the registered nature of business for this entity is ${
+              document.querySelector("#sic0").innerText
+            }. This is a standard risk industry`;
 
-        return {
-          name,
-          number,
-          incorporation,
-          type,
-          status,
-          address,
-          natureOfBusiness
-        };
-      });
-      await page.evaluate(() => document.querySelector("#people-tab").click());
-      await page.waitForNavigation();
-      await page.evaluate(() => document.querySelector("#pscs-link").click());
-      await page.waitForNavigation();
+      return {
+        name,
+        number,
+        incorporation,
+        type,
+        status,
+        address,
+        natureOfBusiness
+      };
+    });
+    await page.evaluate(() => document.querySelector("#people-tab").click());
+    await page.waitForNavigation();
+    await page.evaluate(() => document.querySelector("#pscs-link").click());
+    await page.waitForNavigation();
 
-      let psc = await page.evaluate(() => {
-        // Establish how many PSC's are listed - converting the string to integer
-        const pscTotal = parseInt(
-          document.querySelector("#company-pscs").innerText.slice(0, 1)
-        );
+    let psc = await page.evaluate(() => {
+      // Establish how many PSC's are listed - converting the string to integer
+      const pscTotal = parseInt(
+        document.querySelector("#company-pscs").innerText.slice(0, 1)
+      );
 
-        // Convert PSC's elements to an array. Remove the first element with slice as this is not a person.
-        let pscs = Array.from(
-          document.getElementsByClassName("heading-medium")
-        ).slice(1);
+      // Convert PSC's elements to an array. Remove the first element with slice as this is not a person.
+      let pscs = Array.from(
+        document.getElementsByClassName("heading-medium")
+      ).slice(1);
 
-        let pscDetails = "";
+      let pscDetails = "";
 
-        for (let i = 0; i < pscTotal; i++) {
-          pscDetails +=
-            pscTotal > 1
-              ? `${pscs[i].children[0].innerText.trim()}, ` // Comma added for multipe PSC's
-              : `${pscs[i].children[0].innerText.trim()} `;
-        }
-
+      for (let i = 0; i < pscTotal; i++) {
         pscDetails +=
           pscTotal > 1
-            ? `are registered as persons/entities with significant control of this entity on Companies House.`
-            : `is registered as a person/entity with significant control of this entity on Companies House.`;
+            ? `${pscs[i].children[0].innerText.trim()}, ` // Comma added for multipe PSC's
+            : `${pscs[i].children[0].innerText.trim()} `;
+      }
 
-        if (pscTotal == 0) {
-          pscDetails = `There are no active persons / entities with significant control registered for this entity on Companies House.`;
-        }
+      pscDetails +=
+        pscTotal > 1
+          ? `are registered as persons/entities with significant control of this entity on Companies House.`
+          : `is registered as a person/entity with significant control of this entity on Companies House.`;
 
-        return {
-          pscDetails
-        };
-      });
+      if (pscTotal == 0) {
+        pscDetails = `There are no active persons / entities with significant control registered for this entity on Companies House.`;
+      }
 
-      company.psc = psc.pscDetails; // Add person with significant control to company object
+      return {
+        pscDetails
+      };
+    });
 
-      await browser.close();
+    company.psc = psc.pscDetails; // Add person with significant control to company object
 
-      let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
+    await browser.close();
+
+    let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
   is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. ${company.natureOfBusiness}. ${company.psc}`;
-      res.send(details);
-    } catch (e) {
-      console.log(e);
-      res.send(
-        "Something went wrong! Please ensure your URL is correct and try again."
-      );
-    }
+    res.send(details);
+  } catch (e) {
+    console.log(e);
+    res.send(
+      "Something went wrong! Please ensure your URL is correct and try again."
+    );
   }
-);
+});
 
 const PORT = process.env.PORT || 5000;
 
