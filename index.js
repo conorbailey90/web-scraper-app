@@ -19,7 +19,7 @@ app.use(express.static("public"));
 submitCount = 0; // Used to count the amount of submit button link clicks.
 
 app.use("/", require("./routes/scraper"));
-app.use("/companieshouse/", require("./routes/scraper"));
+app.use("/companieshouse/", require("./routes/companieshouse"));
 
 const PORT = process.env.PORT || 5000;
 
