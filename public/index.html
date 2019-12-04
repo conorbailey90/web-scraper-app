@@ -27,7 +27,7 @@
     </form>
 
     <div class="loading">
-      <img src="./loader2.jpg" alt="loader" />
+      <img src="./loader.jpg" alt="loader" />
     </div>
 
     <div class="company"></div>
@@ -54,9 +54,11 @@
         e.preventDefault();
 
         let xhr = new XMLHttpRequest();
+        document.querySelector(".button").disabled = true;
         companyDetails.style.border = `1px solid white`;
         companyDetails.innerHTML = "";
         clearBtn.style.display = "none";
+        copyBtn.style.display = "none";
         loader.style.display = "block";
         chOne.innerHTML = "";
         chTwo.innerHTML = "";
@@ -90,6 +92,7 @@
             clearBtn.style.display = "block";
             copyBtn.style.display = "block";
             companyDetails.style.background = `#EEEEEE`;
+            document.querySelector(".button").disabled = false;
           }
         };
 
