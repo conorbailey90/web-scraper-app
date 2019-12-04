@@ -20,14 +20,7 @@ app.use(express.static("public"));
 
 submitCount = 0; // Used to count the amount of submit button link clicks.
 
-// Used to time out long running requests in order to stop them blocking the Heroku Dynos
-// function haltOnTimedout(req, res, next) {
-//   if (!req.timedout) next();
-// }
-
-timeout("10s"), haltOnTimedout, app.use(haltOnTimedout());
-
-app.post("/", async (req, res, next) => {
+app.post("/", async (req, res) => {
   try {
     let website = req.body.URL;
     console.log(website);
@@ -235,7 +228,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.get("/:companyID", async (req, res, next) => {
+app.get("/:companyID", async (req, res) => {
   var companyNumber = req.params.companyID;
 
   const website = `https://beta.companieshouse.gov.uk/company/${companyNumber}`;
