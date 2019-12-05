@@ -13,11 +13,12 @@ app.use(
 
 app.use(bodyParser.json());
 
-// Allows the use of all files in the Static folder.
+// Allows the used of all files in the Static folder.
 app.use(express.static("public"));
 
 submitCount = 0; // Used to count the amount of submit button link clicks.
 
+// Routes
 app.use("/", require("./routes/scraper"));
 app.use("/companieshouse/", require("./routes/companieshouse"));
 

@@ -27,6 +27,8 @@ h3 {
   height: 5rem;
   padding: 1rem;
   background: rgb(238, 238, 238);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.212);
+  border: 1px solid rgba(0, 0, 0, 0.253);
 }
 
 input[type="submit"] {
@@ -73,6 +75,24 @@ input[type="submit"]:hover {
   border: 1px solid rgb(255, 255, 255);
   padding: 0.5rem;
   overflow: hidden;
+  display: none;
+}
+
+.company.visible {
+  position: absolute;
+  color: rgb(0, 0, 0);
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 20%;
+  background: rgb(238, 238, 238);
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.253);
+  padding: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.212);
 }
 
 .clear {
@@ -83,7 +103,7 @@ input[type="submit"]:hover {
   top: 51%;
   right: 0;
   width: 50px;
-  height: 1rem;
+  height: 1.5rem;
   display: none;
   cursor: pointer;
   transition: all 0.5s;
@@ -95,8 +115,8 @@ input[type="submit"]:hover {
   top: 51%;
   right: 0;
   width: 50px;
-  height: 1rem;
-  border-bottom: 1px solid black;
+  height: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.253);
   display: none;
   transition: all 0.5s;
   cursor: pointer;
@@ -110,7 +130,7 @@ input[type="submit"]:hover {
   top: 51%;
   right: 50px;
   width: 50px;
-  height: 1rem;
+  height: 1.5rem;
   display: none;
   cursor: pointer;
   transition: all 0.5s;
@@ -121,8 +141,8 @@ input[type="submit"]:hover {
   top: 51%;
   right: 50px;
   width: 50px;
-  height: 1rem;
-  border-bottom: 1px solid black;
+  height: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.253);
   display: none;
   transition: all 0.5s;
   cursor: pointer;

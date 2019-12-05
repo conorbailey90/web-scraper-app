@@ -196,7 +196,7 @@ router.post("/", async (req, res) => {
       significant control of this entity as per the Companycheck company registration website.`;
       res.send(details);
     } else {
-      res.status(400).json({ details: "Not a valid website" });
+      res.json({ details: "Not a valid website" });
     }
   } catch (e) {
     console.log(e);

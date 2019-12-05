@@ -55,8 +55,7 @@
 
         let xhr = new XMLHttpRequest();
         document.querySelector(".button").disabled = true;
-        companyDetails.style.border = `1px solid white`;
-        companyDetails.innerHTML = "";
+        companyDetails.classList.remove("visible");
         clearBtn.style.display = "none";
         copyBtn.style.display = "none";
         loader.style.display = "block";
@@ -91,7 +90,7 @@
             loader.style.display = "none";
             clearBtn.style.display = "block";
             copyBtn.style.display = "block";
-            companyDetails.style.background = `#EEEEEE`;
+            companyDetails.classList.add("visible");
             document.querySelector(".button").disabled = false;
           }
         };
