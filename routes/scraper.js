@@ -3,6 +3,10 @@ const router = express.Router();
 const puppeteer = require("puppeteer");
 const path = require("path");
 
+router.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public", "index.html"));
+});
+
 router.post("/", async (req, res) => {
   try {
     let website = req.body.URL;
@@ -12,7 +16,7 @@ router.post("/", async (req, res) => {
     if (website.slice(0, 34) == "https://beta.companieshouse.gov.uk") {
       // const browser = await puppeteer.launch({ headless: false });
       const browser = await puppeteer.launch({
-        defaultViewport: { width: 1920, height: 1280 },
+        defaultViewport: { width: 1920, height: 1500 },
         args: ["--no-sandbox"]
       });
       const page = await browser.newPage();
@@ -74,6 +78,7 @@ router.post("/", async (req, res) => {
 
         let pscDetails = "";
 
+        // Add all PSC names to the pscDetails variable
         for (let i = 0; i < pscTotal; i++) {
           pscDetails +=
             pscTotal > 1
@@ -81,6 +86,7 @@ router.post("/", async (req, res) => {
               : `${pscs[i].children[0].innerText.trim()} `;
         }
 
+        // Attach the following string to the pscDetails variable depending on whether single or multiple owners.
         pscDetails +=
           pscTotal > 1
             ? `are registered as persons/entities with significant control of this entity on Companies House.`
@@ -100,12 +106,10 @@ router.post("/", async (req, res) => {
       await page.screenshot({ path: "./public/CompaniesHouse2.png" });
       await browser.close();
 
-      submitCount++;
-
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
       is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. ${company.natureOfBusiness}. ${company.psc}`;
       // res.send(details);
-      res.json({ details, submitCount });
+      res.json({ details });
 
       // Companycheck website
     } else if (website.slice(0, 26) == "https://companycheck.co.uk") {
@@ -192,7 +196,7 @@ router.post("/", async (req, res) => {
 
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
       is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. The nature of business
-      for this entity is registered as: ${company.natureOfBusiness}. This is a standard risk industry. ${company.psc} is listed as a person / entity with 
+      for this entity is registered as: ${company.natureOfBusiness}. This is a standard risk industry. ${company.psc} is listed as a person / entity with
       significant control of this entity as per the Companycheck company registration website.`;
       res.send(details);
     } else {
@@ -205,10 +209,6 @@ router.post("/", async (req, res) => {
         "Something went wrong! Please ensure your URL is correct and try again."
     });
   }
-});
-
-router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 module.exports = router;
