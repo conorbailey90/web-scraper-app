@@ -71,7 +71,7 @@ router.post("/", async (req, res) => {
       dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p>`;
     }, dayOfAccess);
 
-    await page.screenshot({ path: "./public/companyss/google.png" });
+    await page.screenshot({ path: "./public/google.png" });
 
     let links = await page.evaluate(() => {
       let pages = Array.from(document.querySelectorAll(".rc"));
@@ -99,7 +99,7 @@ router.post("/", async (req, res) => {
     }, dayOfAccess);
 
     await page.screenshot({
-      path: "./public/companyss/link1.png"
+      path: "./public/link1.png"
       // fullPage: true
     });
     await page.goto(links[1], { waitUntil: "networkidle2" });
@@ -120,7 +120,7 @@ router.post("/", async (req, res) => {
     }, dayOfAccess);
 
     await page.screenshot({
-      path: "./public/companyss/link2.png"
+      path: "./public/link2.png"
       // fullPage: true
     });
     await page.goto(links[2], { waitUntil: "networkidle2" });
@@ -141,7 +141,7 @@ router.post("/", async (req, res) => {
     }, dayOfAccess);
 
     await page.screenshot({
-      path: "./public/companyss/link3.png"
+      path: "./public/link3.png"
       // fullPage: true
     });
     await page.goto(links[3], { waitUntil: "networkidle2" });
@@ -162,7 +162,7 @@ router.post("/", async (req, res) => {
     }, dayOfAccess);
 
     await page.screenshot({
-      path: "./public/companyss/link4.png"
+      path: "./public/link4.png"
       // fullPage: true
     });
     await page.goto(links[4], { waitUntil: "networkidle2" });
@@ -183,7 +183,7 @@ router.post("/", async (req, res) => {
     }, dayOfAccess);
 
     await page.screenshot({
-      path: "./public/companyss/link5.png"
+      path: "./public/link5.png"
       // fullPage: true
     });
 
@@ -244,7 +244,7 @@ router.post("/", async (req, res) => {
     );
 
     await page.screenshot({
-      path: "./public/companyss/dowjones.png"
+      path: "./public/dowjones.png"
       // fullPage: true
     });
     console.log(links);
