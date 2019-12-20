@@ -30,8 +30,8 @@ router.post("/", async (req, res) => {
     console.log(dayOfAccess);
 
     const browser = await puppeteer.launch({
-      defaultViewport: { width: 1920, height: 2000 }
-      // args: ["--no-sandbox"]
+      defaultViewport: { width: 1920, height: 2000 },
+      args: ["--no-sandbox"]
       // headless: false
     });
     const page = await browser.newPage();
