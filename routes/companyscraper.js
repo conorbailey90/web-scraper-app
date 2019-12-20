@@ -188,43 +188,43 @@ router.post("/", async (req, res) => {
       // fullPage: true
     });
 
-    await page.goto("https://www.dowjones.com/products/risk-compliance/", {
-      waitUntil: "load",
-      timeout: 0
-    });
+    // await page.goto("https://www.dowjones.com/products/risk-compliance/", {
+    //   waitUntil: "load",
+    //   timeout: 0
+    // });
 
-    let loginPage = await page.evaluate(() => {
-      let link = document.querySelector(
-        "body > div.page-wrapper > header > div > div.header-right > div > div > div > ul > li:nth-child(5) > div > div > h3 > a"
-      ).href;
-      return link;
-    });
-    await page.goto(loginPage, {
-      waitUntil: "networkidle2"
-    });
+    // let loginPage = await page.evaluate(() => {
+    //   let link = document.querySelector(
+    //     "body > div.page-wrapper > header > div > div.header-right > div > div > div > ul > li:nth-child(5) > div > div > h3 > a"
+    //   ).href;
+    //   return link;
+    // });
+    // await page.goto(loginPage, {
+    //   waitUntil: "networkidle2"
+    // });
 
-    await page.evaluate(() => {
-      let email = document.querySelector("#email");
-      email.value = "conor.bailey@santandergcb.com";
-      let password = document.querySelector(".password");
-      password.value = "Zildjian01";
-      let link = document.querySelector(
-        "#card-sign-in > form > div > div:nth-child(7) > div > button"
-      );
-      link.click();
-    });
+    // await page.evaluate(() => {
+    //   let email = document.querySelector("#email");
+    //   email.value = "conor.bailey@santandergcb.com";
+    //   let password = document.querySelector(".password");
+    //   password.value = "Zildjian01";
+    //   let link = document.querySelector(
+    //     "#card-sign-in > form > div > div:nth-child(7) > div > button"
+    //   );
+    //   link.click();
+    // });
 
-    await page.waitForSelector("#chkAM");
-    await page.waitForSelector("#txtName");
-    await page.waitForSelector("#btn10012");
+    // await page.waitForSelector("#chkAM");
+    // await page.waitForSelector("#txtName");
+    // await page.waitForSelector("#btn10012");
 
-    await page.evaluate(company => {
-      document.querySelector("#chkAM").click();
-      document.querySelector("#txtName").value = company;
-      document.querySelector("#btn10012").click();
-    }, company);
+    // await page.evaluate(company => {
+    //   document.querySelector("#chkAM").click();
+    //   document.querySelector("#txtName").value = company;
+    //   document.querySelector("#btn10012").click();
+    // }, company);
 
-    await page.waitForNavigation();
+    // await page.waitForNavigation();
 
     // await page.evaluate(dayOfAccess => {
     //   let dateDiv = document.createElement("div");
@@ -241,15 +241,15 @@ router.post("/", async (req, res) => {
     //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
     // }, dayOfAccess);
 
-    await page.waitForFunction(
-      "document.querySelector('#loading1').style.display == 'none'"
-    );
+    // await page.waitForFunction(
+    //   "document.querySelector('#loading1').style.display == 'none'"
+    // );
 
-    await page.screenshot({
-      path: "./public/dowjones.png"
-      // fullPage: true
-    });
-    console.log(links);
+    // await page.screenshot({
+    //   path: "./public/dowjones.png"
+    //   // fullPage: true
+    // });
+    // console.log(links);
 
     await browser.close();
     res.json({
