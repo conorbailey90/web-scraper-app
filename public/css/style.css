@@ -140,7 +140,7 @@ input[type="submit"]:hover {
   text-align: center;
   font-size: 0.8rem;
   top: 51%;
-  right: 20%;
+  right: 0%;
   width: 50px;
   height: 1.5rem;
   display: none;
@@ -148,7 +148,7 @@ input[type="submit"]:hover {
   transition: all 0.5s;
 }
 
-.clear-two {
+.refresh {
   /* display: inline; */
   position: absolute;
   text-align: center;
