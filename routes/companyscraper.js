@@ -30,8 +30,8 @@ router.post("/", async (req, res) => {
     console.log(dayOfAccess);
 
     const browser = await puppeteer.launch({
-      defaultViewport: { width: 1920, height: 2000 },
-      args: ["--no-sandbox"]
+      defaultViewport: { width: 1920, height: 2000 }
+      // args: ["--no-sandbox"]
       // headless: false
     });
     const page = await browser.newPage();
@@ -56,20 +56,20 @@ router.post("/", async (req, res) => {
     });
     await page.waitForNavigation();
 
-    await page.evaluate(dayOfAccess => {
-      let dateDiv = document.createElement("div");
-      dateDiv.style.position = "absolute";
-      dateDiv.style.top = 0;
-      dateDiv.style.left = "50%";
-      dateDiv.style.width = "50%";
-      dateDiv.style.height = "5rem";
-      dateDiv.style.color = "white";
-      dateDiv.style.background = "black";
-      dateDiv.style.zIndex = 9999;
-      dateDiv.style.padding = "5px";
-      document.body.appendChild(dateDiv);
-      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p>`;
-    }, dayOfAccess);
+    // await page.evaluate(dayOfAccess => {
+    //   let dateDiv = document.createElement("div");
+    //   dateDiv.style.position = "absolute";
+    //   dateDiv.style.top = 0;
+    //   dateDiv.style.left = "50%";
+    //   dateDiv.style.width = "50%";
+    //   dateDiv.style.height = "80px";
+    //   dateDiv.style.color = "white";
+    //   dateDiv.style.background = "black";
+    //   dateDiv.style.zIndex = 9999;
+    //   dateDiv.style.padding = "5px";
+    //   document.body.appendChild(dateDiv);
+    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p>`;
+    // }, dayOfAccess);
 
     await page.screenshot({ path: "./public/google.png" });
 
@@ -81,106 +81,107 @@ router.post("/", async (req, res) => {
       });
       return pageLinks;
     });
+    // { waitUntil: "networkidle2" }
+    await page.goto(links[0], { waitUntil: "load", timeout: 0 });
 
-    await page.goto(links[0], { waitUntil: "networkidle2" });
-    await page.evaluate(dayOfAccess => {
-      let dateDiv = document.createElement("div");
-      dateDiv.style.position = "absolute";
-      dateDiv.style.top = 0;
-      dateDiv.style.left = "50%";
-      dateDiv.style.width = "50%";
-      dateDiv.style.height = "7rem";
-      dateDiv.style.color = "white";
-      dateDiv.style.background = "black";
-      dateDiv.style.zIndex = 9999;
-      dateDiv.style.padding = "5px";
-      document.body.appendChild(dateDiv);
-      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    }, dayOfAccess);
+    // await page.evaluate(dayOfAccess => {
+    //   let dateDiv = document.createElement("div");
+    //   dateDiv.style.position = "absolute";
+    //   dateDiv.style.top = 0;
+    //   dateDiv.style.left = "50%";
+    //   dateDiv.style.width = "50%";
+    //   dateDiv.style.height = "80px";
+    //   dateDiv.style.color = "white";
+    //   dateDiv.style.background = "black";
+    //   dateDiv.style.zIndex = 9999;
+    //   dateDiv.style.padding = "5px";
+    //   document.body.appendChild(dateDiv);
+    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    // }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link1.png"
       // fullPage: true
     });
-    await page.goto(links[1], { waitUntil: "networkidle2" });
+    await page.goto(links[1], { waitUntil: "load", timeout: 0 });
 
-    await page.evaluate(dayOfAccess => {
-      let dateDiv = document.createElement("div");
-      dateDiv.style.position = "absolute";
-      dateDiv.style.top = 0;
-      dateDiv.style.left = "50%";
-      dateDiv.style.width = "50%";
-      dateDiv.style.height = "7rem";
-      dateDiv.style.color = "white";
-      dateDiv.style.background = "black";
-      dateDiv.style.zIndex = 9999;
-      dateDiv.style.padding = "5px";
-      document.body.appendChild(dateDiv);
-      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    }, dayOfAccess);
+    // await page.evaluate(dayOfAccess => {
+    //   let dateDiv = document.createElement("div");
+    //   dateDiv.style.position = "absolute";
+    //   dateDiv.style.top = 0;
+    //   dateDiv.style.left = "50%";
+    //   dateDiv.style.width = "50%";
+    //   dateDiv.style.height = "80px";
+    //   dateDiv.style.color = "white";
+    //   dateDiv.style.background = "black";
+    //   dateDiv.style.zIndex = 9999;
+    //   dateDiv.style.padding = "5px";
+    //   document.body.appendChild(dateDiv);
+    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    // }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link2.png"
       // fullPage: true
     });
-    await page.goto(links[2], { waitUntil: "networkidle2" });
+    await page.goto(links[2], { waitUntil: "load", timeout: 0 });
 
-    await page.evaluate(dayOfAccess => {
-      let dateDiv = document.createElement("div");
-      dateDiv.style.position = "absolute";
-      dateDiv.style.top = 0;
-      dateDiv.style.left = "50%";
-      dateDiv.style.width = "50%";
-      dateDiv.style.height = "7rem";
-      dateDiv.style.color = "white";
-      dateDiv.style.background = "black";
-      dateDiv.style.zIndex = 9999;
-      dateDiv.style.padding = "5px";
-      document.body.appendChild(dateDiv);
-      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>${location.href}</p>`;
-    }, dayOfAccess);
+    // await page.evaluate(dayOfAccess => {
+    //   let dateDiv = document.createElement("div");
+    //   dateDiv.style.position = "absolute";
+    //   dateDiv.style.top = 0;
+    //   dateDiv.style.left = "50%";
+    //   dateDiv.style.width = "50%";
+    //   dateDiv.style.height = "80px";
+    //   dateDiv.style.color = "white";
+    //   dateDiv.style.background = "black";
+    //   dateDiv.style.zIndex = 9999;
+    //   dateDiv.style.padding = "5px";
+    //   document.body.appendChild(dateDiv);
+    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>${location.href}</p>`;
+    // }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link3.png"
       // fullPage: true
     });
-    await page.goto(links[3], { waitUntil: "networkidle2" });
+    await page.goto(links[3], { waitUntil: "load", timeout: 0 });
 
-    await page.evaluate(dayOfAccess => {
-      let dateDiv = document.createElement("div");
-      dateDiv.style.position = "absolute";
-      dateDiv.style.top = 0;
-      dateDiv.style.left = "50%";
-      dateDiv.style.width = "50%";
-      dateDiv.style.height = "7rem";
-      dateDiv.style.color = "white";
-      dateDiv.style.background = "black";
-      dateDiv.style.zIndex = 9999;
-      dateDiv.style.padding = "5px";
-      document.body.appendChild(dateDiv);
-      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    }, dayOfAccess);
+    // await page.evaluate(dayOfAccess => {
+    //   let dateDiv = document.createElement("div");
+    //   dateDiv.style.position = "absolute";
+    //   dateDiv.style.top = 0;
+    //   dateDiv.style.left = "50%";
+    //   dateDiv.style.width = "50%";
+    //   dateDiv.style.height = "80px";
+    //   dateDiv.style.color = "white";
+    //   dateDiv.style.background = "black";
+    //   dateDiv.style.zIndex = 9999;
+    //   dateDiv.style.padding = "5px";
+    //   document.body.appendChild(dateDiv);
+    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    // }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link4.png"
       // fullPage: true
     });
-    await page.goto(links[4], { waitUntil: "networkidle2" });
+    await page.goto(links[4], { waitUntil: "load", timeout: 0 });
 
-    await page.evaluate(dayOfAccess => {
-      let dateDiv = document.createElement("div");
-      dateDiv.style.position = "absolute";
-      dateDiv.style.top = 0;
-      dateDiv.style.left = "50%";
-      dateDiv.style.width = "50%";
-      dateDiv.style.height = "7rem";
-      dateDiv.style.color = "white";
-      dateDiv.style.background = "black";
-      dateDiv.style.zIndex = 9999;
-      dateDiv.style.padding = "5px";
-      document.body.appendChild(dateDiv);
-      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    }, dayOfAccess);
+    // await page.evaluate(dayOfAccess => {
+    //   let dateDiv = document.createElement("div");
+    //   dateDiv.style.position = "absolute";
+    //   dateDiv.style.top = 0;
+    //   dateDiv.style.left = "50%";
+    //   dateDiv.style.width = "50%";
+    //   dateDiv.style.height = "80px";
+    //   dateDiv.style.color = "white";
+    //   dateDiv.style.background = "black";
+    //   dateDiv.style.zIndex = 9999;
+    //   dateDiv.style.padding = "5px";
+    //   document.body.appendChild(dateDiv);
+    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    // }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link5.png"
@@ -188,7 +189,8 @@ router.post("/", async (req, res) => {
     });
 
     await page.goto("https://www.dowjones.com/products/risk-compliance/", {
-      waitUntil: "networkidle2"
+      waitUntil: "load",
+      timeout: 0
     });
 
     let loginPage = await page.evaluate(() => {
@@ -224,20 +226,20 @@ router.post("/", async (req, res) => {
 
     await page.waitForNavigation();
 
-    await page.evaluate(dayOfAccess => {
-      let dateDiv = document.createElement("div");
-      dateDiv.style.position = "absolute";
-      dateDiv.style.top = 0;
-      dateDiv.style.left = "50%";
-      dateDiv.style.width = "50%";
-      dateDiv.style.height = "3rem";
-      dateDiv.style.color = "white";
-      dateDiv.style.background = "black";
-      dateDiv.style.zIndex = 9999;
-      dateDiv.style.padding = "5px";
-      document.body.appendChild(dateDiv);
-      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    }, dayOfAccess);
+    // await page.evaluate(dayOfAccess => {
+    //   let dateDiv = document.createElement("div");
+    //   dateDiv.style.position = "absolute";
+    //   dateDiv.style.top = 0;
+    //   dateDiv.style.left = "50%";
+    //   dateDiv.style.width = "50%";
+    //   dateDiv.style.height = "3rem";
+    //   dateDiv.style.color = "white";
+    //   dateDiv.style.background = "black";
+    //   dateDiv.style.zIndex = 9999;
+    //   dateDiv.style.padding = "5px";
+    //   document.body.appendChild(dateDiv);
+    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    // }, dayOfAccess);
 
     await page.waitForFunction(
       "document.querySelector('#loading1').style.display == 'none'"

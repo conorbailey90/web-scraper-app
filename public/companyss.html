@@ -26,6 +26,8 @@
       <input type="submit" id="button" />
     </form>
 
+    <div class="clear-two">Clear</div>
+
     <div class="link-list"></div>
     <div class="loading">
       <img src="./loader.jpg" alt="loader" />
@@ -68,6 +70,11 @@
       const companyFour = document.querySelector(".company-four");
       const companyFive = document.querySelector(".company-five");
       const loader = document.querySelector(".loading");
+      const clearBtn = document.querySelector(".clear-two");
+
+      clearBtn.addEventListener("click", e => {
+        location.reload();
+      });
 
       function retrieve(e) {
         e.preventDefault();
@@ -88,7 +95,7 @@
         xhr.onload = function() {
           if (this.status == 200) {
             // linklist.innerHTML = JSON.parse(this.responseText).links;
-            dowjones.innerHTML = `<img src="./dowjones.png">`;
+            // dowjones.innerHTML = `<img src="./dowjones.png">`;
             google.innerHTML = `<img src="./google.png">`;
             companyOne.innerHTML = `<img src="./link1.png">`;
             companyTwo.innerHTML = `<img src="./link2.png">`;
@@ -97,6 +104,9 @@
             companyFive.innerHTML = `<img src="./link5.png">`;
             console.log(this.responseText);
             loader.style.display = "none";
+            document.querySelector("#button").disabled = false;
+            clearBtn.style.display = "block";
+            clearBtn.style.zIndex = 9999;
           }
         };
 
