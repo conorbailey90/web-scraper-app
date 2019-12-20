@@ -31,7 +31,12 @@ router.post("/", async (req, res) => {
 
     const browser = await puppeteer.launch({
       defaultViewport: { width: 1920, height: 2000 },
-      args: ["--no-sandbox"]
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--single-process"
+      ]
       // headless: false
     });
     const page = await browser.newPage();
@@ -56,20 +61,20 @@ router.post("/", async (req, res) => {
     });
     await page.waitForNavigation();
 
-    // await page.evaluate(dayOfAccess => {
-    //   let dateDiv = document.createElement("div");
-    //   dateDiv.style.position = "absolute";
-    //   dateDiv.style.top = 0;
-    //   dateDiv.style.left = "50%";
-    //   dateDiv.style.width = "50%";
-    //   dateDiv.style.height = "80px";
-    //   dateDiv.style.color = "white";
-    //   dateDiv.style.background = "black";
-    //   dateDiv.style.zIndex = 9999;
-    //   dateDiv.style.padding = "5px";
-    //   document.body.appendChild(dateDiv);
-    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p>`;
-    // }, dayOfAccess);
+    await page.evaluate(dayOfAccess => {
+      let dateDiv = document.createElement("div");
+      dateDiv.style.position = "absolute";
+      dateDiv.style.top = 0;
+      dateDiv.style.left = "50%";
+      dateDiv.style.width = "50%";
+      dateDiv.style.height = "80px";
+      dateDiv.style.color = "white";
+      dateDiv.style.background = "black";
+      dateDiv.style.zIndex = 9999;
+      dateDiv.style.padding = "5px";
+      document.body.appendChild(dateDiv);
+      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p>`;
+    }, dayOfAccess);
 
     await page.screenshot({ path: "./public/google.png" });
 
@@ -84,20 +89,20 @@ router.post("/", async (req, res) => {
     // { waitUntil: "networkidle2" }
     await page.goto(links[0], { waitUntil: "load", timeout: 0 });
 
-    // await page.evaluate(dayOfAccess => {
-    //   let dateDiv = document.createElement("div");
-    //   dateDiv.style.position = "absolute";
-    //   dateDiv.style.top = 0;
-    //   dateDiv.style.left = "50%";
-    //   dateDiv.style.width = "50%";
-    //   dateDiv.style.height = "80px";
-    //   dateDiv.style.color = "white";
-    //   dateDiv.style.background = "black";
-    //   dateDiv.style.zIndex = 9999;
-    //   dateDiv.style.padding = "5px";
-    //   document.body.appendChild(dateDiv);
-    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    // }, dayOfAccess);
+    await page.evaluate(dayOfAccess => {
+      let dateDiv = document.createElement("div");
+      dateDiv.style.position = "absolute";
+      dateDiv.style.top = 0;
+      dateDiv.style.left = "50%";
+      dateDiv.style.width = "50%";
+      dateDiv.style.height = "80px";
+      dateDiv.style.color = "white";
+      dateDiv.style.background = "black";
+      dateDiv.style.zIndex = 9999;
+      dateDiv.style.padding = "5px";
+      document.body.appendChild(dateDiv);
+      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link1.png"
@@ -105,20 +110,20 @@ router.post("/", async (req, res) => {
     });
     await page.goto(links[1], { waitUntil: "load", timeout: 0 });
 
-    // await page.evaluate(dayOfAccess => {
-    //   let dateDiv = document.createElement("div");
-    //   dateDiv.style.position = "absolute";
-    //   dateDiv.style.top = 0;
-    //   dateDiv.style.left = "50%";
-    //   dateDiv.style.width = "50%";
-    //   dateDiv.style.height = "80px";
-    //   dateDiv.style.color = "white";
-    //   dateDiv.style.background = "black";
-    //   dateDiv.style.zIndex = 9999;
-    //   dateDiv.style.padding = "5px";
-    //   document.body.appendChild(dateDiv);
-    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    // }, dayOfAccess);
+    await page.evaluate(dayOfAccess => {
+      let dateDiv = document.createElement("div");
+      dateDiv.style.position = "absolute";
+      dateDiv.style.top = 0;
+      dateDiv.style.left = "50%";
+      dateDiv.style.width = "50%";
+      dateDiv.style.height = "80px";
+      dateDiv.style.color = "white";
+      dateDiv.style.background = "black";
+      dateDiv.style.zIndex = 9999;
+      dateDiv.style.padding = "5px";
+      document.body.appendChild(dateDiv);
+      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link2.png"
@@ -126,20 +131,20 @@ router.post("/", async (req, res) => {
     });
     await page.goto(links[2], { waitUntil: "load", timeout: 0 });
 
-    // await page.evaluate(dayOfAccess => {
-    //   let dateDiv = document.createElement("div");
-    //   dateDiv.style.position = "absolute";
-    //   dateDiv.style.top = 0;
-    //   dateDiv.style.left = "50%";
-    //   dateDiv.style.width = "50%";
-    //   dateDiv.style.height = "80px";
-    //   dateDiv.style.color = "white";
-    //   dateDiv.style.background = "black";
-    //   dateDiv.style.zIndex = 9999;
-    //   dateDiv.style.padding = "5px";
-    //   document.body.appendChild(dateDiv);
-    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>${location.href}</p>`;
-    // }, dayOfAccess);
+    await page.evaluate(dayOfAccess => {
+      let dateDiv = document.createElement("div");
+      dateDiv.style.position = "absolute";
+      dateDiv.style.top = 0;
+      dateDiv.style.left = "50%";
+      dateDiv.style.width = "50%";
+      dateDiv.style.height = "80px";
+      dateDiv.style.color = "white";
+      dateDiv.style.background = "black";
+      dateDiv.style.zIndex = 9999;
+      dateDiv.style.padding = "5px";
+      document.body.appendChild(dateDiv);
+      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>${location.href}</p>`;
+    }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link3.png"
@@ -147,20 +152,20 @@ router.post("/", async (req, res) => {
     });
     await page.goto(links[3], { waitUntil: "load", timeout: 0 });
 
-    // await page.evaluate(dayOfAccess => {
-    //   let dateDiv = document.createElement("div");
-    //   dateDiv.style.position = "absolute";
-    //   dateDiv.style.top = 0;
-    //   dateDiv.style.left = "50%";
-    //   dateDiv.style.width = "50%";
-    //   dateDiv.style.height = "80px";
-    //   dateDiv.style.color = "white";
-    //   dateDiv.style.background = "black";
-    //   dateDiv.style.zIndex = 9999;
-    //   dateDiv.style.padding = "5px";
-    //   document.body.appendChild(dateDiv);
-    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    // }, dayOfAccess);
+    await page.evaluate(dayOfAccess => {
+      let dateDiv = document.createElement("div");
+      dateDiv.style.position = "absolute";
+      dateDiv.style.top = 0;
+      dateDiv.style.left = "50%";
+      dateDiv.style.width = "50%";
+      dateDiv.style.height = "80px";
+      dateDiv.style.color = "white";
+      dateDiv.style.background = "black";
+      dateDiv.style.zIndex = 9999;
+      dateDiv.style.padding = "5px";
+      document.body.appendChild(dateDiv);
+      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link4.png"
@@ -168,20 +173,20 @@ router.post("/", async (req, res) => {
     });
     await page.goto(links[4], { waitUntil: "load", timeout: 0 });
 
-    // await page.evaluate(dayOfAccess => {
-    //   let dateDiv = document.createElement("div");
-    //   dateDiv.style.position = "absolute";
-    //   dateDiv.style.top = 0;
-    //   dateDiv.style.left = "50%";
-    //   dateDiv.style.width = "50%";
-    //   dateDiv.style.height = "80px";
-    //   dateDiv.style.color = "white";
-    //   dateDiv.style.background = "black";
-    //   dateDiv.style.zIndex = 9999;
-    //   dateDiv.style.padding = "5px";
-    //   document.body.appendChild(dateDiv);
-    //   dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
-    // }, dayOfAccess);
+    await page.evaluate(dayOfAccess => {
+      let dateDiv = document.createElement("div");
+      dateDiv.style.position = "absolute";
+      dateDiv.style.top = 0;
+      dateDiv.style.left = "50%";
+      dateDiv.style.width = "50%";
+      dateDiv.style.height = "80px";
+      dateDiv.style.color = "white";
+      dateDiv.style.background = "black";
+      dateDiv.style.zIndex = 9999;
+      dateDiv.style.padding = "5px";
+      document.body.appendChild(dateDiv);
+      dateDiv.innerHTML = `<p>Date: ${dayOfAccess}</p> <p>Address: ${location.href}</p>`;
+    }, dayOfAccess);
 
     await page.screenshot({
       path: "./public/link5.png"
