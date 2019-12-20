@@ -3,6 +3,39 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+}
+
+a {
+  color: #000;
+}
+
+a:hover {
+  opacity: 0.6;
+}
+
+nav {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 4rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+}
+
+nav ul {
+  position: absolute;
+  width: 50%;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  padding-top: 1.4rem;
+}
+
+nav ul li {
+  display: inline;
+  list-style: none;
+  margin: 1rem;
 }
 
 .title {
@@ -58,9 +91,14 @@ input[type="submit"]:hover {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+  width: 100%;
+  height: 40%;
 }
 
 .loading img {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
   width: 200px;
 }
 
@@ -192,4 +230,89 @@ input[type="submit"]:hover {
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.322);
   width: 80%;
+}
+
+/* Screenshot page */
+
+.link-list {
+  position: absolute;
+  width: 50%;
+  height: 30%;
+  top: 40%;
+  left: 20%;
+}
+
+.ss-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 20000px;
+}
+
+.dowjones {
+  position: absolute;
+  top: 0;
+  height: 1000px;
+  width: 100%;
+}
+.google {
+  position: absolute;
+  top: 1000px;
+  height: 1000px;
+  width: 100%;
+}
+
+.company-one {
+  position: absolute;
+  top: 2000px;
+  height: 1000px;
+  width: 100%;
+}
+.company-two {
+  position: absolute;
+  top: 3000px;
+  height: 1000px;
+  width: 100%;
+}
+.company-three {
+  position: absolute;
+  top: 4000px;
+  height: 1000px;
+  width: 100%;
+}
+.company-four {
+  position: absolute;
+  top: 5000px;
+  height: 1000px;
+  width: 100%;
+}
+.company-five {
+  position: absolute;
+  top: 6000px;
+  height: 1000px;
+  width: 100%;
+}
+.dowjones img,
+.google img,
+.company-one img,
+.company-two img,
+.company-three img,
+.company-four img,
+.company-five img {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  border: 1px solid black;
+}
+
+.loadingText {
+  position: absolute;
+
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }

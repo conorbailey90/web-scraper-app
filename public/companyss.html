@@ -3,15 +3,105 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./css/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <h1>Companies Screenshot</h1>
+    <h2 class="title">Companies Screenshot</h2>
 
-    <form action="/companyss" method="POST">
-      <input type="text" id="name" />
-      <input type="text" id="button" />
+    <nav>
+      <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./companyss.html">Company SS</a></li>
+      </ul>
+    </nav>
+
+    <form id="get-data" action="/companies/" method="POST">
+      <input type="text" id="name" size="80" placeholder="Enter company name" />
+      <input type="submit" id="button" />
     </form>
+
+    <div class="link-list"></div>
+    <div class="loading">
+      <img src="./loader.jpg" alt="loader" />
+      <p class="loadingText">This can take up to one minute...</p>
+    </div>
+
+    <div class="ss-container">
+      <div class="dowjones"></div>
+      <div class="google"></div>
+
+      <div class="company-one">
+        <div class="address-time-one"></div>
+      </div>
+
+      <div class="company-two">
+        <div class="address-time-two"></div>
+      </div>
+
+      <div class="company-three">
+        <div class="address-time-three"></div>
+      </div>
+
+      <div class="company-four">
+        <div class="address-time-four"></div>
+      </div>
+
+      <div class="company-five">
+        <div class="address-time-five"></div>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector("#get-data").addEventListener("submit", retrieve);
+      const linklist = document.querySelector(".link-list");
+      const dowjones = document.querySelector(".dowjones");
+      const google = document.querySelector(".google");
+      const companyOne = document.querySelector(".company-one");
+      const companyTwo = document.querySelector(".company-two");
+      const companyThree = document.querySelector(".company-three");
+      const companyFour = document.querySelector(".company-four");
+      const companyFive = document.querySelector(".company-five");
+      const loader = document.querySelector(".loading");
+
+      function retrieve(e) {
+        e.preventDefault();
+
+        let data = {
+          companyName: document.querySelector("#name").value
+        };
+        console.log(data);
+
+        let xhr = new XMLHttpRequest();
+        document.querySelector("#button").disabled = true;
+        loader.style.display = "block";
+
+        xhr.open("POST", "/companies/", true);
+
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onload = function() {
+          if (this.status == 200) {
+            // linklist.innerHTML = JSON.parse(this.responseText).links;
+            dowjones.innerHTML = `<img src="./companyss/dowjones.png">`;
+            google.innerHTML = `<img src="./companyss/google.png">`;
+            companyOne.innerHTML = `<img src="./companyss/link1.png">`;
+            companyTwo.innerHTML = `<img src="./companyss/link2.png">`;
+            companyThree.innerHTML = `<img src="./companyss/link3.png">`;
+            companyFour.innerHTML = `<img src="./companyss/link4.png">`;
+            companyFive.innerHTML = `<img src="./companyss/link5.png">`;
+            console.log(this.responseText);
+            loader.style.display = "none";
+          }
+        };
+
+        xhr.send(JSON.stringify(data));
+      }
+    </script>
   </body>
 </html>
