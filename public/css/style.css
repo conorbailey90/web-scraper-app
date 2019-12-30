@@ -241,7 +241,8 @@ input[type="submit"]:hover {
   border: 1px solid black;
 }
 
-#company {
+#company,
+#name {
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.322);
   width: 80%;

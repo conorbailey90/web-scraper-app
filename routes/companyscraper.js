@@ -39,7 +39,18 @@ router.post("/", async (req, res) => {
       ]
       // headless: false
     });
+
     const page = await browser.newPage();
+
+    await page.setRequestInterception(true);
+
+    page.on("request", req => {
+      if (req.resourceType() === "image") {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
 
     await page.goto(website, { waitUntil: "networkidle2" });
 
@@ -86,8 +97,9 @@ router.post("/", async (req, res) => {
       });
       return pageLinks;
     });
-    // { waitUntil: "networkidle2" }
-    await page.goto(links[0], { waitUntil: "load", timeout: 0 });
+
+    await page.goto(links[0]);
+    await page.waitFor(900);
 
     await page.evaluate(dayOfAccess => {
       let dateDiv = document.createElement("div");
@@ -106,9 +118,10 @@ router.post("/", async (req, res) => {
 
     await page.screenshot({
       path: "./public/link1.png"
-      // fullPage: true
     });
-    await page.goto(links[1], { waitUntil: "load", timeout: 0 });
+    await page.goto(links[1]);
+
+    await page.waitFor(900);
 
     await page.evaluate(dayOfAccess => {
       let dateDiv = document.createElement("div");
@@ -129,7 +142,9 @@ router.post("/", async (req, res) => {
       path: "./public/link2.png"
       // fullPage: true
     });
-    await page.goto(links[2], { waitUntil: "load", timeout: 0 });
+    await page.goto(links[2]);
+
+    await page.waitFor(900);
 
     await page.evaluate(dayOfAccess => {
       let dateDiv = document.createElement("div");
@@ -148,9 +163,10 @@ router.post("/", async (req, res) => {
 
     await page.screenshot({
       path: "./public/link3.png"
-      // fullPage: true
     });
-    await page.goto(links[3], { waitUntil: "load", timeout: 0 });
+    await page.goto(links[3]);
+
+    await page.waitFor(900);
 
     await page.evaluate(dayOfAccess => {
       let dateDiv = document.createElement("div");
@@ -171,7 +187,9 @@ router.post("/", async (req, res) => {
       path: "./public/link4.png"
       // fullPage: true
     });
-    await page.goto(links[4], { waitUntil: "load", timeout: 0 });
+    await page.goto(links[4]);
+
+    await page.waitFor(900);
 
     await page.evaluate(dayOfAccess => {
       let dateDiv = document.createElement("div");
