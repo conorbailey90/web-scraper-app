@@ -6,43 +6,60 @@
   text-decoration: none;
 }
 
+body {
+  background: #222222;
+}
+
 a {
-  color: #000;
+  color: #ffffff;
 }
 
 a:hover {
-  opacity: 0.6;
+  color: rgb(81, 156, 255);
 }
 
 nav {
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  width: 25%;
   top: 0;
   left: 0;
-  height: 4rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.13);
+  background: #161616;
+  color: white;
+  z-index: 9999;
+}
+
+.page-name {
+  position: absolute;
+  top: 3rem;
+  left: 35%;
+  color: rgb(81, 156, 255);
 }
 
 nav ul {
   position: absolute;
-  width: 50%;
-  top: 0;
-  left: 50%;
+  width: 100%;
+  top: 10%;
   height: 100%;
   padding-top: 1.4rem;
 }
 
 nav ul li {
-  display: inline;
+  /* display: inline; */
   list-style: none;
   margin: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
 }
 
 .title {
-  margin: 1rem;
+  margin-top: 3rem;
   letter-spacing: 1px;
   font-size: 1.2rem;
+  text-align: center;
   text-transform: uppercase;
+  color: rgb(81, 156, 255);
 }
 
 h3 {
@@ -54,33 +71,32 @@ h3 {
 #get-data {
   position: absolute;
   top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  left: 35%;
+  width: 55%;
   height: 5rem;
   padding: 1rem;
-  background: rgb(238, 238, 238);
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.212);
-  border: 1px solid rgba(0, 0, 0, 0.253);
+  background: #161616;
+  color: white;
+  /* border: 1px solid rgb(255, 255, 255); */
 }
 
 input[type="submit"] {
-  background-color: #5a5a5a;
+  background-color: #5f5f5f;
   border: none;
   padding: 0.2rem 0.5rem 0.2rem 0.5rem;
   margin: 0.5rem;
-  border-radius: 20%;
-  color: rgb(255, 255, 255);
+  /* border-radius: 20%; */
+  color: #ffffff;
   cursor: pointer;
 }
 
 input[type="submit"]:hover {
-  background-color: #383838;
+  background-color: #414141;
   border: none;
   padding: 0.2rem 0.5rem 0.2rem 0.5rem;
   margin: 0.5rem;
-  border-radius: 20%;
-  color: white;
+
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -105,9 +121,9 @@ input[type="submit"]:hover {
 .company {
   position: absolute;
   top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  left: 35%;
+  /* transform: translateX(-50%); */
+  width: 55%;
   height: 20%;
   font-size: 0.8rem;
   border: 1px solid rgb(255, 255, 255);
@@ -119,19 +135,17 @@ input[type="submit"]:hover {
 
 .company.visible {
   position: absolute;
-  color: rgb(0, 0, 0);
+  color: white;
   top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  left: 35%;
+  width: 55%;
   height: 20%;
-  background: rgb(238, 238, 238);
+  background: #161616;
   font-size: 0.8rem;
   border: 1px solid rgba(0, 0, 0, 0.253);
   padding: 0.5rem;
   overflow: hidden;
   display: flex;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.212);
 }
 
 .clear {
@@ -146,6 +160,7 @@ input[type="submit"]:hover {
   display: none;
   cursor: pointer;
   transition: all 0.5s;
+  color: white;
 }
 
 .refresh {
@@ -160,6 +175,7 @@ input[type="submit"]:hover {
   display: none;
   cursor: pointer;
   transition: all 0.5s;
+  color: white;
 }
 .clear:hover {
   position: absolute;
@@ -169,10 +185,11 @@ input[type="submit"]:hover {
   right: 0;
   width: 50px;
   height: 1.5rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.253);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.253);
   display: none;
   transition: all 0.5s;
   cursor: pointer;
+  color: white;
 }
 
 .copy {
@@ -187,6 +204,7 @@ input[type="submit"]:hover {
   display: none;
   cursor: pointer;
   transition: all 0.5s;
+  color: white;
 }
 .copy:hover {
   text-align: center;
@@ -195,10 +213,11 @@ input[type="submit"]:hover {
   right: 50px;
   width: 50px;
   height: 1.5rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.253);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.253);
   display: none;
   transition: all 0.5s;
   cursor: pointer;
+  color: white;
 }
 
 .buttons {
@@ -211,18 +230,20 @@ input[type="submit"]:hover {
 .ch-1 {
   position: absolute;
   width: 60%;
+  left: 25%;
   height: 140vh;
-  width: 100%;
-  top: 70vh;
+  width: 75%;
+  top: 60vh;
   padding: 3rem;
 }
 
 .ch-2 {
   position: absolute;
+  left: 25%;
   width: 60%;
   height: 100vh;
-  width: 100%;
-  top: 170vh;
+  width: 75%;
+  top: 160vh;
   padding: 3rem;
 }
 
@@ -277,38 +298,44 @@ input[type="submit"]:hover {
   position: absolute;
   top: 0px;
   height: 1000px;
-  width: 100%;
+  left: 25%;
+  width: 75%;
 }
 
 .company-one {
   position: absolute;
   top: 1000px;
   height: 1000px;
-  width: 100%;
+  left: 25%;
+  width: 75%;
 }
 .company-two {
   position: absolute;
   top: 2000px;
   height: 1000px;
-  width: 100%;
+  left: 25%;
+  width: 75%;
 }
 .company-three {
   position: absolute;
   top: 3000px;
   height: 1000px;
-  width: 100%;
+  left: 25%;
+  width: 75%;
 }
 .company-four {
   position: absolute;
   top: 4000px;
   height: 1000px;
-  width: 100%;
+  left: 25%;
+  width: 75%;
 }
 .company-five {
   position: absolute;
   top: 5000px;
   height: 1000px;
-  width: 100%;
+  left: 25%;
+  width: 75%;
 }
 .dowjones img,
 .google img,
@@ -325,10 +352,130 @@ input[type="submit"]:hover {
   border: 1px solid black;
 }
 
-.loadingText {
-  position: absolute;
+/* Loading animation */
 
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+.loading {
+  position: absolute;
+  left: 62.5%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+}
+
+.box {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: rgb(81, 156, 255);
+}
+
+.box:nth-child(1) {
+  animation: a1 2s infinite linear;
+}
+
+.box:nth-child(2) {
+  animation: a2 2s infinite linear;
+}
+
+@keyframes a1 {
+  0% {
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+  }
+  12.5% {
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 30px;
+  }
+  37.5% {
+    top: 0;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+  }
+  50% {
+    top: 0;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+  }
+  62.5% {
+    top: 0;
+    left: 30px;
+    width: 30px;
+    height: 60px;
+  }
+  75% {
+    top: 0;
+    left: 30px;
+    width: 30px;
+    height: 60px;
+  }
+  87.5% {
+    top: 30px;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+  }
+  100% {
+    top: 30px;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@keyframes a2 {
+  0% {
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+  }
+  12.5% {
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+  }
+  37.5% {
+    right: 0;
+    bottom: 0;
+    width: 60px;
+    height: 30px;
+  }
+  50% {
+    right: 30px;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+  }
+  62.5% {
+    right: 30px;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+  }
+  75% {
+    right: 30px;
+    bottom: 0;
+    width: 30px;
+    height: 60px;
+  }
+  87.5% {
+    right: 30px;
+    bottom: 0;
+    width: 30px;
+    height: 60px;
+  }
+  100% {
+    right: 30px;
+    bottom: 30px;
+    width: 30px;
+    height: 30px;
+  }
 }
