@@ -10,6 +10,10 @@ body {
   background: #222222;
 }
 
+.color-text {
+  color: rgb(81, 156, 255);
+}
+
 a {
   color: #ffffff;
 }
@@ -40,7 +44,7 @@ nav {
 nav ul {
   position: absolute;
   width: 100%;
-  top: 10%;
+  top: 15%;
   height: 100%;
   padding-top: 1.4rem;
 }
@@ -139,7 +143,7 @@ input[type="submit"]:hover {
   top: 30%;
   left: 35%;
   width: 55%;
-  height: 20%;
+  height: 50%;
   background: #161616;
   font-size: 0.8rem;
   border: 1px solid rgba(0, 0, 0, 0.253);

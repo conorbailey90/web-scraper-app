@@ -43,16 +43,39 @@
 
     <div class="company"></div>
 
+    <!-- <script>
+      document.querySelector('#get-data').addEventListener('submit', retrieve)
+
+      function retrieve(e){
+
+        e.preventDefault()
+        let companyNumber = document.querySelector('#company').value;
+
+        const url = `https://duedil.io/v4/company/gb/${companyNumber}.json`;
+
+        fetch(url, {
+          method: "GET",
+          headers: {
+            "X-Auth-Token": "e31e630750ee76f42f387798fca15f22"
+          }
+        })
+          .then(res => res.json())
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+              }
+
+      
+    </script> -->
+
 
     <script>
       document.querySelector("#get-data").addEventListener("submit", retrieve);
-      // const clearBtn = document.querySelector(".clear");
-      // const copyBtn = document.querySelector(".copy");
       const companyDetails = document.querySelector(".company");
       const loader = document.querySelector(".loading");
-
-      // clearBtn.addEventListener("click", clear);
-      // copyBtn.addEventListener("click", copyText);
 
       function retrieve(e) {
         e.preventDefault();
@@ -60,8 +83,7 @@
         let xhr = new XMLHttpRequest();
         document.querySelector(".button").disabled = true;
         companyDetails.classList.remove("visible");
-        // clearBtn.style.display = "none";
-        // copyBtn.style.display = "none";
+    
         loader.style.display = "block";
       
         let data = {
@@ -75,12 +97,29 @@
 
         xhr.onload = function() {
           if (this.status == 200) {
-            companyDetails.innerHTML = JSON.parse(this.responseText).details;
+            let details = JSON.parse(this.responseText);
+
+            let description = `<div><span class="color-text">Summary</span></br></br>
+                                ${details.name} is a ${details.officialStatus} company (${details.type}) registered in the ${details.incorporationCountry}
+                                at the following address: ${details.registeredAddress.fullAddress}. This entity was incorporated on ${details.incorporationDate}.
+                                The company registration number is ${details.companyId}.</br></br>
+
+                                <span class="color-text">Accounts</span></br></br>
+                                <span class="color-text">Filing type:</span>${details.accounts.filingType}</br>
+                                <span class="color-text">Latest accounts date:</span>${details.accounts.latestAccountsDate}</br>
+                                <span class="color-text">Turnover:</span>${details.financialSummary.turnover == null ? 'Not available' : 'GBP ' + details.financialSummary.turnover}</br>
+                                <span class="color-text">Post Tax profit:</span>${details.financialSummary.postTaxProfit == null ? 'Not available' : 'GBP ' + details.financialSummary.postTaxProfit}</br>
+                                <span class="color-text">Total assets:</span>${details.financialSummary.totalAssets == null ? 'Not available' : 'GBP ' + details.financialSummary.totalAssets}</br>
+                                <span class="color-text">Net assets:</span>${details.financialSummary.netAssets == null ? 'Not available' : 'GBP ' + details.financialSummary.netAssets}
+                                </div>`
+                                
+
+                                
+                                
+            companyDetails.innerHTML = description;
         
             console.log(this.responseText);
             loader.style.display = "none";
-            // clearBtn.style.display = "block";
-            // copyBtn.style.display = "block";
             companyDetails.classList.add("visible");
             document.querySelector(".button").disabled = false;
           }
@@ -88,22 +127,6 @@
 
         xhr.send(JSON.stringify(data));
       }
-
-      // function copyText(e) {
-      //   let textArea = document.createElement("textarea");
-      //   document.body.appendChild(textArea);
-      //   let copyText = document.querySelector(".company").innerText;
-      //   textArea.value = copyText;
-      //   let selector = textArea;
-      //   textArea.select();
-      //   document.execCommand("copy");
-      //   textArea.remove();
-      //   alert("Text copied to clipboard");
-      // }
-
-      // function clear() {
-      //   location.reload();
-      // }
     </script>
   </body>
 </html>
