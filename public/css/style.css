@@ -157,7 +157,7 @@ input[type="submit"]:hover {
   position: absolute;
   text-align: center;
   font-size: 0.8rem;
-  top: 51%;
+  top: 80%;
   right: 0%;
   width: 50px;
   height: 1.5rem;
@@ -165,6 +165,7 @@ input[type="submit"]:hover {
   cursor: pointer;
   transition: all 0.5s;
   color: white;
+  z-index: 9999;
 }
 
 .refresh {
@@ -185,7 +186,7 @@ input[type="submit"]:hover {
   position: absolute;
   text-align: center;
   font-size: 0.8rem;
-  top: 51%;
+  top: 80%;
   right: 0;
   width: 50px;
   height: 1.5rem;
@@ -201,7 +202,7 @@ input[type="submit"]:hover {
   position: absolute;
   text-align: center;
   font-size: 0.8rem;
-  top: 51%;
+  top: 80%;
   right: 50px;
   width: 50px;
   height: 1.5rem;
@@ -209,11 +210,12 @@ input[type="submit"]:hover {
   cursor: pointer;
   transition: all 0.5s;
   color: white;
+  z-index: 9999;
 }
 .copy:hover {
   text-align: center;
   font-size: 0.8rem;
-  top: 51%;
+  top: 80%;
   right: 50px;
   width: 50px;
   height: 1.5rem;
@@ -228,7 +230,7 @@ input[type="submit"]:hover {
   position: absolute;
   right: 10%;
   width: 80%;
-  top: 51%;
+  top: 75%;
 }
 
 .ch-1 {
@@ -237,7 +239,7 @@ input[type="submit"]:hover {
   left: 25%;
   height: 140vh;
   width: 75%;
-  top: 60vh;
+  top: 78vh;
   padding: 3rem;
 }
 

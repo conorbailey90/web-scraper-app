@@ -25,7 +25,7 @@
     <div class="page-name">Duedil Check</div>
 
     <form id="get-data" method="POST" action="/duedil/">
-      <label>Enter Company Name</label></br>
+      <label>Enter Company Registration Number</label></br>
       <input
         size="80"
         type="text"
@@ -99,18 +99,23 @@
           if (this.status == 200) {
             let details = JSON.parse(this.responseText);
 
+            function newDate(date){
+              return `${date.slice(8)}-${date.slice(5,7)}-${date.slice(0,4)}`
+            }
+
             let description = `<div><span class="color-text">Summary</span></br></br>
                                 ${details.name} is a ${details.officialStatus} company (${details.type}) registered in the ${details.incorporationCountry}
-                                at the following address: ${details.registeredAddress.fullAddress}. This entity was incorporated on ${details.incorporationDate}.
+                                at the following address: ${details.registeredAddress.fullAddress}. This entity was incorporated on ${newDate(details.incorporationDate)}.
                                 The company registration number is ${details.companyId}.</br></br>
 
-                                <span class="color-text">Accounts</span></br></br>
-                                <span class="color-text">Filing type:</span>${details.accounts.filingType}</br>
-                                <span class="color-text">Latest accounts date:</span>${details.accounts.latestAccountsDate}</br>
-                                <span class="color-text">Turnover:</span>${details.financialSummary.turnover == null ? 'Not available' : 'GBP ' + details.financialSummary.turnover}</br>
-                                <span class="color-text">Post Tax profit:</span>${details.financialSummary.postTaxProfit == null ? 'Not available' : 'GBP ' + details.financialSummary.postTaxProfit}</br>
-                                <span class="color-text">Total assets:</span>${details.financialSummary.totalAssets == null ? 'Not available' : 'GBP ' + details.financialSummary.totalAssets}</br>
-                                <span class="color-text">Net assets:</span>${details.financialSummary.netAssets == null ? 'Not available' : 'GBP ' + details.financialSummary.netAssets}
+                                <span class="color-text">Accounts&nbsp&nbsp&nbsp&nbsp</span></br></br>
+                                <span class="color-text">Filing type:&nbsp&nbsp&nbsp&nbsp</span>${details.accounts.filingType}</br>
+                                <span class="color-text">Latest accounts date:&nbsp&nbsp&nbsp&nbsp</span>${newDate(details.accounts.latestAccountsDate)}</br>
+                                <span class="color-text">Turnover:&nbsp&nbsp&nbsp&nbsp</span>${details.financialSummary.turnover == null ? 'Not available' : 'GBP ' + details.financialSummary.turnover}</br>
+                                <span class="color-text">Post Tax profit:&nbsp&nbsp&nbsp&nbsp</span>${details.financialSummary.postTaxProfit == null ? 'Not available' : 'GBP ' + details.financialSummary.postTaxProfit}</br>
+                                <span class="color-text">Total assets:&nbsp&nbsp&nbsp&nbsp</span>${details.financialSummary.totalAssets == null ? 'Not available' : 'GBP ' + details.financialSummary.totalAssets}</br>
+                                <span class="color-text">Net assets:&nbsp&nbsp&nbsp&nbsp</span>${details.financialSummary.netAssets == null ? 'Not available' : 'GBP ' + details.financialSummary.netAssets}</br>
+                                </br><span class="color-text">Data sourced from DueDil (https://www.duedil.com/)</span>
                                 </div>`
                                 
 
