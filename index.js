@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 app.use("/", require("./routes/scraper"));
 app.use("/companies/", require("./routes/companyscraper.js"));
 app.use("/duedil/", require("./routes/duedil"));
+app.use("/opencorporates/", require("./routes/opencorporates"));
 app.use("/companieshouse/", require("./routes/companieshouse"));
 
 // Allows the use of all files in the Static folder.

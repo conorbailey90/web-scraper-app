@@ -6,6 +6,15 @@
   text-decoration: none;
 }
 
+.small-text {
+  opacity: 0.3;
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 0.5rem;
+}
+
 body {
   background: #222222;
 }
@@ -33,6 +42,10 @@ nav {
   color: white;
   z-index: 9999;
 }
+
+/* .navigation.scrolled {
+  background: red;
+} */
 
 .page-name {
   position: absolute;
@@ -75,8 +88,8 @@ h3 {
 #get-data {
   position: absolute;
   top: 15%;
-  left: 35%;
-  width: 55%;
+  left: 30%;
+  width: 65%;
   height: 5rem;
   padding: 1rem;
   background: #161616;
@@ -125,9 +138,9 @@ input[type="submit"]:hover {
 .company {
   position: absolute;
   top: 30%;
-  left: 35%;
+  left: 30%;
   /* transform: translateX(-50%); */
-  width: 55%;
+  width: 65%;
   height: 20%;
   font-size: 0.8rem;
   border: 1px solid rgb(255, 255, 255);
@@ -141,31 +154,15 @@ input[type="submit"]:hover {
   position: absolute;
   color: white;
   top: 30%;
-  left: 35%;
-  width: 55%;
-  height: 50%;
+  left: 30%;
+  width: 65%;
+  height: 60%;
   background: #161616;
   font-size: 0.8rem;
   border: 1px solid rgba(0, 0, 0, 0.253);
   padding: 0.5rem;
-  overflow: hidden;
+  overflow: scroll;
   display: flex;
-}
-
-.clear {
-  /* display: inline; */
-  position: absolute;
-  text-align: center;
-  font-size: 0.8rem;
-  top: 80%;
-  right: 0%;
-  width: 50px;
-  height: 1.5rem;
-  display: none;
-  cursor: pointer;
-  transition: all 0.5s;
-  color: white;
-  z-index: 9999;
 }
 
 .refresh {
@@ -182,11 +179,27 @@ input[type="submit"]:hover {
   transition: all 0.5s;
   color: white;
 }
+
+.clear {
+  /* display: inline; */
+  position: absolute;
+  text-align: center;
+  font-size: 0.8rem;
+  top: 7vh;
+  right: 0%;
+  width: 50px;
+  height: 1.5rem;
+  display: none;
+  cursor: pointer;
+  transition: all 0.5s;
+  color: white;
+  z-index: 9999;
+}
 .clear:hover {
   position: absolute;
   text-align: center;
   font-size: 0.8rem;
-  top: 80%;
+  top: 7vh;
   right: 0;
   width: 50px;
   height: 1.5rem;
@@ -202,7 +215,7 @@ input[type="submit"]:hover {
   position: absolute;
   text-align: center;
   font-size: 0.8rem;
-  top: 80%;
+  top: 7vh;
   right: 50px;
   width: 50px;
   height: 1.5rem;
@@ -215,7 +228,7 @@ input[type="submit"]:hover {
 .copy:hover {
   text-align: center;
   font-size: 0.8rem;
-  top: 80%;
+  top: 7vh;
   right: 50px;
   width: 50px;
   height: 1.5rem;
@@ -228,9 +241,10 @@ input[type="submit"]:hover {
 
 .buttons {
   position: absolute;
-  right: 10%;
+  right: 5%;
   width: 80%;
-  top: 75%;
+  top: 85%;
+  z-index: 9999;
 }
 
 .ch-1 {
@@ -356,6 +370,17 @@ input[type="submit"]:hover {
   transform: translateX(-50%);
   width: 70%;
   border: 1px solid black;
+}
+/* OpenCorporates */
+
+.info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  overflow: scroll;
 }
 
 /* Loading animation */

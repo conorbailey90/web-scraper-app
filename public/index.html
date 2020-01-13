@@ -12,11 +12,12 @@
     <title>Company Analysis</title>
   </head>
   <body>
-    <nav>
+    <nav class="navigation">
       <h2 class="title">Company Analysis Tool</h2>
       <ul>
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./duedil">Duedil Check</a></li>
+        <li><a href="./index.html">Companies House</a></li>
+        <li><a href="./opencorporates.html">Open Corporates</a></li>
+        <li><a href="./duedil">Duedil</a></li>
         <!-- <li><a href="./companyss.html">Screenshot Tool</a></li> -->
       </ul>
     </nav>
@@ -49,6 +50,19 @@
     </div>
 
     <script>
+ window.onscroll = function(){
+        let scrolled = window.scrollY;
+        console.log(scrolled)
+        let navBar = document.querySelector('.navigation')
+        console.log(navBar)
+
+        if (scrolled > 10){
+          navBar.classList.add('scrolled')
+        }else{
+          navBar.classList.remove('scrolled')
+        }
+      }
+
       document.querySelector("#get-data").addEventListener("submit", retrieve);
       const clearBtn = document.querySelector(".clear");
       const copyBtn = document.querySelector(".copy");

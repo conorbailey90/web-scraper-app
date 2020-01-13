@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Company Analysis</title>
+  </head>
+  <body>
+    <nav>
+      <h2 class="title">Company Analysis Tool</h2>
+      <ul>
+        <li><a href="./index.html">Companies House</a></li>
+        <li><a href="./opencorporates.html">Open Corporates</a></li>
+        <li><a href="./duedil">Duedil</a></li>
+        <!-- <li><a href="./companyss.html">Screenshot Tool</a></li> -->
+      </ul>
+
+      <p class="small-text">Conor Bailey</p>
+    </nav>
+      
+
+
+    <div class="page-name"> Open Corporates Check</div>
+
+    <form id="get-data" method="POST" action="/opencorporates/">
+      <label>Enter Company Registration Number</label></br>
+      <input
+        size="80"
+        type="text"
+        id="company"
+        name="company"
+        placeholder="Enter company registration number here"
+      />
+      <select id="country" name="country">
+        <option value="GB">United Kingdom</option>
+        <option value="LU">Luxembourg</option>
+
+
+        
+      </select>
+      <input class="button" type="submit" />
+    </form>
+
+    <div class="loading">
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+    <div class="buttons">
+      <div class="copy">Copy</div>
+      <div class="clear">Clear</div>
+    </div>
+
+    <div class="company"></div>
+
+    <script>
+      document.querySelector("#get-data").addEventListener("submit", retrieve);
+      const companyDetails = document.querySelector(".company");
+      const loader = document.querySelector(".loading");
+      const clearBtn = document.querySelector(".clear");
+      const copyBtn = document.querySelector(".copy");
+      const buttons = document.querySelector('.buttons')
+
+      clearBtn.addEventListener("click", clear);
+      copyBtn.addEventListener("click", copyText);
+
+      function dateFormat(date){
+        return `${date.slice(-2)}/${date.slice(5,7)}/${date.slice(0,4)}`
+      }
+
+      function retrieve(e) {
+        e.preventDefault();
+
+        let xhr = new XMLHttpRequest();
+        document.querySelector(".button").disabled = true;
+        companyDetails.classList.remove("visible");
+    
+        loader.style.display = "block";
+      
+        let data = {
+          companyNumber: document.querySelector("#company").value,
+          country: document.querySelector('#country').value
+        };
+        console.log(data);
+
+        xhr.open("POST", "/opencorporates/", true);
+
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onload = function() {
+          if (this.status == 200) {
+            let details = JSON.parse(this.responseText);
+            clearBtn.style.display = "block";
+            copyBtn.style.display = "block";
+
+            console.log(this.responseText);
+
+            let company = details.results.company
+
+            let companyName = company.name;
+            let type = company.company_type
+            let jurisdiction = company.jurisdiction_code;
+            let companyNumber = company.company_number;
+            let registry = company.registry_url;
+            let status = company.current_status;
+            let incorporation = dateFormat(company.incorporation_date);
+            let address = company.registered_address_in_full;
+            let ocUrl = company.opencorporates_url;
+            let industry;
+            let pscs ='';
+            let financialSummary;
+            let financialSummarySource;
+            let profit;
+            let revenue;
+            let accountsDate;
+
+            // Ultimate ownership
+
+            company.ultimate_beneficial_owners.forEach(psc =>{
+              pscs += `${psc.ultimate_beneficial_owner.name} `})
+
+            if(company.ultimate_beneficial_owners.length == 0){
+              pscs = 'There are no ownership details available for this entity on Open Corporates.'
+            }else if (company.ultimate_beneficial_owners.length == 1) {
+              pscs += 'is registered as a signicant controller of this entity on Open Corporates.'
+            }else{
+              pscs += 'are registered signicant controllers of this entity on Open Corporates.'
+            }
+
+             // Industry
+            if (company.industry_codes.length > 0){
+              industry = `This entity is engaged in the following industry sector: ${company.industry_codes[0].industry_code.description}. This is a standard risk industry.`;
+            }else{
+              industry = `No industry details are available for this entity on Open Corporates.`
+            }
+
+            // Financial summary
+            if (company.financial_summary != null){
+              financialSummary = `<span class="color-text">Accounts source URL:</span> <a href="${company.financial_summary.source_url == null ? 'Not available' : company.financial_summary.source_url}">${company.financial_summary.source_url}</a></br>
+              <span class="color-text">Accounts date:</span> ${company.financial_summary.accounts_date == null ? 'Not available' : dateFormat(company.financial_summary.accounts_date)}</br>
+              <span class="color-text">Reported profit:</span> ${company.financial_summary.profit == null ? 'Not available' : company.financial_summary.profit}</br>
+              <span class="color-text">Reported revenue:</span> ${company.financial_summary.revenue == null ? 'Not available' : company.financial_summary.revenue }</br>
+              <span class="color-text">Current assets:</span> ${company.financial_summary.current_assets[0].value = null ? 'Not available' : 'GBP ' + company.financial_summary.current_assets[0].value}`
+            }else{
+              financialSummary = 'There is no information available regarding the financials for the this entity on Open Corporates.'
+            }
+
+          
+            let description = `<div><h2 class="color-text">Summary</h2></br>${companyName} (${companyNumber}) is a ${type} (${status}) with a registered address of: ${address} (low risk jurisdiction). This entity was 
+            incorporated on ${incorporation}. ${industry} ${pscs}</br></br><h2 class="color-text">Accounts</h2></br>${financialSummary}</br></br>
+            <span class ="color-text">Data sourced from Open Corporates:<span> <a href="${company.opencorporates_url}">${company.opencorporates_url}</a>
+            </br> <span class ="color-text">Registry URL:<span> <a href=${registry}>${registry}</a></div>`
+            
+            // ${financialSummary}, ${profit}, ${revenue}, ${accountsDate}, ${registry}, ${ocUrl}`
+            companyDetails.innerHTML = description;
+    
+        
+            console.log(this.responseText);
+            loader.style.display = "none";
+            companyDetails.classList.add("visible");
+            document.querySelector(".button").disabled = false;
+            }
+          else{
+            companyDetails.innerHTML =`<div><p>Something went wrong. Please ensure your company number is correct.</p></div>`;
+            loader.style.display = "none";
+            companyDetails.classList.add("visible");
+            document.querySelector(".button").disabled = false;
+          }
+        };
+        xhr.send(JSON.stringify(data));
+      }
+
+      function copyText(e) {
+        let textArea = document.createElement("textarea");
+        document.body.appendChild(textArea);
+        let copyText = document.querySelector(".company").innerText;
+        textArea.value = copyText;
+        let selector = textArea;
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+        alert("Text copied to clipboard");
+      }
+
+      function clear() {
+        location.reload();
+      }
+      
+      buttons.style.zIndex = 9999;
+    
+    </script>
+  </body>
+</html>
+

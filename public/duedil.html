@@ -15,11 +15,11 @@
     <nav>
       <h2 class="title">Company Analysis Tool</h2>
       <ul>
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./duedil">Duedil Check</a></li>
+        <li><a href="./index.html">Companies House</a></li>
+        <li><a href="./opencorporates.html">Open Corporates</a></li>
+        <li><a href="./duedil">Duedil</a></li>
         <!-- <li><a href="./companyss.html">Screenshot Tool</a></li> -->
       </ul>
-      
     </nav>
 
     <div class="page-name">Duedil Check</div>
@@ -31,7 +31,7 @@
         type="text"
         id="company"
         name="company"
-        placeholder="Enter URL here"
+        placeholder="Enter company registration number here"
       />
       <input class="button" type="submit" />
     </form>
@@ -40,42 +40,23 @@
       <div class="box"></div>
       <div class="box"></div>
     </div>
+    <div class="buttons">
+      <div class="copy">Copy</div>
+      <div class="clear">Clear</div>
+    </div>
 
     <div class="company"></div>
-
-    <!-- <script>
-      document.querySelector('#get-data').addEventListener('submit', retrieve)
-
-      function retrieve(e){
-
-        e.preventDefault()
-        let companyNumber = document.querySelector('#company').value;
-
-        const url = `https://duedil.io/v4/company/gb/${companyNumber}.json`;
-
-        fetch(url, {
-          method: "GET",
-          headers: {
-            "X-Auth-Token": "e31e630750ee76f42f387798fca15f22"
-          }
-        })
-          .then(res => res.json())
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-              }
-
-      
-    </script> -->
-
 
     <script>
       document.querySelector("#get-data").addEventListener("submit", retrieve);
       const companyDetails = document.querySelector(".company");
       const loader = document.querySelector(".loading");
+      const clearBtn = document.querySelector(".clear");
+      const copyBtn = document.querySelector(".copy");
+      const buttons = document.querySelector('.buttons')
+
+      clearBtn.addEventListener("click", clear);
+      copyBtn.addEventListener("click", copyText);
 
       function retrieve(e) {
         e.preventDefault();
@@ -98,12 +79,24 @@
         xhr.onload = function() {
           if (this.status == 200) {
             let details = JSON.parse(this.responseText);
+            clearBtn.style.display = "block";
+            copyBtn.style.display = "block";
 
+            console.log(this.responseText);
+
+            if(details.hasOwnProperty('httpCode') && details.httpCode == 404){
+              companyDetails.innerHTML =`<div class="info"><p>Something went wrong. Please ensure your company number is correct</p></div>`;
+            loader.style.display = "none";
+            companyDetails.classList.add("visible");
+            
+            document.querySelector(".button").disabled = false;
+            }else{
+            // Amend date format in the response
             function newDate(date){
               return `${date.slice(8)}-${date.slice(5,7)}-${date.slice(0,4)}`
             }
 
-            let description = `<div><span class="color-text">Summary</span></br></br>
+            let description = `<div class="info"><span class="color-text">Summary</span></br></br>
                                 ${details.name} is a ${details.officialStatus} company (${details.type}) registered in the ${details.incorporationCountry}
                                 at the following address: ${details.registeredAddress.fullAddress}. This entity was incorporated on ${newDate(details.incorporationDate)}.
                                 The company registration number is ${details.companyId}.</br></br>
@@ -116,14 +109,21 @@
                                 <span class="color-text">Total assets:&nbsp&nbsp&nbsp&nbsp</span>${details.financialSummary.totalAssets == null ? 'Not available' : 'GBP ' + details.financialSummary.totalAssets}</br>
                                 <span class="color-text">Net assets:&nbsp&nbsp&nbsp&nbsp</span>${details.financialSummary.netAssets == null ? 'Not available' : 'GBP ' + details.financialSummary.netAssets}</br>
                                 </br><span class="color-text">Data sourced from DueDil (https://www.duedil.com/)</span>
-                                </div>`
-                                
-
-                                
-                                
+                                </div>`  
+           
             companyDetails.innerHTML = description;
+            let companyInfo = document.querySelector('.info');
+            companyInfo.style.zIndex = 1;
         
             console.log(this.responseText);
+            loader.style.display = "none";
+            companyDetails.classList.add("visible");
+            document.querySelector(".button").disabled = false;
+            }
+
+            
+          }else{
+            companyDetails.innerHTML =`<div><p>Something went wrong. Please ensure your company number is correct.</p></div>`;
             loader.style.display = "none";
             companyDetails.classList.add("visible");
             document.querySelector(".button").disabled = false;
@@ -131,7 +131,29 @@
         };
 
         xhr.send(JSON.stringify(data));
+      
+      
+      
       }
+
+      function copyText(e) {
+        let textArea = document.createElement("textarea");
+        document.body.appendChild(textArea);
+        let copyText = document.querySelector(".company").innerText;
+        textArea.value = copyText;
+        let selector = textArea;
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+        alert("Text copied to clipboard");
+      }
+
+      function clear() {
+        location.reload();
+      }
+      
+      buttons.style.zIndex = 9999;
+    
     </script>
   </body>
 </html>
