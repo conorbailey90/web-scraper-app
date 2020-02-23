@@ -4,7 +4,7 @@ const puppeteer = require("puppeteer");
 const path = require("path");
 
 router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public", "index.html"));
+  res.sendFile(path.join(__dirname, "../public", "ch.html"));
 });
 
 router.post("/", async (req, res) => {
@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 
       await page.goto(website, { waitUntil: "networkidle2" });
 
-      await page.screenshot({ path: "./public/CompaniesHouse1.png" });
+      // await page.screenshot({ path: "./public/CompaniesHouse1.png" });
 
       let company = await page.evaluate(() => {
         let name = document.querySelector(
@@ -75,6 +75,7 @@ router.post("/", async (req, res) => {
             : Array.from(
                 document.getElementsByClassName("heading-medium")
               ).slice(1);
+        // remove first element as the is the section header
 
         let pscDetails = "";
 
@@ -103,18 +104,17 @@ router.post("/", async (req, res) => {
 
       company.psc = psc.pscDetails; // Add person with significant control to company object
 
-      await page.screenshot({ path: "./public/CompaniesHouse2.png" });
+      // await page.screenshot({ path: "./public/CompaniesHouse2.png" });
       await browser.close();
 
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
       is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. ${company.natureOfBusiness}. ${company.psc}`;
       // res.send(details);
       res.json({ details });
-
-      // Companycheck website
-    } else if (website.length <= 10) {
+    } else if (website.length < 10) {
+      // const browser = await puppeteer.launch({ headless: false });
       const browser = await puppeteer.launch({
-        defaultViewport: { width: 1920, height: 1280 },
+        defaultViewport: { width: 1920, height: 1500 },
         args: ["--no-sandbox"]
       });
       const page = await browser.newPage();
@@ -123,7 +123,7 @@ router.post("/", async (req, res) => {
         waitUntil: "networkidle2"
       });
 
-      await page.screenshot({ path: "./public/CompaniesHouse1.png" });
+      // await page.screenshot({ path: "./public/CompaniesHouse1.png" });
 
       let company = await page.evaluate(() => {
         let name = document.querySelector(
@@ -175,6 +175,7 @@ router.post("/", async (req, res) => {
             : Array.from(
                 document.getElementsByClassName("heading-medium")
               ).slice(1);
+        // remove first element as the is the section header
 
         let pscDetails = "";
 
@@ -203,7 +204,7 @@ router.post("/", async (req, res) => {
 
       company.psc = psc.pscDetails; // Add person with significant control to company object
 
-      await page.screenshot({ path: "./public/CompaniesHouse2.png" });
+      // await page.screenshot({ path: "./public/CompaniesHouse2.png" });
       await browser.close();
 
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status

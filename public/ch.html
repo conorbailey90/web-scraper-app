@@ -2,19 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/styleHome.css" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
     <script
       src="https://kit.fontawesome.com/7577eba8ec.js"
       crossorigin="anonymous"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Company Analysis Tool</title>
+    <title>Companies House</title>
   </head>
   <body>
     <nav class="navigation">
@@ -41,76 +41,82 @@
         </div>
       </div>
 
-      <h4 class="news-title">Financial Crime News</h4>
-
-      <div class="news-container">
-        <ul class="news"></ul>
-      </div>
+      <form class="get-data" action="/companies" method="POST">
+        <label>Companies House</label></br>
+        <input
+          type="text"
+          id="company"
+          name="company"
+          placeholder="Enter URL here"
+        />
+        <input class="button-1" type="submit" />
+      </form>
 
       <div class="loading"></div>
-    </div>
 
-    <script>
-      const apiKey = "cc3bf21c2493409384397d4ec4357b90";
-      const dateTime = document.querySelector(".time");
-      const newsList = document.querySelector(".news");
-      const loading = document.querySelector(".loading");
-      const newsContainer = document.querySelector(".news-container");
-      let url = `http://newsapi.org/v2/everything?q="financial crime"&apiKey=${apiKey}`;
+      <container class="ch-container">
+        <p>
+          Enter Companies House URL or UK company registration number in the
+          form.
+        </p>
+      </container>
 
-      function addZero(n) {
-        return n < 10 ? `0${n}` : n;
-      }
-      document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(() => {
-          const p5Canvas = document.querySelector(".p5Canvas");
-          p5Canvas.style.display = "block";
-        }, 500);
-      });
+      <script>
+        const dateTime = document.querySelector(".time");
+        const chContainer = document.querySelector(".ch-container");
+        let chForm = document.querySelector(".get-data");
+        let companyNumber = document.querySelector("#company");
+        const loading = document.querySelector('.loading');
+        
+        
 
-      function getTime() {
-        const time = new Date();
-        dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
-          time.getMonth() + 1
-        )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
-          time.getMinutes()
-        )}:${addZero(time.getSeconds())}`;
+        chForm.addEventListener("submit", e => {
+          const p5Canvas = document.querySelector('.p5Canvas');
+          e.preventDefault();
 
-        setTimeout(getTime, 1000);
-      }
+          if (companyNumber.value == ''){
+            chContainer.innerHTML = '<p class="warning">Input form is empty.</p>'
+          return
+        }
+          document.querySelector(".button-1").disabled = true;
+          p5Canvas.style.display = 'block'
+          chContainer.innerHTML = '<p>Fetching data.</p>'
 
-      getTime();
-
-      fetch(url)
-        .then(response => {
-          if (response.status !== 200) {
-            console.log(
-              "Looks like there was a problem. Status Code: " + response.status
-            );
-            return;
-          }
-
-          // Examine the text in the response
-          response.json().then(data => {
-            console.log(data.articles);
-            data.articles.forEach(article => {
-              let li = document.createElement("li");
-              let a = document.createElement("a");
-              a.setAttribute("href", `${article.url}`);
-              a.setAttribute("target", "_blank");
-              a.textContent = `${article.title}`;
-              li.appendChild(a);
-              newsList.appendChild(li);
-            });
-          });
-        })
-        .catch(err => {
-          console.log("Fetch Error :-S", err);
+          let data = { URL: companyNumber.value };
+          const xhr = new XMLHttpRequest();
+          console.log(data);
+          xhr.open("POST", "/companies", true);
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.onload = function() {
+            console.log(JSON.parse(this.responseText));
+            chContainer.innerHTML = JSON.parse(this.responseText).details;
+            document.querySelector(".button-1").disabled = false;
+            p5Canvas.style.display = 'none'
+          };
+          xhr.send(JSON.stringify(data));
         });
 
-      // Loading particles
+        function addZero(n) {
+          return n < 10 ? `0${n}` : n;
+        }
 
-      const particles = [];
+        function getTime() {
+          const time = new Date();
+          dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
+            time.getMonth() + 1
+          )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
+            time.getMinutes()
+          )}:${addZero(time.getSeconds())}`;
+
+          setTimeout(getTime, 1000);
+        }
+
+        getTime();
+
+
+        // Loading particles
+
+        const particles = [];
 
       function setup() {
         createCanvas(loading.offsetWidth, loading.offsetHeight);
@@ -147,7 +153,7 @@
         // Draw single particle
         draw() {
           noStroke();
-          fill("rgba(255,255,255,0.3)");
+          fill("rgba(255,255,255,0.5)");
           circle(this.pos.x, this.pos.y, this.size);
         }
 
@@ -172,12 +178,13 @@
             );
 
             if (d < 120) {
-              stroke("rgba(255,255,255,0.04)");
+              stroke("rgba(255,255,255,0.08)");
               line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
             }
           });
         }
       }
-    </script>
+      </script>
+    </div>
   </body>
 </html>

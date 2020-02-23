@@ -14,8 +14,9 @@ app.use(
 app.use(bodyParser.json());
 
 // Routes
-app.use("/", require("./routes/scraper"));
-app.use("/companies/", require("./routes/companyscraper.js"));
+// app.use("/", require("./routes/scraper"));
+app.use("/", require("./routes/home"));
+app.use("/companies/", require("./routes/chscraper.js"));
 app.use("/duedil/", require("./routes/duedil"));
 app.use("/opencorporates/", require("./routes/opencorporates"));
 app.use("/companieshouse/", require("./routes/companieshouse"));

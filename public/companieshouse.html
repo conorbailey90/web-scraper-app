@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Company Analysis</title>
+  </head>
+  <body>
+    <nav class="navigation">
+      <h2 class="title">Company Analysis Tool</h2>
+      <ul>
+        <li><a href="./index.html">Companies House</a></li>
+        <li><a href="./opencorporates.html">Open Corporates</a></li>
+        <li><a href="./duedil">Duedil</a></li>
+        <!-- <li><a href="./companyss.html">Screenshot Tool</a></li> -->
+      </ul>
+      <p class="small-text">Conor Bailey</p>
+    </nav>
+
+    <div class="page-name">Companies House Check</div>
+
+    <form id="get-data" method="POST" action="/">
+      <label>Enter Company Number (UK) or URL (Companies House)</label></br>
+      <input
+        size="80"
+        type="text"
+        id="company"
+        name="company"
+        placeholder="Enter URL here"
+      />
+      <input class="button" type="submit" />
+    </form>
+
+    <div class="loading">
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+
+    <div class="company"></div>
+    <div class="ch-1"></div>
+    <div class="ch-2"></div>
+    <div class="buttons">
+      <div class="copy">Copy</div>
+      <div class="clear">Clear</div>
+    </div>
+
+    <script>
+ window.onscroll = function(){
+        let scrolled = window.scrollY;
+        console.log(scrolled)
+        let navBar = document.querySelector('.navigation')
+        console.log(navBar)
+
+        if (scrolled > 10){
+          navBar.classList.add('scrolled')
+        }else{
+          navBar.classList.remove('scrolled')
+        }
+      }
+
+      document.querySelector("#get-data").addEventListener("submit", retrieve);
+      const clearBtn = document.querySelector(".clear");
+      const copyBtn = document.querySelector(".copy");
+      const companyDetails = document.querySelector(".company");
+      const chOne = document.querySelector(".ch-1");
+      const chTwo = document.querySelector(".ch-2");
+      const loader = document.querySelector(".loading");
+
+      clearBtn.addEventListener("click", clear);
+      copyBtn.addEventListener("click", copyText);
+
+      function retrieve(e) {
+        e.preventDefault();
+
+        let xhr = new XMLHttpRequest();
+        document.querySelector(".button").disabled = true;
+        companyDetails.classList.remove("visible");
+        clearBtn.style.display = "none";
+        copyBtn.style.display = "none";
+        loader.style.display = "block";
+        chOne.innerHTML = "";
+        chTwo.innerHTML = "";
+
+        let data = {
+          URL: document.querySelector("#company").value
+        };
+        console.log(data);
+
+        xhr.open("POST", "/", true);
+
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onload = function() {
+          if (this.status == 200) {
+            companyDetails.innerHTML = JSON.parse(this.responseText).details;
+            if (
+              companyDetails.innerHTML ==
+                "Something went wrong! Please ensure your URL is correct and try again." ||
+              companyDetails.innerHTML == "Not a valid website"
+            ) {
+              chOne.innerHTML = "";
+              chTwo.innerHTML = "";
+            } else {
+              chOne.innerHTML = `<img src="./CompaniesHouse1.png">`;
+              chTwo.innerHTML = `<img src="./CompaniesHouse2.png">`;
+            }
+
+            console.log(this.responseText);
+            loader.style.display = "none";
+            clearBtn.style.display = "block";
+            copyBtn.style.display = "block";
+            companyDetails.classList.add("visible");
+            document.querySelector(".button").disabled = false;
+          }
+        };
+
+        xhr.send(JSON.stringify(data));
+      }
+
+      function copyText(e) {
+        let textArea = document.createElement("textarea");
+        document.body.appendChild(textArea);
+        let copyText = document.querySelector(".company").innerText;
+        textArea.value = copyText;
+        let selector = textArea;
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+        alert("Text copied to clipboard");
+      }
+
+      function clear() {
+        location.reload();
+      }
+    </script>
+
+  </body>
+</html>

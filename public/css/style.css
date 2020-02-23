@@ -4,13 +4,14 @@
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
   text-decoration: none;
+  color: white;
 }
 
 .small-text {
   opacity: 0.3;
   position: absolute;
   bottom: 0.5rem;
-  left: 50%;
+  left: 10%;
   transform: translate(-50%);
   font-size: 0.5rem;
 }
@@ -29,6 +30,37 @@ a {
 
 a:hover {
   color: rgb(81, 156, 255);
+}
+
+.news-container {
+  position: absolute;
+  left: 30%;
+  top: 40%;
+  width: 65%;
+  height: 200vh;
+}
+
+.news {
+  list-style: none;
+  font-size: 0.8rem;
+  line-height: 200%;
+}
+
+.news-div {
+  width: 50%;
+  height: 30%;
+  background: #222222;
+  margin: 3rem;
+  border-radius: 2px;
+  box-shadow: #262626 0px 0px 2px 2px, #000000 4px 4px 8px,
+    #4d4d4d -4px -4px 8px;
+}
+
+.news-div img {
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 nav {
@@ -71,7 +103,7 @@ nav ul li {
 }
 
 .title {
-  margin-top: 3rem;
+  margin-top: 2rem;
   letter-spacing: 1px;
   font-size: 1.2rem;
   text-align: center;
@@ -79,10 +111,10 @@ nav ul li {
   color: rgb(81, 156, 255);
 }
 
-h3 {
+.newsTitle {
   position: absolute;
-  left: 10%;
-  top: 10%;
+  left: 30%;
+  top: 0%;
 }
 
 #get-data {

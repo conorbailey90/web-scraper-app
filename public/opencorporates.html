@@ -2,72 +2,95 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styleHome.css" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    <script
+      src="https://kit.fontawesome.com/7577eba8ec.js"
+      crossorigin="anonymous"
+    ></script>
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Company Analysis</title>
+    <title>Open Corporates</title>
   </head>
   <body>
-    <nav>
+    <nav class="navigation">
       <h2 class="title">Company Analysis Tool</h2>
       <ul>
         <li><a href="./index.html">Companies House</a></li>
         <li><a href="./opencorporates.html">Open Corporates</a></li>
         <li><a href="./duedil">Duedil</a></li>
-        <!-- <li><a href="./companyss.html">Screenshot Tool</a></li> -->
       </ul>
-
-      <p class="small-text">Conor Bailey</p>
     </nav>
-      
+    <div class="container">
+      <div class="cat"><h4>Company Analysis Tool</h4></div>
+      <div class="nav-links">
+        <div class="home-link">
+          <a href="./index.html"><i class="fas fa-home"></i></a>
+        </div>
+        <div class="ch-link"><a href="./ch.html">Companies House</a></div>
+        <div class="oc-link">
+          <a href="./opencorporates.html">Open Corporates</a>
+        </div>
+        <div class="dd-link"><a href="./duedil">Duedil</a></div>
+        <div class="date-time">
+          <p class="time"></p>
+        </div>
+      </div>
 
-
-    <div class="page-name"> Open Corporates Check</div>
-
-    <form id="get-data" method="POST" action="/opencorporates/">
-      <label>Enter Company Registration Number</label></br>
-      <input
-        size="80"
-        type="text"
-        id="company"
-        name="company"
-        placeholder="Enter company registration number here"
-      />
-      <select id="country" name="country">
-        <option value="GB">United Kingdom</option>
-        <option value="LU">Luxembourg</option>
-
-
+      <form class="get-data" method="POST" action="/opencorporates/">
+        <label>Open Corporates</label></br>
+        <input
+          type="text"
+          id="company"
+          name="company"
+          placeholder="Enter company registration number here"
+        />
+        <select id="country" name="country">
+          <option value="GB">United Kingdom</option>
+          <option value="LU">Luxembourg</option>
         
-      </select>
-      <input class="button" type="submit" />
-    </form>
+        </select>
+        <input class="button" type="submit" />
+      </form>
 
-    <div class="loading">
-      <div class="box"></div>
-      <div class="box"></div>
-    </div>
-    <div class="buttons">
-      <div class="copy">Copy</div>
-      <div class="clear">Clear</div>
-    </div>
+      <container class="loading"></container>
 
-    <div class="company"></div>
+      <container class="oc-container">
+        <p>
+          Enter UK company registration number in the
+          form.
+        </p>
+      </container>
+
+   
 
     <script>
-      document.querySelector("#get-data").addEventListener("submit", retrieve);
-      const companyDetails = document.querySelector(".company");
-      const loader = document.querySelector(".loading");
-      const clearBtn = document.querySelector(".clear");
-      const copyBtn = document.querySelector(".copy");
-      const buttons = document.querySelector('.buttons')
 
-      clearBtn.addEventListener("click", clear);
-      copyBtn.addEventListener("click", copyText);
+      const companyDetails = document.querySelector(".oc-container");
+      const dateTime = document.querySelector('.time')
+      document.querySelector(".get-data").addEventListener("submit", retrieve);
+      const inputValue = document.querySelector('#company')
+      const loading = document.querySelector('.loading')
+    
+      function addZero(n) {
+                return n < 10 ? `0${n}` : n;
+              }
+      function getTime() {
+              const time = new Date();
+              dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
+                time.getMonth() + 1
+              )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
+                time.getMinutes()
+              )}:${addZero(time.getSeconds())}`;
+
+              setTimeout(getTime, 1000);
+            }
+
+      getTime();
 
       function dateFormat(date){
         return `${date.slice(-2)}/${date.slice(5,7)}/${date.slice(0,4)}`
@@ -76,11 +99,18 @@
       function retrieve(e) {
         e.preventDefault();
 
+        if (inputValue.value == ''){
+          companyDetails.innerHTML = '<p class="warning">Input form is empty.</p>'
+          return
+        }
+        const p5Canvas = document.querySelector('.p5Canvas');
+        p5Canvas.style.display = 'block'
+
         let xhr = new XMLHttpRequest();
         document.querySelector(".button").disabled = true;
-        companyDetails.classList.remove("visible");
-    
-        loader.style.display = "block";
+        companyDetails.innerHTML = '<p>Fetching data.</p>'
+        
+
       
         let data = {
           companyNumber: document.querySelector("#company").value,
@@ -95,8 +125,7 @@
         xhr.onload = function() {
           if (this.status == 200) {
             let details = JSON.parse(this.responseText);
-            clearBtn.style.display = "block";
-            copyBtn.style.display = "block";
+           
 
             console.log(this.responseText);
 
@@ -157,18 +186,14 @@
             </br> <span class ="color-text">Registry URL:<span> <a href=${registry}>${registry}</a></div>`
             
             // ${financialSummary}, ${profit}, ${revenue}, ${accountsDate}, ${registry}, ${ocUrl}`
+           
+
             companyDetails.innerHTML = description;
-    
-        
-            console.log(this.responseText);
-            loader.style.display = "none";
-            companyDetails.classList.add("visible");
+            p5Canvas.style.display = 'none'
             document.querySelector(".button").disabled = false;
             }
           else{
             companyDetails.innerHTML =`<div><p>Something went wrong. Please ensure your company number is correct.</p></div>`;
-            loader.style.display = "none";
-            companyDetails.classList.add("visible");
             document.querySelector(".button").disabled = false;
           }
         };
@@ -190,9 +215,78 @@
       function clear() {
         location.reload();
       }
-      
-      buttons.style.zIndex = 9999;
-    
+
+         // Loading particles
+
+         const particles = [];
+
+function setup() {
+  createCanvas(loading.offsetWidth, loading.offsetHeight);
+  const particlesLength = Math.floor(loading.offsetWidth / 10);
+  console.log(particlesLength);
+  for (let i = 0; i < particlesLength; i++) {
+    particles.push(new Particle());
+  }
+}
+
+function draw() {
+  background("#161616");
+  particles.forEach((particle, index) => {
+    particle.update();
+    particle.draw();
+    particle.checkParticles(particles.slice(index));
+  });
+}
+
+class Particle {
+  constructor() {
+    // Position
+    this.pos = createVector(random(width), random(height));
+    // Velocity
+    this.vel = createVector(random(-1, 1), random(-1, 1));
+    // Size
+    this.size = 2;
+  }
+  // Update movement by adding velocity
+  update() {
+    this.pos.add(this.vel);
+    this.edges();
+  }
+  // Draw single particle
+  draw() {
+    noStroke();
+    fill("rgba(255,255,255,0.5)");
+    circle(this.pos.x, this.pos.y, this.size);
+  }
+
+  // Detect edges
+  edges() {
+    if (this.pos.x < 0 || this.pos.x > width) {
+      this.vel.x *= -1;
+    }
+    if (this.pos.y < 0 || this.pos.y > height) {
+      this.vel.y *= -1;
+    }
+  }
+
+  // Connect particles
+  checkParticles(particles) {
+    particles.forEach(particle => {
+      const d = dist(
+        this.pos.x,
+        this.pos.y,
+        particle.pos.x,
+        particle.pos.y
+      );
+
+      if (d < 120) {
+        stroke("rgba(255,255,255,0.08)");
+        line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
+      }
+    });
+  }
+}
+
     </script>
   </body>
 </html>
