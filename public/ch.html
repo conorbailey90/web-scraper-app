@@ -54,6 +54,11 @@
 
       <div class="loading"></div>
 
+      <div class="button-container">
+          <div class="copy">Copy</div>
+          <div class="clear">Clear</div>
+        </div>
+
       <container class="ch-container">
         <p>
           Enter Companies House URL or UK company registration number in the
@@ -67,6 +72,11 @@
         let chForm = document.querySelector(".get-data");
         let companyNumber = document.querySelector("#company");
         const loading = document.querySelector('.loading');
+        const copyBtn = document.querySelector('.copy')
+        const clearBtn = document.querySelector('.clear')
+
+        copyBtn.addEventListener('click', copyText)
+        clearBtn.addEventListener('click', clear)
         
         
 
@@ -112,6 +122,22 @@
         }
 
         getTime();
+
+      function copyText(e) {
+        let textArea = document.createElement("textarea");
+        document.body.appendChild(textArea);
+        let copyText = document.querySelector(".ch-container").innerText;
+        textArea.value = copyText;
+        let selector = textArea;
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+        alert("Text copied to clipboard");
+      }
+
+      function clear() {
+        location.reload();
+      }
 
 
         // Loading particles

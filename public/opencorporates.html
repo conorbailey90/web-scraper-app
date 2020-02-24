@@ -59,6 +59,11 @@
 
       <container class="loading"></container>
 
+      <div class="button-container">
+          <div class="copy">Copy</div>
+          <div class="clear">Clear</div>
+        </div>
+
       <container class="oc-container">
         <p>
           Enter UK company registration number in the
@@ -71,10 +76,16 @@
     <script>
 
       const companyDetails = document.querySelector(".oc-container");
-      const dateTime = document.querySelector('.time')
+      const dateTime = document.querySelector('.time');
       document.querySelector(".get-data").addEventListener("submit", retrieve);
-      const inputValue = document.querySelector('#company')
-      const loading = document.querySelector('.loading')
+      const inputValue = document.querySelector('#company');
+      const loading = document.querySelector('.loading');
+      const copyBtn = document.querySelector('.copy');
+      const clearBtn = document.querySelector('.clear');
+
+
+      copyBtn.addEventListener('click', copyText)
+      clearBtn.addEventListener('click', clear)
     
       function addZero(n) {
                 return n < 10 ? `0${n}` : n;
@@ -203,7 +214,7 @@
       function copyText(e) {
         let textArea = document.createElement("textarea");
         document.body.appendChild(textArea);
-        let copyText = document.querySelector(".company").innerText;
+        let copyText = document.querySelector(".oc-container").innerText;
         textArea.value = copyText;
         let selector = textArea;
         textArea.select();

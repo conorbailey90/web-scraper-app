@@ -208,13 +208,12 @@ nav {
 .ch-container {
   position: absolute;
   padding: 1rem;
-  overflow: scroll;
-  /* line-height: 200%; */
+  overflow: hidden;
   top: 20%;
   left: 40%;
   width: 58%;
   font-size: 0.7rem;
-  height: 55%;
+  height: 65%;
   border-radius: 20px;
   box-shadow: inset #000000 2px 2px 6px, inset #2e2e2e -2px -2px 6px;
 }
@@ -223,12 +222,11 @@ nav {
   position: absolute;
   padding: 1rem;
   overflow: scroll;
-  /* line-height: 200%; */
   top: 20%;
   left: 40%;
   width: 58%;
   font-size: 0.7rem;
-  height: 75%;
+  height: 65%;
   border-radius: 20px;
   box-shadow: inset #000000 2px 2px 6px, inset #2e2e2e -2px -2px 6px;
 }
@@ -240,7 +238,7 @@ nav {
   left: 40%;
   width: 58%;
   font-size: 0.7rem;
-  height: 75%;
+  height: 65%;
   border-radius: 20px;
   box-shadow: inset #000000 2px 2px 6px, inset #2e2e2e -2px -2px 6px;
 }
@@ -260,4 +258,67 @@ nav {
   left: 10%;
   width: 30%;
   height: 30%;
+}
+
+.button-container {
+  position: absolute;
+  display: flex;
+  top: 88%;
+  left: 40%;
+  width: 55%;
+  height: 2rem;
+}
+
+.copy {
+  position: absolute;
+  padding: 0.3rem;
+  left: 5%;
+  width: 40%;
+  height: 2rem;
+  font-size: 0.8rem;
+  text-align: center;
+  border-radius: 20px;
+  box-shadow: #000000 2px 2px 8px, #2e2e2e -2px -2px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.clear {
+  position: absolute;
+  padding: 0.3rem;
+  width: 40%;
+  left: 60%;
+  height: 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  box-shadow: #000000 2px 2px 8px, #2e2e2e -2px -2px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.copy:hover {
+  position: absolute;
+  padding: 0.3rem;
+  left: 5%;
+  width: 40%;
+  height: 2rem;
+  font-size: 0.8rem;
+  text-align: center;
+  border-radius: 20px;
+  box-shadow: #000000 1px 1px 6px, #2e2e2e -1px -1px 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.clear:hover {
+  position: absolute;
+  padding: 0.3rem;
+  width: 40%;
+  left: 60%;
+  height: 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  box-shadow: #000000 1px 1px 6px, #2e2e2e -1px -1px 6px;
+  cursor: pointer;
+  transition: 0.3s;
 }
