@@ -2,11 +2,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: #161616;
   color: #fff;
   font-family: "Montserrat", sans-serif;
   text-decoration: none;
   list-style: none;
+  background: #161616;
+}
+
+ul,
+li {
+  background: transparent;
 }
 
 p.warning {
@@ -15,6 +20,7 @@ p.warning {
 
 a,
 i {
+  background: transparent;
   /* color: #d0d0d0d0; */
 }
 
@@ -89,7 +95,7 @@ nav {
   font-size: 0.7rem;
   height: 75%;
   border-radius: 20px;
-  box-shadow: #2e2e2e 2px 2px 8px, #000000 -2px -2px 8px;
+  box-shadow: inset #000000 2px 2px 5px, inset #2e2e2e -2px -2px 5px;
 }
 
 .news-title {
