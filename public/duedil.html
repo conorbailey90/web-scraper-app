@@ -219,7 +219,7 @@
         // Draw single particle
         draw() {
           noStroke();
-          fill("rgba(255,255,255,0.5)");
+          fill("rgba(255,255,255,0.3)");
           circle(this.pos.x, this.pos.y, this.size);
         }
 
@@ -244,7 +244,7 @@
             );
 
             if (d < 120) {
-              stroke("rgba(255,255,255,0.08)");
+              stroke("rgba(255,255,255,0.04)");
               line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
             }
           });

@@ -87,7 +87,7 @@ nav {
 .news-container {
   position: absolute;
   padding: 1rem;
-  overflow: scroll;
+  overflow: hidden;
   line-height: 200%;
   top: 20%;
   left: 40%;
@@ -227,7 +227,7 @@ nav {
 .dd-container {
   position: absolute;
   padding: 1rem;
-  overflow: scroll;
+  overflow: hidden;
   top: 20%;
   left: 40%;
   width: 58%;
@@ -239,7 +239,7 @@ nav {
 .oc-container {
   position: absolute;
   padding: 1rem;
-  overflow: scroll;
+  overflow: hidden;
   top: 20%;
   left: 40%;
   width: 58%;
