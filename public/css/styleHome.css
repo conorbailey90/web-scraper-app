@@ -253,14 +253,14 @@ nav {
   position: absolute;
   top: 60%;
   left: 5%;
-  width: 30%;
-  height: 30%;
+  width: 25%;
+  height: 20%;
 }
 
 .p5Canvas {
   position: absolute;
   display: none;
-  top: 60%;
+  top: 65%;
   left: 10%;
   width: 30%;
   height: 30%;
