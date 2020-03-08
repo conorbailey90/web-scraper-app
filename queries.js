@@ -1,23 +1,27 @@
-const { Pool } = require("pg");
+const { pool } = require("./config");
 
-const pool = new Pool({
-  user: "conor",
-  host: "localhost",
-  database: "api",
-  password: "zildjian01",
-  port: 5432
-});
+const getCompanies = (req, res) => {
+  pool.query(
+    // CREATE TABLE IF NOT EXISTS companies
+    // (id BIGSERIAL PRIMARY KEY NOT NULL,
+    // source VARCHAR(50) NOT NULL,
+    // company_name VARCHAR(100) NOT NULL,
+    // company_number VARCHAR(50) NOT NULL,
+    // company_summary VARCHAR(800),
+    // last_updated DATE NOT NULL,
+    // UNIQUE (source, company_number))
 
-const getUsers = (req, res) => {
-  pool.query("SELECT * FROM users ORDER BY id ASC", (err, results) => {
-    if (err) {
-      throw err;
+    `SELECT source, company_name, company_number, last_updated FROM companies ORDER BY company_name ASC`,
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+      res.status(200).json(results.rows);
     }
-    res.status(200).json(results.rows);
-  });
+  );
 };
 
-const getUserById = (req, res) => {
+const getCompanyById = (req, res) => {
   const id = parseInt(req.params.id);
 
   pool.query("SELECT * FROM users WHERE ID = $1", [id], (err, results) => {
@@ -28,18 +32,21 @@ const getUserById = (req, res) => {
   });
 };
 
-const createUser = (req, res) => {
-  const { name, email } = req.body;
+const createCompany = (source, companyName, companyNumber, companySummary) => {
+  // const { companyName, companyNumber, companySummary, lastUpdated } = req.body;
 
   pool.query(
-    "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING id",
-    [name, email],
+    `INSERT INTO companies (source, company_name, company_number, company_summary, last_updated) 
+    VALUES ($1, $2, $3, $4, now()::DATE )
+    ON CONFLICT ON CONSTRAINT companies_source_company_number_key 
+    DO UPDATE SET company_summary = $4, last_updated = now()::DATE
+    RETURNING id`,
+    [source, companyName, companyNumber, companySummary],
     (err, results) => {
       if (err) {
         throw err;
       }
       console.log(results.rows);
-      res.status(201).send(`User added with ID: ${results.rows[0].id}`);
     }
   );
 };
@@ -72,9 +79,9 @@ const deleteUser = (req, res) => {
 };
 
 module.exports = {
-  getUsers,
-  getUserById,
-  createUser,
+  getCompanies,
+  getCompanyById,
+  createCompany,
   updateUser,
   deleteUser
 };

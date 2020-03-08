@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "node index",
-    "dev": "nodemon indexttext.js"
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC"

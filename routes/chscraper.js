@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const puppeteer = require("puppeteer");
 const path = require("path");
+const cors = require("cors");
+const db = require("../queries");
+// const { pool } = require("../config");
+// require("dotenv").config();
 
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "ch.html"));
@@ -23,8 +27,6 @@ router.post("/", async (req, res) => {
 
       await page.goto(website, { waitUntil: "networkidle2" });
 
-      // await page.screenshot({ path: "./public/CompaniesHouse1.png" });
-
       let company = await page.evaluate(() => {
         let name = document.querySelector(
           "#content-container > div.company-header > p.heading-xlarge"
@@ -104,12 +106,11 @@ router.post("/", async (req, res) => {
 
       company.psc = psc.pscDetails; // Add person with significant control to company object
 
-      // await page.screenshot({ path: "./public/CompaniesHouse2.png" });
       await browser.close();
 
       let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
       is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. ${company.natureOfBusiness}. ${company.psc}`;
-      // res.send(details);
+
       res.json({ details });
     } else if (website.length < 10) {
       // const browser = await puppeteer.launch({ headless: false });
@@ -123,8 +124,6 @@ router.post("/", async (req, res) => {
         waitUntil: "networkidle2"
       });
 
-      // await page.screenshot({ path: "./public/CompaniesHouse1.png" });
-
       let company = await page.evaluate(() => {
         let name = document.querySelector(
           "#content-container > div.company-header > p.heading-xlarge"
@@ -175,7 +174,7 @@ router.post("/", async (req, res) => {
             : Array.from(
                 document.getElementsByClassName("heading-medium")
               ).slice(1);
-        // remove first element as the is the section header
+        // remove first element as this is the section header
 
         let pscDetails = "";
 
@@ -204,12 +203,16 @@ router.post("/", async (req, res) => {
 
       company.psc = psc.pscDetails; // Add person with significant control to company object
 
-      // await page.screenshot({ path: "./public/CompaniesHouse2.png" });
       await browser.close();
 
-      let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status
-      is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. ${company.natureOfBusiness}. ${company.psc}`;
-      // res.send(details);
+      // Source declaration for database.
+      let source = "Companies House";
+
+      let details = `${company.name} is a UK registered ${company.type} which was incorporated on ${company.incorporation} (${company.number}). The company status is ${company.status}. The registered address for this entity is: ${company.address}. The UK is a low risk jurisdiction. ${company.natureOfBusiness}. ${company.psc}`;
+
+      // Add / update record in Postgres database
+      db.createCompany(source, company.name, company.number, details);
+
       res.json({ details });
     } else {
       res.json({ details: "Not a valid website" });
@@ -221,6 +224,14 @@ router.post("/", async (req, res) => {
         "Something went wrong! Please ensure your URL is correct and try again."
     });
   }
+
+  // const pool = new Pool({
+  //   user: `${process.env.DB_USER}`,
+  //   host: `${process.env.DB_HOST}`,
+  //   database: `${process.env.DB_DATABASE}`,
+  //   password: `${process.env.DB_PASSWORD}`,
+  //   port: `${process.env.DB_PORT}`
+  // });
 });
 
 module.exports = router;
