@@ -16,13 +16,16 @@ app.use(
 
 app.use(bodyParser.json());
 
+app.set("view engine", "ejs");
+
 // Routes
 app.use("/", require("./routes/home"));
 app.use("/companies/", require("./routes/chscraper.js"));
 app.use("/duedil/", require("./routes/duedil"));
 app.use("/opencorporates/", require("./routes/opencorporates"));
 app.use("/companieshouse/", require("./routes/companieshouse"));
-app.use("/getall", db.getCompanies);
+app.use("/database", require("./routes/companyDatabase"));
+app.get("/test", db.getCompanies);
 
 // Allows the use of all files in the Static folder.
 app.use(express.static("public"));

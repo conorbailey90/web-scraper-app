@@ -20,22 +20,22 @@
     <nav class="navigation">
       <h2 class="title">Company Analysis Tool</h2>
       <ul>
-        <li><a href="./index.html">Companies House</a></li>
-        <li><a href="./opencorporates.html">Open Corporates</a></li>
-        <li><a href="./duedil">Duedil</a></li>
+        <li><a href="companies">Companies House</a></li>
+        <li><a href="opencorporates">Open Corporates</a></li>
+        <li><a href="duedil">Duedil</a></li>
       </ul>
     </nav>
     <div class="container">
       <div class="cat"><h4>Company Analysis Tool</h4></div>
       <div class="nav-links">
         <div class="home-link">
-          <a href="./index.html"><i class="fas fa-home"></i></a>
+          <a href="/"><i class="fas fa-home"></i></a>
         </div>
-        <div class="ch-link"><a href="./ch.html">Companies House</a></div>
+        <div class="ch-link"><a href="companies">Companies House</a></div>
         <div class="oc-link">
-          <a href="./opencorporates.html">Open Corporates</a>
+          <a href="opencorporates">Open Corporates</a>
         </div>
-        <div class="dd-link"><a href="./duedil">Duedil</a></div>
+        <div class="dd-link"><a href="duedil">Duedil</a></div>
         <div class="date-time">
           <p class="time"></p>
         </div>
@@ -86,18 +86,19 @@
       clearBtn.addEventListener('click', clear)
     
       function addZero(n) {
-                return n < 10 ? `0${n}` : n;
-              }
+        return n < 10 ? `0${n}` : n;
+      }
+      
       function getTime() {
-              const time = new Date();
-              dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
-                time.getMonth() + 1
-              )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
-                time.getMinutes()
-              )}:${addZero(time.getSeconds())}`;
+          const time = new Date();
+          dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
+            time.getMonth() + 1
+          )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
+            time.getMinutes()
+          )}:${addZero(time.getSeconds())}`;
 
-              setTimeout(getTime, 1000);
-            }
+          setTimeout(getTime, 1000);
+        }
 
       getTime();
 
@@ -135,73 +136,79 @@
           if (this.status == 200) {
             let details = JSON.parse(this.responseText);
            
-
-            console.log(this.responseText);
-
-            let company = details.results.company
-
-            let companyName = company.name;
-            let type = company.company_type
-            let jurisdiction = company.jurisdiction_code;
-            let companyNumber = company.company_number;
-            let registry = company.registry_url;
-            let status = company.current_status;
-            let incorporation = dateFormat(company.incorporation_date);
-            let address = company.registered_address_in_full;
-            let ocUrl = company.opencorporates_url;
-            let industry;
-            let pscs ='';
-            let financialSummary;
-            let financialSummarySource;
-            let profit;
-            let revenue;
-            let accountsDate;
-
-            // Ultimate ownership
-
-            company.ultimate_beneficial_owners.forEach(psc =>{
-              pscs += `${psc.ultimate_beneficial_owner.name} `})
-
-            if(company.ultimate_beneficial_owners.length == 0){
-              pscs = 'There are no ownership details available for this entity on Open Corporates.'
-            }else if (company.ultimate_beneficial_owners.length == 1) {
-              pscs += 'is registered as a signicant controller of this entity on Open Corporates.'
+            if ('error' in details){
+              console.log('YEAH!')
+              companyDetails.innerHTML = `</p>${details.error.message}</p>`;
+              p5Canvas.style.display = 'none'
+              document.querySelector(".button").disabled = false;
             }else{
-              pscs += 'are registered signicant controllers of this entity on Open Corporates.'
-            }
+              console.log(this.responseText);
 
-             // Industry
-            if (company.industry_codes.length > 0){
-              industry = `This entity is engaged in the following industry sector: ${company.industry_codes[0].industry_code.description}. This is a standard risk industry.`;
-            }else{
-              industry = `No industry details are available for this entity on Open Corporates.`
-            }
+              let company = details.results.company
 
-            // Financial summary
-            if (company.financial_summary != null){
-              financialSummary = `<span class="color-text">Accounts source URL:</span> <a href="${company.financial_summary.source_url == null ? 'Not available' : company.financial_summary.source_url}">${company.financial_summary.source_url}</a></br>
-              <span class="color-text">Accounts date:</span> ${company.financial_summary.accounts_date == null ? 'Not available' : dateFormat(company.financial_summary.accounts_date)}</br>
-              <span class="color-text">Reported profit:</span> ${company.financial_summary.profit == null ? 'Not available' : company.financial_summary.profit}</br>
-              <span class="color-text">Reported revenue:</span> ${company.financial_summary.revenue == null ? 'Not available' : company.financial_summary.revenue }</br>
-              <span class="color-text">Current assets:</span> ${company.financial_summary.current_assets[0].value = null ? 'Not available' : 'GBP ' + company.financial_summary.current_assets[0].value}`
-            }else{
-              financialSummary = 'There is no information available regarding the financials for the this entity on Open Corporates.'
-            }
+              let companyName = company.name;
+              let type = company.company_type
+              let jurisdiction = company.jurisdiction_code;
+              let companyNumber = company.company_number;
+              let registry = company.registry_url;
+              let status = company.current_status;
+              let incorporation = dateFormat(company.incorporation_date);
+              let address = company.registered_address_in_full;
+              let ocUrl = company.opencorporates_url;
+              let industry;
+              let pscs ='';
+              let financialSummary;
+              let financialSummarySource;
+              let profit;
+              let revenue;
+              let accountsDate;
 
-          
-            let description = `<div><h2 class="color-text">Summary</h2></br>${companyName} (${companyNumber}) is a ${type} (${status}) with a registered address of: ${address} (low risk jurisdiction). This entity was 
-            incorporated on ${incorporation}. ${industry} ${pscs}</br></br><h2 class="color-text">Accounts</h2></br>${financialSummary}</br></br>
-            <span class ="color-text">Data sourced from Open Corporates:<span> <a href="${company.opencorporates_url}">${company.opencorporates_url}</a>
-            </br> <span class ="color-text">Registry URL:<span> <a href=${registry}>${registry}</a></div>`
-            
-            // ${financialSummary}, ${profit}, ${revenue}, ${accountsDate}, ${registry}, ${ocUrl}`
+              // Ultimate ownership
+
+              company.ultimate_beneficial_owners.forEach(psc =>{
+                pscs += `${psc.ultimate_beneficial_owner.name} `})
+
+              if(company.ultimate_beneficial_owners.length == 0){
+                pscs = 'There are no ownership details available for this entity on Open Corporates.'
+              }else if (company.ultimate_beneficial_owners.length == 1) {
+                pscs += 'is registered as a signicant controller of this entity on Open Corporates.'
+              }else{
+                pscs += 'are registered signicant controllers of this entity on Open Corporates.'
+              }
+
+              // Industry
+              if (company.industry_codes.length > 0){
+                industry = `This entity is engaged in the following industry sector: ${company.industry_codes[0].industry_code.description}. This is a standard risk industry.`;
+              }else{
+                industry = `No industry details are available for this entity on Open Corporates.`
+              }
+
+              // Financial summary
+              if (company.financial_summary != null){
+                financialSummary = `<span class="color-text">Accounts source URL:</span> <a href="${company.financial_summary.source_url == null ? 'Not available' : company.financial_summary.source_url}">${company.financial_summary.source_url}</a></br>
+                <span class="color-text">Accounts date:</span> ${company.financial_summary.accounts_date == null ? 'Not available' : dateFormat(company.financial_summary.accounts_date)}</br>
+                <span class="color-text">Reported profit:</span> ${company.financial_summary.profit == null ? 'Not available' : company.financial_summary.profit}</br>
+                <span class="color-text">Reported revenue:</span> ${company.financial_summary.revenue == null ? 'Not available' : company.financial_summary.revenue }</br>
+                <span class="color-text">Current assets:</span> ${company.financial_summary.current_assets[0].value = null ? 'Not available' : 'GBP ' + company.financial_summary.current_assets[0].value}`
+              }else{
+                financialSummary = 'There is no information available regarding the financials for the this entity on Open Corporates.'
+              }
+
+
+              let description = `<div><h2 class="color-text">Summary</h2></br>${companyName} (${companyNumber}) is a ${type} (${status}) with a registered address of: ${address} (low risk jurisdiction). This entity was 
+              incorporated on ${incorporation}. ${industry} ${pscs}</br></br><h2 class="color-text">Accounts</h2></br>${financialSummary}</br></br>
+              <span class ="color-text">Data sourced from Open Corporates:<span> <a href="${company.opencorporates_url}">${company.opencorporates_url}</a>
+              </br> <span class ="color-text">Registry URL:<span> <a href=${registry}>${registry}</a></div>`
+
+              // ${financialSummary}, ${profit}, ${revenue}, ${accountsDate}, ${registry}, ${ocUrl}`
+
+
+              companyDetails.innerHTML = description;
+              p5Canvas.style.display = 'none'
+              document.querySelector(".button").disabled = false;
+            }
            
-
-            companyDetails.innerHTML = description;
-            p5Canvas.style.display = 'none'
-            document.querySelector(".button").disabled = false;
-            }
-          else{
+        }else{
             companyDetails.innerHTML =`<div><p>Something went wrong. Please ensure your company number is correct.</p></div>`;
             document.querySelector(".button").disabled = false;
           }
@@ -225,76 +232,76 @@
         location.reload();
       }
 
-         // Loading particles
+     // Loading particles
 
-         const particles = [];
+      const particles = [];
 
-function setup() {
-  createCanvas(loading.offsetWidth, loading.offsetHeight);
-  const particlesLength = Math.floor(loading.offsetWidth / 10);
-  console.log(particlesLength);
-  for (let i = 0; i < particlesLength; i++) {
-    particles.push(new Particle());
-  }
-}
-
-function draw() {
-  background("#161616");
-  particles.forEach((particle, index) => {
-    particle.update();
-    particle.draw();
-    particle.checkParticles(particles.slice(index));
-  });
-}
-
-class Particle {
-  constructor() {
-    // Position
-    this.pos = createVector(random(width), random(height));
-    // Velocity
-    this.vel = createVector(random(-1, 1), random(-1, 1));
-    // Size
-    this.size = 2;
-  }
-  // Update movement by adding velocity
-  update() {
-    this.pos.add(this.vel);
-    this.edges();
-  }
-  // Draw single particle
-  draw() {
-    noStroke();
-    fill("rgba(255,255,255,0.3)");
-    circle(this.pos.x, this.pos.y, this.size);
-  }
-
-  // Detect edges
-  edges() {
-    if (this.pos.x < 0 || this.pos.x > width) {
-      this.vel.x *= -1;
-    }
-    if (this.pos.y < 0 || this.pos.y > height) {
-      this.vel.y *= -1;
-    }
-  }
-
-  // Connect particles
-  checkParticles(particles) {
-    particles.forEach(particle => {
-      const d = dist(
-        this.pos.x,
-        this.pos.y,
-        particle.pos.x,
-        particle.pos.y
-      );
-
-      if (d < 120) {
-        stroke("rgba(255,255,255,0.04)");
-        line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
+      function setup() {
+        createCanvas(loading.offsetWidth, loading.offsetHeight);
+        const particlesLength = Math.floor(loading.offsetWidth / 10);
+        console.log(particlesLength);
+        for (let i = 0; i < particlesLength; i++) {
+          particles.push(new Particle());
+        }
       }
-    });
-  }
-}
+
+      function draw() {
+        background("#161616");
+        particles.forEach((particle, index) => {
+          particle.update();
+          particle.draw();
+          particle.checkParticles(particles.slice(index));
+        });
+      }
+
+      class Particle {
+        constructor() {
+          // Position
+          this.pos = createVector(random(width), random(height));
+          // Velocity
+          this.vel = createVector(random(-1, 1), random(-1, 1));
+          // Size
+          this.size = 2;
+        }
+        // Update movement by adding velocity
+        update() {
+          this.pos.add(this.vel);
+          this.edges();
+        }
+        // Draw single particle
+        draw() {
+          noStroke();
+          fill("rgba(255,255,255,0.3)");
+          circle(this.pos.x, this.pos.y, this.size);
+        }
+
+        // Detect edges
+        edges() {
+          if (this.pos.x < 0 || this.pos.x > width) {
+            this.vel.x *= -1;
+          }
+          if (this.pos.y < 0 || this.pos.y > height) {
+            this.vel.y *= -1;
+          }
+        }
+
+        // Connect particles
+        checkParticles(particles) {
+          particles.forEach(particle => {
+            const d = dist(
+              this.pos.x,
+              this.pos.y,
+              particle.pos.x,
+              particle.pos.y
+            );
+
+            if (d < 120) {
+              stroke("rgba(255,255,255,0.04)");
+              line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
+            }
+          });
+        }
+      }
 
     </script>
   </body>

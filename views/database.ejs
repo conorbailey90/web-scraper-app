@@ -31,9 +31,9 @@
         <div class="home-link">
           <a href="./index.html"><i class="fas fa-home"></i></a>
         </div>
-        <div class="ch-link"><a href="companies">Companies House</a></div>
+        <div class="ch-link"><a href="./ch.html">Companies House</a></div>
         <div class="oc-link">
-          <a href="opencorporates">Open Corporates</a>
+          <a href="./opencorporates.html">Open Corporates</a>
         </div>
         <div class="dd-link"><a href="./duedil">Duedil</a></div>
         <div class="date-time">
@@ -41,39 +41,29 @@
         </div>
       </div>
 
-      <ul class="home-list">
-        <li><i class="fas fa-user"></i>Sign In</li>
-        <li>
-          <a href="database"><i class="fas fa-database"></i>Company Database</a>
-        </li>
-      </ul>
-
-      <h4 class="news-title">Financial Crime News</h4>
-
       <div class="news-container">
         <ul class="news"></ul>
+        <h1><%= title %></h1>
       </div>
 
       <div class="loading"></div>
     </div>
 
     <script>
-      const apiKey = "cc3bf21c2493409384397d4ec4357b90";
       const dateTime = document.querySelector(".time");
-      const newsList = document.querySelector(".news");
       const loading = document.querySelector(".loading");
-      const newsContainer = document.querySelector(".news-container");
-      let url = `https://newsapi.org/v2/everything?q="financial crime"&apiKey=${apiKey}`;
 
       function addZero(n) {
         return n < 10 ? `0${n}` : n;
       }
-      document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(() => {
-          const p5Canvas = document.querySelector(".p5Canvas");
-          p5Canvas.style.display = "block";
-        }, 500);
-      });
+
+      console.log("<%= title[0]['company_name'] %>");
+      //   document.addEventListener("DOMContentLoaded", () => {
+      //     setTimeout(() => {
+      //       const p5Canvas = document.querySelector(".p5Canvas");
+      //       p5Canvas.style.display = "block";
+      //     }, 500);
+      //   });
 
       function getTime() {
         const time = new Date();
@@ -87,33 +77,6 @@
       }
 
       getTime();
-
-      fetch(url)
-        .then(response => {
-          if (response.status !== 200) {
-            console.log(
-              "Looks like there was a problem. Status Code: " + response.status
-            );
-            return;
-          }
-
-          // Examine the text in the response
-          response.json().then(data => {
-            console.log(data.articles);
-            data.articles.forEach(article => {
-              let li = document.createElement("li");
-              let a = document.createElement("a");
-              a.setAttribute("href", `${article.url}`);
-              a.setAttribute("target", "_blank");
-              a.textContent = `${article.title}`;
-              li.appendChild(a);
-              newsList.appendChild(li);
-            });
-          });
-        })
-        .catch(err => {
-          console.log("Fetch Error :-S", err);
-        });
 
       // Loading particles
 

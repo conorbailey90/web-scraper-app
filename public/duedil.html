@@ -20,22 +20,22 @@
     <nav class="navigation">
       <h2 class="title">Company Analysis Tool</h2>
       <ul>
-        <li><a href="./index.html">Companies House</a></li>
-        <li><a href="./opencorporates.html">Open Corporates</a></li>
-        <li><a href="./duedil">Duedil</a></li>
+        <li><a href="companies">Companies House</a></li>
+        <li><a href="opencorporates">Open Corporates</a></li>
+        <li><a href="duedil">Duedil</a></li>
       </ul>
     </nav>
     <div class="container">
       <div class="cat"><h4>Company Analysis Tool</h4></div>
       <div class="nav-links">
         <div class="home-link">
-          <a href="./index.html"><i class="fas fa-home"></i></a>
+          <a href="/"><i class="fas fa-home"></i></a>
         </div>
-        <div class="ch-link"><a href="./ch.html">Companies House</a></div>
+        <div class="ch-link"><a href="companies">Companies House</a></div>
         <div class="oc-link">
-          <a href="./opencorporates.html">Open Corporates</a>
+          <a href="opencorporates">Open Corporates</a>
         </div>
-        <div class="dd-link"><a href="./duedil">Duedil</a></div>
+        <div class="dd-link"><a href="duedil">Duedil</a></div>
         <div class="date-time">
           <p class="time"></p>
         </div>
@@ -97,12 +97,14 @@
       getTime();
 
       function retrieve(e) {
+        
         e.preventDefault();
 
         if (inputValue.value == ''){
           companyDetails.innerHTML = '<p class="warning">Input form is empty.</p>'
           return
         }
+
         const p5Canvas = document.querySelector('.p5Canvas');
         let xhr = new XMLHttpRequest();
         document.querySelector(".button-1").disabled = true;
@@ -119,13 +121,15 @@
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onload = function() {
+         
           if (this.status == 200) {
+          
             let details = JSON.parse(this.responseText);
-            console.log(this.responseText);
+            console.log(details);
 
-            if(details.hasOwnProperty('httpCode') && details.httpCode == 404){
+            if('httpCode' in details && details.httpCode == 404){
               companyDetails.innerHTML =`<div class="info"><p>Something went wrong. Please ensure your company number is correct</p></div>`;
-
+              p5Canvas.style.display = 'none'
               document.querySelector(".button-1").disabled = false;
             }else{
             // Amend date format in the response

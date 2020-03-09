@@ -16,6 +16,10 @@ const getCompanies = (req, res) => {
       if (err) {
         throw err;
       }
+      console.log(results.rows);
+      return results.rows;
+      // let companies = results.rows[0];
+      // return results.rows;
       res.status(200).json(results.rows);
     }
   );
