@@ -60,10 +60,8 @@ nav {
 }
 
 .nav-links {
-  /* display: none; */
   position: absolute;
   left: 30%;
-  /* transform: translate(-50%); */
   width: 70%;
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -343,4 +341,19 @@ li:hover {
   box-shadow: #000000 1px 1px 6px, #2e2e2e -1px -1px 6px;
   cursor: pointer;
   transition: 0.3s;
+}
+
+/* Database */
+
+td,
+th {
+  margin: 1rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  border: 1px solid black;
+}
+
+.entry:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }

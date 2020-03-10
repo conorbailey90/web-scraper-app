@@ -29,41 +29,64 @@
       <div class="cat"><h4>Company Analysis Tool</h4></div>
       <div class="nav-links">
         <div class="home-link">
-          <a href="./index.html"><i class="fas fa-home"></i></a>
+          <a href="/"><i class="fas fa-home"></i></a>
         </div>
-        <div class="ch-link"><a href="./ch.html">Companies House</a></div>
+        <div class="ch-link"><a href="companies">Companies House</a></div>
         <div class="oc-link">
-          <a href="./opencorporates.html">Open Corporates</a>
+          <a href="opencorporates">Open Corporates</a>
         </div>
-        <div class="dd-link"><a href="./duedil">Duedil</a></div>
+        <div class="dd-link"><a href="duedil">Duedil</a></div>
         <div class="date-time">
           <p class="time"></p>
         </div>
       </div>
 
+      <h4 class="news-title">Latest Updated Companies</h4>
+
       <div class="news-container">
         <ul class="news"></ul>
-        <h1><%= title %></h1>
+        <!-- <h1><%= results %></h1> -->
+        <table>
+          <tr>
+            <th>
+              Company Name
+            </th>
+            <th>
+              Company Number
+            </th>
+            <th>
+              Source
+            </th>
+            <th>
+              Last Updated
+            </th>
+          </tr>
+          <% for(var i=0; i < results.length; i++) { %>
+          <tr class="entry">
+            <td><%= results[i].company_name %></td>
+            <td><%= results[i].company_number %></td>
+            <td><%= results[i].source %></td>
+            <td class="last-update"><%= results[i].last_updated %></td>
+          </tr>
+          <% } %>
+        </table>
       </div>
 
       <div class="loading"></div>
     </div>
 
+    <!-- <script src="../public/js/particles.js"></script> -->
     <script>
       const dateTime = document.querySelector(".time");
-      const loading = document.querySelector(".loading");
+      const lastUpdate = document.querySelectorAll(".last-update");
+
+      lastUpdate.forEach(cell => {
+        cell.innerText = cell.innerText.slice(4, 15);
+      });
 
       function addZero(n) {
         return n < 10 ? `0${n}` : n;
       }
-
-      console.log("<%= title[0]['company_name'] %>");
-      //   document.addEventListener("DOMContentLoaded", () => {
-      //     setTimeout(() => {
-      //       const p5Canvas = document.querySelector(".p5Canvas");
-      //       p5Canvas.style.display = "block";
-      //     }, 500);
-      //   });
 
       function getTime() {
         const time = new Date();
@@ -77,77 +100,6 @@
       }
 
       getTime();
-
-      // Loading particles
-
-      const particles = [];
-
-      function setup() {
-        createCanvas(loading.offsetWidth, loading.offsetHeight);
-        const particlesLength = Math.floor(loading.offsetWidth / 10);
-        console.log(particlesLength);
-        for (let i = 0; i < particlesLength; i++) {
-          particles.push(new Particle());
-        }
-      }
-
-      function draw() {
-        background("#161616");
-        particles.forEach((particle, index) => {
-          particle.update();
-          particle.draw();
-          particle.checkParticles(particles.slice(index));
-        });
-      }
-
-      class Particle {
-        constructor() {
-          // Position
-          this.pos = createVector(random(width), random(height));
-          // Velocity
-          this.vel = createVector(random(-1, 1), random(-1, 1));
-          // Size
-          this.size = 2;
-        }
-        // Update movement by adding velocity
-        update() {
-          this.pos.add(this.vel);
-          this.edges();
-        }
-        // Draw single particle
-        draw() {
-          noStroke();
-          fill("rgba(255,255,255,0.3)");
-          circle(this.pos.x, this.pos.y, this.size);
-        }
-
-        // Detect edges
-        edges() {
-          if (this.pos.x < 0 || this.pos.x > width) {
-            this.vel.x *= -1;
-          }
-          if (this.pos.y < 0 || this.pos.y > height) {
-            this.vel.y *= -1;
-          }
-        }
-
-        // Connect particles
-        checkParticles(particles) {
-          particles.forEach(particle => {
-            const d = dist(
-              this.pos.x,
-              this.pos.y,
-              particle.pos.x,
-              particle.pos.y
-            );
-
-            if (d < 120) {
-              stroke("rgba(255,255,255,0.04)");
-              line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
-            }
-          });
-        }
-      }
     </script>
   </body>
 </html>

@@ -15,13 +15,13 @@ router.get("/", (req, res) => {
     // last_updated DATE NOT NULL,
     // UNIQUE (source, company_number))
 
-    `SELECT source, company_name, company_number, last_updated FROM companies ORDER BY company_name ASC`,
+    `SELECT company_name, company_number, source, last_updated FROM companies ORDER BY last_updated DESC LIMIT 10`,
     (err, results) => {
       if (err) {
         throw err;
       }
       console.log(results.rows);
-      res.render("database", { title: results.rows });
+      res.render("database", { results: results.rows });
     }
   );
 });
