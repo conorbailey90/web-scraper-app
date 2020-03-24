@@ -17,29 +17,33 @@
     <title>Company Analysis Tool</title>
   </head>
   <body>
-    <nav class="navigation">
-      <h2 class="title">Company Analysis Tool</h2>
-      <ul>
-        <li><a href="./index.html">Companies House</a></li>
-        <li><a href="./opencorporates.html">Open Corporates</a></li>
-        <li><a href="./duedil">Duedil</a></li>
-      </ul>
-    </nav>
     <div class="container">
       <div class="cat"><h4>Company Analysis Tool</h4></div>
       <div class="nav-links">
         <div class="home-link">
           <a href="/"><i class="fas fa-home"></i></a>
         </div>
-        <div class="ch-link"><a href="companies">Companies House</a></div>
+        <div class="ch-link"><a href="/companies">Companies House</a></div>
         <div class="oc-link">
-          <a href="opencorporates">Open Corporates</a>
+          <a href="/opencorporates">Open Corporates</a>
         </div>
-        <div class="dd-link"><a href="duedil">Duedil</a></div>
+        <div class="dd-link"><a href="/duedil">Duedil</a></div>
         <div class="date-time">
           <p class="time"></p>
         </div>
       </div>
+
+      <form class="get-data" action="/database" method="POST">
+        <label>Search For A Company</label></br>
+        <input
+          type="text"
+          id="company"
+          name="company"
+          placeholder="Enter Company Name"
+        />
+        <input class="button-1" type="submit" />
+      </form>
+
 
       <h4 class="news-title">Latest Updated Companies</h4>
 
@@ -47,42 +51,103 @@
         <ul class="news"></ul>
         <!-- <h1><%= results %></h1> -->
         <table>
-          <tr>
+          <thead>
             <th>
-              Company Name
+              <strong>Company Name</strong>
             </th>
             <th>
-              Company Number
+              <strong>Company Number</strong>
             </th>
             <th>
-              Source
+              <strong>Source</strong>
             </th>
             <th>
-              Last Updated
+              <strong>Last Updated</strong>
             </th>
-          </tr>
+          </thead>
+          <tbody class="db-list">
           <% for(var i=0; i < results.length; i++) { %>
-          <tr class="entry">
-            <td><%= results[i].company_name %></td>
+          <tr
+            class="entry"
+            onclick="window.location='/database/companies/<%= results[i].id %>'"
+          >
+            <td>
+              <%= results[i].company_name %>
+            </td>
             <td><%= results[i].company_number %></td>
             <td><%= results[i].source %></td>
             <td class="last-update"><%= results[i].last_updated %></td>
           </tr>
           <% } %>
+        </tbody>
         </table>
       </div>
 
       <div class="loading"></div>
     </div>
-
-    <!-- <script src="../public/js/particles.js"></script> -->
+    
     <script>
       const dateTime = document.querySelector(".time");
-      const lastUpdate = document.querySelectorAll(".last-update");
+      const searchForm = document.querySelector('.get-data');
+      const searchField = document.querySelector('#company');
+      const container = document.querySelector('.news-container');
+      const dbList = document.querySelector('.db-list');
 
+      searchForm.addEventListener('submit', retrieve)
+
+      function retrieve(e){
+        e.preventDefault()
+
+        let company = {name : searchField.value}
+        
+
+        const xhr = new XMLHttpRequest()
+
+        xhr.open("POST", "/database/", true);
+
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.send(JSON.stringify(company))
+
+        xhr.onload = function(){
+          if (this.status == 200) {
+            let details = JSON.parse(this.responseText);
+            if (details.dbResults.length == 0){
+              dbList.innerHTML = '<p>No records found in database.</p>'
+            }else{
+              dbList.innerHTML = '';
+              for (let i = 0; i < details.dbResults.length; i++){
+                let tr = document.createElement('tr');
+                tr.classList.add('entry')
+                tr.setAttribute('onclick', `window.location="/database/companies/${details.dbResults[i].id}"` )
+
+                let td1 = document.createElement('td');
+                td1.innerText = details.dbResults[i].company_name;
+                let td2 = document.createElement('td');
+                td2.innerText = details.dbResults[i].company_number;
+                let td3 = document.createElement('td');
+                td3.innerText = details.dbResults[i].source;
+                let td4 = document.createElement('td');
+                td4.classList.add('last-update')
+                td4.innerText = details.dbResults[i].last_updated.slice(0,10);
+
+                tr.append(td1,td2, td3, td4);
+
+                dbList.appendChild(tr);
+              }
+            }  
+        }
+      }
+    }
+    function adjustDate(){
+      const lastUpdate = document.querySelectorAll(".last-update");
+      // Shorten the dates in the table 
       lastUpdate.forEach(cell => {
         cell.innerText = cell.innerText.slice(4, 15);
       });
+    }
+
+    adjustDate()
 
       function addZero(n) {
         return n < 10 ? `0${n}` : n;
@@ -98,7 +163,6 @@
 
         setTimeout(getTime, 1000);
       }
-
       getTime();
     </script>
   </body>

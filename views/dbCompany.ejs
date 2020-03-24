@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/css/styleHome.css" />
+    <script
+      src="https://kit.fontawesome.com/7577eba8ec.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Company Analysis Tool</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="cat"><h4>Company Analysis Tool</h4></div>
+      <div class="nav-links">
+        <div class="home-link">
+          <a href="/"><i class="fas fa-home"></i></a>
+        </div>
+        <div class="ch-link">
+          <a href="/companies">Companies House</a>
+        </div>
+        <div class="oc-link">
+          <a href="/opencorporates">Open Corporates</a>
+        </div>
+        <div class="dd-link"><a href="/duedil">Duedil</a></div>
+        <div class="date-time">
+          <p class="time"></p>
+        </div>
+      </div>
+
+      <ul class="home-list">
+        <li><i class="fas fa-user"></i>Sign In</li>
+        <li>
+          <a href="/database"><i class="fas fa-database"></i>Company Database</a>
+        </li>
+      </ul>
+
+      <div class="news-container">
+        <h3>
+          <%= results[0].company_name %> (<%= results[0].company_number %>)
+        </h3></br>
+        <h4>Source: <%= results[0].source %></h4></br>
+        <p><%= results[0].company_summary %></p></br>
+        <p>Last update: <%= results[0].last_updated %></p>
+
+    </div>
+
+
+  </div>
+
+    <!-- <script src="../public/js/particles.js"></script> -->
+    <script>
+      const dateTime = document.querySelector(".time");
+      const lastUpdate = document.querySelectorAll(".last-update");
+
+      // Shorten the date
+      lastUpdate.forEach(cell => {
+        cell.innerText = cell.innerText.slice(4, 15);
+      });
+
+      function addZero(n) {
+        return n < 10 ? `0${n}` : n;
+      }
+
+      function getTime() {
+        const time = new Date();
+        dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
+          time.getMonth() + 1
+        )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
+          time.getMinutes()
+        )}:${addZero(time.getSeconds())}`;
+
+        setTimeout(getTime, 1000);
+      }
+
+      getTime();
+    </script>
+  </body>
+</html>
