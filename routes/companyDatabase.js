@@ -4,7 +4,7 @@ const path = require("path");
 const router = express.Router();
 const { pool } = require("../config");
 
-router.get("/", (req, res) => {
+router.get("/", checkNotAuthenticated, (req, res) => {
   pool.query(
     // CREATE TABLE IF NOT EXISTS companies
     // (id BIGSERIAL PRIMARY KEY NOT NULL,
@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
     // last_updated DATE NOT NULL,
     // UNIQUE (source, company_number))
 
-    `SELECT id, company_name, company_number, source, last_updated FROM companies ORDER BY last_updated DESC LIMIT 10`,
+    `SELECT id, company_name, company_number, source, last_updated FROM companies ORDER BY last_updated DESC LIMIT 6`,
     (err, results) => {
       if (err) {
         throw err;
@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
   );
 });
 
-router.get("/companies/:db_id", (req, res) => {
+router.get("/companies/:db_id", checkNotAuthenticated, (req, res) => {
   let id = req.params.db_id;
   pool.query(`SELECT * FROM companies WHERE id = $1`, [id], (err, results) => {
     if (err) {
@@ -54,5 +54,13 @@ router.post("/", (req, res) => {
     }
   );
 });
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash("error_msg", "Please sign in to access the company database");
+  res.redirect("/users/login");
+}
 
 module.exports = router;

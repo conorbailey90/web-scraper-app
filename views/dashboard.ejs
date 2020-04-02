@@ -14,7 +14,7 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Company Analysis Tool</title>
+    <title>Company Analysis Tool: Dashboard</title>
   </head>
   <body>
     <div class="container">
@@ -23,9 +23,7 @@
         <div class="home-link">
           <a href="/"><i class="fas fa-home"></i></a>
         </div>
-        <div class="ch-link">
-          <a href="/companies">Companies House</a>
-        </div>
+        <div class="ch-link"><a href="/companies">Companies House</a></div>
         <div class="oc-link">
           <a href="/opencorporates">Open Corporates</a>
         </div>
@@ -34,36 +32,34 @@
           <p class="time"></p>
         </div>
       </div>
+      
+      <ul class="success">
+        <% if ( success_msg != ''){ %>
+            <li><%= success_msg %></h1>
+      <%  } %>
+    </ul>
 
-      <ul class="home-list">
-        <li><a href="/login"> <i class="fas fa-user"></i>Sign In</a></li>
-        <li>
-          <a href="/database"><i class="fas fa-database"></i>Company Database</a>
-        </li>
-      </ul>
+    <% if (messages.error) { %>
+    <%= messages.error %>
+   <% } %>
+    
+    <h2 class="welcome">Hi <%= user.charAt(0).toUpperCase() + user.slice(1) %></h2>
 
-      <div class="news-container">
-        <h3>
-          <%= results[0].company_name %> (<%= results[0].company_number %>)
-        </h3></br>
-        <h4>Source: <%= results[0].source %></h4></br>
-        <p><%= results[0].company_summary %></p></br>
-        <p>Last update: <%= results[0].last_updated %></p>
+      <div class="logout">
+        <a href="/users/logout">Logout</a>
+      </div>
 
-    </div>
+      <div class="change-pw">
+        <a href="/users/password">Change Password</a>
+      </div>
 
-
-  </div>
-
-    <!-- <script src="../public/js/particles.js"></script> -->
     <script>
       const dateTime = document.querySelector(".time");
-      const lastUpdate = document.querySelectorAll(".last-update");
+      const success = document.querySelector('.success')
 
-      // Shorten the date
-      lastUpdate.forEach(cell => {
-        cell.innerText = cell.innerText.slice(4, 15);
-      });
+      setTimeout(()=>{
+        success.remove()
+      },3000);
 
       function addZero(n) {
         return n < 10 ? `0${n}` : n;
@@ -79,8 +75,9 @@
 
         setTimeout(getTime, 1000);
       }
-
       getTime();
+
+    
     </script>
   </body>
 </html>

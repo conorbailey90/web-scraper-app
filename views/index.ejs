@@ -21,7 +21,7 @@
       <div class="cat"><h4>Company Analysis Tool</h4></div>
       <div class="nav-links">
         <div class="home-link">
-          <a href="./index.html"><i class="fas fa-home"></i></a>
+          <a href="/"><i class="fas fa-home"></i></a>
         </div>
         <div class="ch-link"><a href="companies">Companies House</a></div>
         <div class="oc-link">
@@ -34,7 +34,13 @@
       </div>
 
       <ul class="home-list">
-        <li><i class="fas fa-user"></i>Sign In</li>
+        <li>
+          <% if (isLogged){ %>
+          <a href="/users/dashboard"><i class="fas fa-user"></i>Dashboard</a>
+          <% }else{ %>
+          <a href="/users/login"><i class="fas fa-user"></i>Sign In</a>
+          <% } %>
+        </li>
         <li>
           <a href="database"><i class="fas fa-database"></i>Company Database</a>
         </li>

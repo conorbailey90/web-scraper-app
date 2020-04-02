@@ -67,8 +67,16 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", (req, res) => {
+router.get("/", checkAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "duedil.html"));
 });
+
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash("error_msg", "Please sign in to access this feature");
+  res.redirect("/users/login");
+}
 
 module.exports = router;

@@ -358,3 +358,227 @@ th {
   cursor: pointer;
   opacity: 0.6;
 }
+
+/* Login page */
+
+.login {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 12rem;
+  width: 18rem;
+  /* border: 1px solid white; */
+}
+
+#username,
+#password,
+#email {
+  color: white;
+  width: 100%;
+  border-radius: 10px;
+  text-align: center;
+  height: 2rem;
+  margin-bottom: 1rem;
+  border: none;
+  box-shadow: inset #000000 2px 2px 5px, inset #2e2e2e -2px -2px 5px;
+  outline: none;
+}
+
+#username:focus,
+#password:focus,
+#email:focus {
+  color: white;
+  width: 100%;
+  border-radius: 10px;
+  text-align: center;
+  height: 2rem;
+  margin-bottom: 1rem;
+  border: none;
+  box-shadow: inset #000000 2px 2px 5px, inset #2e2e2e -2px -2px 5px;
+  outline: none;
+}
+
+.register {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 2rem;
+  text-align: center;
+  font-size: 0.7rem;
+}
+
+.login-link {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: -4rem;
+  text-align: center;
+  font-size: 0.6rem;
+  width: 100%;
+}
+
+.button-l {
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  box-shadow: #000000 2px 2px 8px, #2e2e2e -2px -2px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.button-l:hover {
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  box-shadow: #000000 1px 1px 6px, #2e2e2e -1px -1px 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button-r {
+  position: absolute;
+  top: 12rem;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  box-shadow: #000000 2px 2px 8px, #2e2e2e -2px -2px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.button-r:hover {
+  position: absolute;
+  top: 12rem;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  box-shadow: #000000 1px 1px 6px, #2e2e2e -1px -1px 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.errors {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.errors li {
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  color: red;
+}
+
+.success {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.success li {
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  color: rgb(38, 228, 13);
+}
+
+.welcome {
+  position: absolute;
+  top: 5rem;
+  left: 10%;
+}
+
+.logout {
+  position: absolute;
+  text-align: center;
+  padding: 0.2rem;
+  top: 12rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15rem;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  box-shadow: #000000 2px 2px 8px, #2e2e2e -2px -2px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.logout:hover {
+  position: absolute;
+  top: 12rem;
+  left: 50%;
+  width: 15rem;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  box-shadow: #000000 1px 1px 8px, #2e2e2e -1px -1px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout:hover a {
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.logout a {
+  font-size: 0.7rem;
+}
+
+.change-pw {
+  position: absolute;
+  text-align: center;
+  padding: 0.2rem;
+  top: 9rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15rem;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  box-shadow: #000000 2px 2px 8px, #2e2e2e -2px -2px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.change-pw:hover {
+  position: absolute;
+  top: 9rem;
+  left: 50%;
+  width: 15rem;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  box-shadow: #000000 1px 1px 8px, #2e2e2e -1px -1px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.change-pw:hover a {
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.change-pw a {
+  font-size: 0.7rem;
+}

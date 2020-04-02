@@ -1,10 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const path = require("path");
-var fetch = require("node-fetch");
 
-router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public", "index.html"));
+router.get("/", isLoggedIn, (req, res) => {
+  res.render("index", { isLogged: req.isLogged });
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    req.isLogged = true;
+    return next();
+  }
+  req.isLogged = false;
+  next();
+}
 
 module.exports = router;

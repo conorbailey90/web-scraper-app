@@ -55,6 +55,42 @@ const createCompany = (source, companyName, companyNumber, companySummary) => {
   );
 };
 
+const selectUser = (username, email) => {
+  pool.query(
+    `SELECT * FROM users
+    WHERE username = $1
+    OR email = $2`,
+    [username, email],
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+      if (results.rows.length > 0) {
+        console.log("working");
+        return true;
+      }
+      console.log(results.rows);
+    }
+  );
+};
+
+const addUser = (username, email, password) => {
+  pool.query(
+    `INSERT INTO users (username, email, password) 
+  VALUES ($1, $2, $3)
+  ON CONFLICT DO NOTHING
+  RETURNING id`,
+    [username, email, password],
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+
+      console.log(results.rows);
+    }
+  );
+};
+
 const updateUser = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -86,6 +122,8 @@ module.exports = {
   getCompanies,
   getCompanyById,
   createCompany,
+  selectUser,
+  addUser,
   updateUser,
   deleteUser
 };

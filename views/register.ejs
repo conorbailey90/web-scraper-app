@@ -23,9 +23,7 @@
         <div class="home-link">
           <a href="/"><i class="fas fa-home"></i></a>
         </div>
-        <div class="ch-link">
-          <a href="/companies">Companies House</a>
-        </div>
+        <div class="ch-link"><a href="/companies">Companies House</a></div>
         <div class="oc-link">
           <a href="/opencorporates">Open Corporates</a>
         </div>
@@ -35,35 +33,32 @@
         </div>
       </div>
 
-      <ul class="home-list">
-        <li><a href="/login"> <i class="fas fa-user"></i>Sign In</a></li>
-        <li>
-          <a href="/database"><i class="fas fa-database"></i>Company Database</a>
-        </li>
-      </ul>
+      <ul class="errors">
+      <% if (typeof errors != 'undefined'){ %>
+        <% errors.forEach(error =>{ %>
+          <li><%= error.msg %></h1>
+       <% }) %>
+    <%  } %>
+  </ul>
+    
 
-      <div class="news-container">
-        <h3>
-          <%= results[0].company_name %> (<%= results[0].company_number %>)
-        </h3></br>
-        <h4>Source: <%= results[0].source %></h4></br>
-        <p><%= results[0].company_summary %></p></br>
-        <p>Last update: <%= results[0].last_updated %></p>
-
+      <form class="login" action="/users/register" method="POST">
+        <input type="text" id="username" name="username" placeholder="Username" required/></br>
+        <input type="email" id="email" name="email" placeholder="Email Address" required>
+        <input type="password" id="password" name="password" placeholder="Password" required/>
+        <input type="password" id="password" name="password2" placeholder="Confirm Password" required/>
+        <input class="button-r" type="submit" value="Register" />
+        <a class="login-link" href="/users/login">Already registered? Log In here.</a>
+      </form>
     </div>
 
-
-  </div>
-
-    <!-- <script src="../public/js/particles.js"></script> -->
     <script>
+      const errorList = document.querySelector('.errors')
       const dateTime = document.querySelector(".time");
-      const lastUpdate = document.querySelectorAll(".last-update");
 
-      // Shorten the date
-      lastUpdate.forEach(cell => {
-        cell.innerText = cell.innerText.slice(4, 15);
-      });
+      setTimeout(() => {
+        errorList.remove()
+      }, 3000);
 
       function addZero(n) {
         return n < 10 ? `0${n}` : n;
@@ -79,7 +74,6 @@
 
         setTimeout(getTime, 1000);
       }
-
       getTime();
     </script>
   </body>
