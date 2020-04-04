@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./css/styleHome.css" />
+    <script
+      src="https://kit.fontawesome.com/7577eba8ec.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Company Analysis Tool</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="cat"><h4>Company Analysis Tool</h4></div>
+      <div class="nav-links">
+        <div class="home-link">
+          <a href="/"><i class="fas fa-home"></i></a>
+        </div>
+        <div class="ch-link"><a href="companies">Companies House</a></div>
+        <div class="oc-link">
+          <a href="opencorporates">Open Corporates</a>
+        </div>
+        <div class="dd-link"><a href="duedil">Duedil</a></div>
+        <div class="date-time">
+          <p class="time"></p>
+        </div>
+      </div>
+
+      <ul class="home-list">
+        <li>
+          <% if (isLogged){ %>
+          <a href="/users/dashboard"><i class="fas fa-user"></i>Dashboard</a>
+          <% }else{ %>
+          <a href="/users/login"><i class="fas fa-user"></i>Sign In</a>
+          <% } %>
+        </li>
+        <li>
+          <a href="database"><i class="fas fa-database"></i>Company Database</a>
+        </li>
+      </ul>
+
+      <h4 class="news-title">Financial Crime News</h4>
+
+      <div class="news-container">
+        <ul class="news"></ul>
+      </div>
+      <div class="tabs">
+        <div class="first">First</div>
+        <div class="previous">Previous</div>
+        <div class="next">Next</div>
+        <div class="last">Last</div>
+      </div>
+
+      <div class="loading"></div>
+    </div>
+    <script src="./js/particles.js"></script>
+    <script>
+      const apiKey = "cc3bf21c2493409384397d4ec4357b90";
+      const dateTime = document.querySelector(".time");
+      const newsList = document.querySelector(".news");
+      const first = document.querySelector(".first");
+      const previous = document.querySelector(".previous");
+      const next = document.querySelector(".next");
+      const last = document.querySelector(".last");
+      const newsContainer = document.querySelector(".news-container");
+
+      let url = `https://newsapi.org/v2/everything?q="financial crime"&apiKey=${apiKey}`;
+
+      let newsArray = [];
+      let page = 0;
+
+      function addZero(n) {
+        return n < 10 ? `0${n}` : n;
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(() => {
+          const p5Canvas = document.querySelector(".p5Canvas");
+          p5Canvas.style.display = "block";
+        }, 500);
+      });
+
+      function getTime() {
+        const time = new Date();
+        dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
+          time.getMonth() + 1
+        )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
+          time.getMinutes()
+        )}:${addZero(time.getSeconds())}`;
+
+        setTimeout(getTime, 1000);
+      }
+
+      getTime();
+
+      fetch(url)
+        .then(response => {
+          if (response.status !== 200) {
+            console.log(
+              "Looks like there was a problem. Status Code: " + response.status
+            );
+            return;
+          }
+
+          // Examine the text in the response
+          response.json().then(data => {
+            console.log(data.articles);
+            data.articles.forEach((article, index) => {
+              let li = document.createElement("li");
+              let a = document.createElement("a");
+              a.setAttribute("href", `${article.url}`);
+              a.setAttribute("target", "_blank");
+              a.textContent = `${index + 1}: ${article.title}`;
+              li.appendChild(a);
+              newsArray.push(li);
+              //   newsList.appendChild(li);
+            });
+            listArticles();
+          });
+        })
+        .catch(err => {
+          console.log("Fetch Error :-S", err);
+        });
+
+      function listArticles() {
+        for (let i = 0; i < page + 5; i++) {
+          newsList.appendChild(newsArray[i]);
+        }
+      }
+
+      first.addEventListener("click", () => {
+        page = 0;
+        newsList.innerHTML = "";
+        for (i = 0; i < 5; i++) {
+          newsList.append(newsArray[i]);
+        }
+      });
+
+      previous.addEventListener("click", () => {
+        page == 0 ? (page = newsArray.length - 5) : (page -= 5);
+        newsList.innerHTML = "";
+        for (i = page; i < page + 5; i++) {
+          newsList.append(newsArray[i]);
+        }
+      });
+
+      next.addEventListener("click", () => {
+        page == newsArray.length - 5 ? (page = 0) : (page += 5);
+        newsList.innerHTML = "";
+        for (i = page; i < page + 5; i++) {
+          newsList.append(newsArray[i]);
+        }
+      });
+
+      last.addEventListener("click", () => {
+        page = newsArray.length - 5;
+        newsList.innerHTML = "";
+        for (i = page; i < page + 5; i++) {
+          newsList.append(newsArray[i]);
+        }
+      });
+    </script>
+  </body>
+</html>

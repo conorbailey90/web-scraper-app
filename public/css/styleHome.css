@@ -108,9 +108,33 @@ li:hover {
   left: 40%;
   width: 58%;
   font-size: 0.7rem;
-  height: 75%;
+  height: 60%;
   border-radius: 20px;
   box-shadow: inset #000000 2px 2px 5px, inset #2e2e2e -2px -2px 5px;
+}
+
+.tabs {
+  position: absolute;
+  left: 40%;
+  top: 85%;
+  width: 58%;
+  height: 2rem;
+  padding: 0.3rem;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* border: 1px solid white; */
+  text-align: center;
+  font-size: 0.8rem;
+  box-shadow: #000000 1px 1px 4px, #2e2e2e -1px -1px 4px;
+}
+
+.first:hover,
+.previous:hover,
+.next:hover,
+.last:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }
 
 .news-title {
@@ -581,4 +605,10 @@ th {
 
 .change-pw a {
   font-size: 0.7rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .p5Canvas {
+    opacity: 0;
+  }
 }

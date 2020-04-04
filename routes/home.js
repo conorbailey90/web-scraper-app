@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", isLoggedIn, (req, res) => {
-  res.render("index", { isLogged: req.isLogged });
+  res.render("index2", { isLogged: req.isLogged });
 });
 
 function isLoggedIn(req, res, next) {
