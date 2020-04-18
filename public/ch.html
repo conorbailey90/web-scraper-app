@@ -33,6 +33,12 @@
         </div>
       </div>
 
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
       <form class="get-data" action="/companies" method="POST">
         <label>Companies House</label></br>
         <input
@@ -57,9 +63,11 @@
           form.
         </p>
       </container>
+
+      <script src="./js/app.js"></script>
       <script src="./js/particles.js"></script>
       <script>
-        const dateTime = document.querySelector(".time");
+       
         const chContainer = document.querySelector(".ch-container");
         let chForm = document.querySelector(".get-data");
         let companyNumber = document.querySelector("#company");
@@ -68,8 +76,6 @@
 
         copyBtn.addEventListener('click', copyText)
         clearBtn.addEventListener('click', clear)
-        
-        
 
         chForm.addEventListener("submit", e => {
           const p5Canvas = document.querySelector('.p5Canvas');
@@ -97,23 +103,6 @@
           };
           xhr.send(JSON.stringify(data));
         });
-
-        function addZero(n) {
-          return n < 10 ? `0${n}` : n;
-        }
-
-        function getTime() {
-          const time = new Date();
-          dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
-            time.getMonth() + 1
-          )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
-            time.getMinutes()
-          )}:${addZero(time.getSeconds())}`;
-
-          setTimeout(getTime, 1000);
-        }
-
-        getTime();
 
       function copyText(e) {
         let textArea = document.createElement("textarea");

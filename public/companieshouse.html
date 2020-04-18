@@ -18,10 +18,15 @@
         <li><a href="./index.html">Companies House</a></li>
         <li><a href="./opencorporates.html">Open Corporates</a></li>
         <li><a href="./duedil">Duedil</a></li>
-        <!-- <li><a href="./companyss.html">Screenshot Tool</a></li> -->
       </ul>
       <p class="small-text">Conor Bailey</p>
     </nav>
+
+    <div class="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
     <div class="page-name">Companies House Check</div>
 
@@ -51,18 +56,6 @@
     </div>
 
     <script>
- window.onscroll = function(){
-        let scrolled = window.scrollY;
-        console.log(scrolled)
-        let navBar = document.querySelector('.navigation')
-        console.log(navBar)
-
-        if (scrolled > 10){
-          navBar.classList.add('scrolled')
-        }else{
-          navBar.classList.remove('scrolled')
-        }
-      }
 
       document.querySelector("#get-data").addEventListener("submit", retrieve);
       const clearBtn = document.querySelector(".clear");

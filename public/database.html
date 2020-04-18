@@ -33,6 +33,12 @@
         </div>
       </div>
 
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
       <div class="news-container">
         <ul class="news"></ul>
       </div>
@@ -40,103 +46,10 @@
       <div class="loading"></div>
     </div>
 
+    <script src="./js/app.js"></script>
+    <script src="./js/particles.js"></script>
     <script>
-      const dateTime = document.querySelector(".time");
       const loading = document.querySelector(".loading");
-
-      function addZero(n) {
-        return n < 10 ? `0${n}` : n;
-      }
-      //   document.addEventListener("DOMContentLoaded", () => {
-      //     setTimeout(() => {
-      //       const p5Canvas = document.querySelector(".p5Canvas");
-      //       p5Canvas.style.display = "block";
-      //     }, 500);
-      //   });
-
-      function getTime() {
-        const time = new Date();
-        dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
-          time.getMonth() + 1
-        )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
-          time.getMinutes()
-        )}:${addZero(time.getSeconds())}`;
-
-        setTimeout(getTime, 1000);
-      }
-
-      getTime();
-
-      // Loading particles
-
-      const particles = [];
-
-      function setup() {
-        createCanvas(loading.offsetWidth, loading.offsetHeight);
-        const particlesLength = Math.floor(loading.offsetWidth / 10);
-        console.log(particlesLength);
-        for (let i = 0; i < particlesLength; i++) {
-          particles.push(new Particle());
-        }
-      }
-
-      function draw() {
-        background("#161616");
-        particles.forEach((particle, index) => {
-          particle.update();
-          particle.draw();
-          particle.checkParticles(particles.slice(index));
-        });
-      }
-
-      class Particle {
-        constructor() {
-          // Position
-          this.pos = createVector(random(width), random(height));
-          // Velocity
-          this.vel = createVector(random(-1, 1), random(-1, 1));
-          // Size
-          this.size = 2;
-        }
-        // Update movement by adding velocity
-        update() {
-          this.pos.add(this.vel);
-          this.edges();
-        }
-        // Draw single particle
-        draw() {
-          noStroke();
-          fill("rgba(255,255,255,0.3)");
-          circle(this.pos.x, this.pos.y, this.size);
-        }
-
-        // Detect edges
-        edges() {
-          if (this.pos.x < 0 || this.pos.x > width) {
-            this.vel.x *= -1;
-          }
-          if (this.pos.y < 0 || this.pos.y > height) {
-            this.vel.y *= -1;
-          }
-        }
-
-        // Connect particles
-        checkParticles(particles) {
-          particles.forEach(particle => {
-            const d = dist(
-              this.pos.x,
-              this.pos.y,
-              particle.pos.x,
-              particle.pos.y
-            );
-
-            if (d < 120) {
-              stroke("rgba(255,255,255,0.04)");
-              line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
-            }
-          });
-        }
-      }
     </script>
   </body>
 </html>

@@ -26,16 +26,28 @@ router.get("/", checkNotAuthenticated, (req, res) => {
   );
 });
 
-router.get("/companies/:db_id", checkNotAuthenticated, (req, res) => {
-  let id = req.params.db_id;
-  pool.query(`SELECT * FROM companies WHERE id = $1`, [id], (err, results) => {
-    if (err) {
-      throw err;
-    }
-    console.log(results.rows);
-    res.render("dbCompany", { results: results.rows });
-  });
-});
+router.get(
+  "/companies/:db_id",
+  checkNotAuthenticated,
+  isLoggedIn,
+  (req, res) => {
+    let id = req.params.db_id;
+    pool.query(
+      `SELECT * FROM companies WHERE id = $1`,
+      [id],
+      (err, results) => {
+        if (err) {
+          throw err;
+        }
+        console.log(results.rows);
+        res.render("dbCompany", {
+          results: results.rows,
+          isLogged: req.isLogged
+        });
+      }
+    );
+  }
+);
 
 router.post("/", (req, res) => {
   let name = req.body.name;
@@ -61,6 +73,15 @@ function checkNotAuthenticated(req, res, next) {
   }
   req.flash("error_msg", "Please sign in to access the company database");
   res.redirect("/users/login");
+}
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    req.isLogged = true;
+    return next();
+  }
+  req.isLogged = false;
+  next();
 }
 
 module.exports = router;

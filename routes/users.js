@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require("path");
 const db = require("../queries");
 const { pool } = require("../config");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 router.get("/login", checkAuthenticated, (req, res) => {

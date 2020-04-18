@@ -4,8 +4,6 @@ const puppeteer = require("puppeteer");
 const path = require("path");
 const cors = require("cors");
 const db = require("../queries");
-// const { pool } = require("../config");
-// require("dotenv").config();
 
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "ch.html"));
@@ -224,14 +222,6 @@ router.post("/", async (req, res) => {
         "Something went wrong! Please ensure your URL is correct and try again."
     });
   }
-
-  // const pool = new Pool({
-  //   user: `${process.env.DB_USER}`,
-  //   host: `${process.env.DB_HOST}`,
-  //   database: `${process.env.DB_DATABASE}`,
-  //   password: `${process.env.DB_PASSWORD}`,
-  //   port: `${process.env.DB_PORT}`
-  // });
 });
 
 module.exports = router;

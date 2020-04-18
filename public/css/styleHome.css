@@ -113,6 +113,20 @@ li:hover {
   box-shadow: inset #000000 2px 2px 5px, inset #2e2e2e -2px -2px 5px;
 }
 
+.db-container {
+  position: absolute;
+  padding: 1rem;
+  overflow: hidden;
+  line-height: 200%;
+  top: 20%;
+  left: 40%;
+  width: 58%;
+  font-size: 0.7rem;
+  height: 60%;
+  border-radius: 20px;
+  box-shadow: inset #000000 2px 2px 5px, inset #2e2e2e -2px -2px 5px;
+}
+
 .tabs {
   position: absolute;
   left: 40%;
@@ -123,7 +137,6 @@ li:hover {
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* border: 1px solid white; */
   text-align: center;
   font-size: 0.8rem;
   box-shadow: #000000 1px 1px 4px, #2e2e2e -1px -1px 4px;
@@ -138,6 +151,12 @@ li:hover {
 }
 
 .news-title {
+  position: absolute;
+  left: 42%;
+  top: 12%;
+}
+
+.db-news-title {
   position: absolute;
   left: 42%;
   top: 12%;
@@ -607,8 +626,192 @@ th {
   font-size: 0.7rem;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 950px) {
   .p5Canvas {
     opacity: 0;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #161616;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30%;
+  }
+  .nav-links.active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #161616;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30%;
+  }
+
+  .cat {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding: 0.6rem;
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    text-align: left;
+    border-radius: 20px;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 2rem;
+    height: 1rem;
+    z-index: 999;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #ffffff;
+    margin-bottom: 3px;
+    transition: 0.2s;
+  }
+
+  .menu-toggle.active :nth-child(1) {
+    transform: rotate(45deg);
+    transition: 0.2s;
+  }
+  .menu-toggle.active :nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active :nth-child(3) {
+    position: absolute;
+    top: 0px;
+    transform: rotate(-45deg);
+    transition: 0.2s;
+  }
+
+  .time {
+    display: none;
+  }
+
+  .news-title {
+    position: absolute;
+    left: 0;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+  }
+
+  .news-container {
+    position: absolute;
+    padding: 1rem;
+    overflow: scroll;
+    line-height: 200%;
+    top: 25%;
+    left: 10%;
+    width: 80%;
+    font-size: 0.7rem;
+    height: 60%;
+    border-radius: 20px;
+    box-shadow: inset #000000 2px 2px 5px, inset #2e2e2e -2px -2px 5px;
+    z-index: 100;
+  }
+
+  .tabs {
+    position: absolute;
+    left: 10%;
+    top: 90%;
+    width: 80%;
+    height: 2rem;
+    padding: 0.3rem;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    font-size: 0.8rem;
+    box-shadow: #000000 1px 1px 4px, #2e2e2e -1px -1px 4px;
+  }
+
+  .home-list {
+    position: absolute;
+    display: inline-block;
+    left: 5%;
+    top: 8%;
+    font-size: 0.7rem;
+  }
+
+  .home-list i {
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .get-data {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    width: 90%;
+    height: 10%;
+  }
+
+  .ch-container,
+  .dd-container {
+    position: absolute;
+    padding: 1rem;
+    overflow: scroll;
+    top: 30%;
+    left: 5%;
+    width: 90%;
+    font-size: 0.7rem;
+    height: 65%;
+    border-radius: 20px;
+    box-shadow: inset #000000 2px 2px 6px, inset #2e2e2e -2px -2px 6px;
+  }
+
+  .oc-container {
+    position: absolute;
+    padding: 1rem;
+    overflow: scroll;
+    top: 35%;
+    left: 5%;
+    width: 90%;
+    font-size: 0.7rem;
+    height: 60%;
+    border-radius: 20px;
+    box-shadow: inset #000000 2px 2px 6px, inset #2e2e2e -2px -2px 6px;
+  }
+
+  .db-container {
+    position: absolute;
+    padding: 1rem;
+    overflow: scroll;
+    line-height: 200%;
+    top: 35%;
+    left: 5%;
+    width: 80%;
+    font-size: 0.7rem;
+    height: 60%;
+    border-radius: 20px;
+    box-shadow: inset #000000 2px 2px 5px, inset #2e2e2e -2px -2px 5px;
+    z-index: 100;
+  }
+
+  .db-news-title {
+    display: none;
+  }
+
+  .button-container {
+    display: none;
   }
 }

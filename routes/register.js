@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const db = require("../queries");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const users = [];
 

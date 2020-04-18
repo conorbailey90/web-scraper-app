@@ -46,6 +46,12 @@
         </li>
       </ul>
 
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
       <h4 class="news-title">Financial Crime News</h4>
 
       <div class="news-container">
@@ -60,10 +66,10 @@
 
       <div class="loading"></div>
     </div>
+    <script src="./js/app.js"></script>
     <script src="./js/particles.js"></script>
     <script>
       const apiKey = "cc3bf21c2493409384397d4ec4357b90";
-      const dateTime = document.querySelector(".time");
       const newsList = document.querySelector(".news");
       const first = document.querySelector(".first");
       const previous = document.querySelector(".previous");
@@ -76,28 +82,12 @@
       let newsArray = [];
       let page = 0;
 
-      function addZero(n) {
-        return n < 10 ? `0${n}` : n;
-      }
       document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
           const p5Canvas = document.querySelector(".p5Canvas");
           p5Canvas.style.display = "block";
         }, 500);
       });
-
-      function getTime() {
-        const time = new Date();
-        dateTime.innerHTML = `${addZero(time.getDate())} / ${addZero(
-          time.getMonth() + 1
-        )} / ${time.getFullYear()}</br>${addZero(time.getHours())}:${addZero(
-          time.getMinutes()
-        )}:${addZero(time.getSeconds())}`;
-
-        setTimeout(getTime, 1000);
-      }
-
-      getTime();
 
       fetch(url)
         .then(response => {
