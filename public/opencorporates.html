@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/styleHome.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
     <script
       src="https://kit.fontawesome.com/7577eba8ec.js"
@@ -18,25 +18,33 @@
   </head>
   <body>
     <div class="container">
-      <div class="cat"><h4>Company Analysis Tool</h4></div>
-      <div class="nav-links">
-        <div class="home-link">
-          <a href="/"><i class="fas fa-home"></i></a>
+      <header>
+        <div class="cat"><h4><a href="/"> Company Analysis Tool</a></h4></div>
+        <div class="nav-links">
+          <div class="ch-link"><a href="companies">Companies House</a></div>
+          <div class="oc-link">
+            <a href="opencorporates">Open Corporates</a>
+          </div>
+          <div class="dd-link"><a href="duedil">DueDil</a></div>
+          <div>
+            <a href="database">Database</a>
+          </div>
         </div>
-        <div class="ch-link"><a href="companies">Companies House</a></div>
-        <div class="oc-link">
-          <a href="opencorporates">Open Corporates</a>
-        </div>
-        <div class="dd-link"><a href="duedil">Duedil</a></div>
-        <div class="date-time">
-          <p class="time"></p>
-        </div>
+      </header>
+      <div class="mobile-nav">
+        <div class="mobile-logo">COMPANY ANALYSIS TOOL</div>
+        <div class="menu-toggle">MENU</div>
       </div>
 
-      <div class="menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
+      <div class="mobile-navlinks">
+        <div class="close">CLOSE</div>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="companies">Companies House</a></li> 
+          <li><a href="opencorporates">Open Corporates</a></li> 
+          <li><a href="duedil">DueDil</a></li>
+          <li><a href="database">Database</a></li>  
+        </ul>
       </div>
 
       <form class="get-data" method="POST" action="/opencorporates/">
@@ -47,15 +55,13 @@
           name="company"
           placeholder="Enter company registration number here"
         />
-        <select id="country" name="country">
-          <option value="GB">United Kingdom</option>
-          <option value="LU">Luxembourg</option>
-        
-        </select>
-        <input class="button" type="submit" />
+        <input class="button-1" type="submit" />
       </form>
 
-      <container class="loading"></container>
+      <div class="image">
+        <img class="pattern" src="./images/pattern.png" alt="">
+        <img class="roto" src="./images/circle.png" alt="">
+      </div>
 
       <div class="button-container">
           <div class="copy">Copy</div>
@@ -70,13 +76,14 @@
       </container>
 
       <script src="./js/app.js"></script>
-      <script src="./js/particles.js"></script>
+  
     <script>
 
       const companyDetails = document.querySelector(".oc-container");
       const inputValue = document.querySelector('#company');
       const copyBtn = document.querySelector('.copy');
       const clearBtn = document.querySelector('.clear');
+      const roto = document.querySelector('.roto')
 
       document.querySelector(".get-data").addEventListener("submit", retrieve);
 
@@ -91,21 +98,20 @@
 
       function retrieve(e) {
         e.preventDefault();
+        roto.classList.add('loading');
 
         if (inputValue.value == ''){
           companyDetails.innerHTML = '<p class="warning">Input form is empty.</p>'
           return
         }
-        const p5Canvas = document.querySelector('.p5Canvas');
-        p5Canvas.style.display = 'block'
-
+    
         let xhr = new XMLHttpRequest();
-        document.querySelector(".button").disabled = true;
+        document.querySelector(".button-1").disabled = true;
         companyDetails.innerHTML = '<p>Fetching data.</p>'
             
         let data = {
           companyNumber: document.querySelector("#company").value,
-          country: document.querySelector('#country').value
+          country: 'GB'
         };
         console.log(data);
 
@@ -116,11 +122,11 @@
         xhr.onload = function() {
           if (this.status == 200) {
             let details = JSON.parse(this.responseText);
+            roto.classList.remove('loading');
            
             if ('error' in details){
               companyDetails.innerHTML = `</p>${details.error.message}</p>`;
-              p5Canvas.style.display = 'none'
-              document.querySelector(".button").disabled = false;
+              document.querySelector(".button-1").disabled = false;
             }else{
               console.log(this.responseText);
 
@@ -184,13 +190,12 @@
 
 
               companyDetails.innerHTML = description;
-              p5Canvas.style.display = 'none'
-              document.querySelector(".button").disabled = false;
+              document.querySelector(".button-1").disabled = false;
             }
            
         }else{
             companyDetails.innerHTML =`<div><p>Something went wrong. Please ensure your company number is correct.</p></div>`;
-            document.querySelector(".button").disabled = false;
+            document.querySelector(".button-1").disabled = false;
           }
         };
         xhr.send(JSON.stringify(data));

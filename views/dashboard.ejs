@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="/css/styleHome.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <script
       src="https://kit.fontawesome.com/7577eba8ec.js"
       crossorigin="anonymous"
@@ -18,19 +18,35 @@
   </head>
   <body>
     <div class="container">
-      <div class="cat"><h4>Company Analysis Tool</h4></div>
-      <div class="nav-links">
-        <div class="home-link">
-          <a href="/"><i class="fas fa-home"></i></a>
-        </div>
-        <div class="ch-link"><a href="/companies">Companies House</a></div>
-        <div class="oc-link">
-          <a href="/opencorporates">Open Corporates</a>
-        </div>
-        <div class="dd-link"><a href="/duedil">Duedil</a></div>
-        <div class="date-time">
-          <p class="time"></p>
-        </div>
+    
+        <header>
+          <div class="cat"><h4><a href="/"> Company Analysis Tool</a></h4></div>
+          <div class="nav-links">
+            <div class="ch-link"><a href="/companies">Companies House</a></div>
+            <div class="oc-link">
+              <a href="/opencorporates">Open Corporates</a>
+            </div>
+            <div class="dd-link"><a href="/duedil">DueDil</a></div>
+            <div>
+              <a href="/database">Database</a>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div class="mobile-nav">
+        <div class="mobile-logo">COMPANY ANALYSIS TOOL</div>
+        <div class="menu-toggle">MENU</div>
+      </div>
+
+      <div class="mobile-navlinks">
+        <div class="close">CLOSE</div>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/companies">Companies House</a></li> 
+          <li><a href="/opencorporates">Open Corporates</a></li> 
+          <li><a href="/duedil">DueDil</a></li>
+          <li><a href="/database">Database</a></li>  
+        </ul>
       </div>
 
       <div class="menu-toggle">
@@ -51,6 +67,7 @@
     
     <h2 class="welcome">Hi <%= user.charAt(0).toUpperCase() + user.slice(1) %></h2>
 
+    <div class="dashboard-buttons">
       <div class="logout">
         <a href="/users/logout">Logout</a>
       </div>
@@ -58,6 +75,14 @@
       <div class="change-pw">
         <a href="/users/password">Change Password</a>
       </div>
+
+    </div>
+
+    <div class="image">
+      <img class="pattern" src="/images/pattern.png" alt="">
+      <img class="roto loading" src="/images/circle.png" alt="">
+    </div>
+
       <script src="../js/app.js"></script>
     <script>
       const success = document.querySelector('.success')

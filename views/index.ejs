@@ -18,19 +18,20 @@
   </head>
   <body>
     <div class="container">
-      <div class="cat"><h4>Company Analysis Tool</h4></div>
-      <div class="nav-links">
-        <div class="home-link">
-          <a href="/"><i class="fas fa-home"></i></a>
-        </div>
-        <div class="ch-link"><a href="companies">Companies House</a></div>
-        <div class="oc-link">
-          <a href="opencorporates">Open Corporates</a>
-        </div>
-        <div class="dd-link"><a href="duedil">Duedil</a></div>
-        <div class="date-time">
-          <p class="time"></p>
-        </div>
+      <div class="container-home">
+        <header>
+          <div class="cat"><h4>Company Analysis Tool</h4></div>
+          <div class="nav-links">
+            <div class="ch-link"><a href="companies">Companies House</a></div>
+            <div class="oc-link">
+              <a href="opencorporates">Open Corporates</a>
+            </div>
+            <div class="dd-link"><a href="duedil">DueDil</a></div>
+            <div>
+              <a href="database">Database</a>
+            </div>
+          </div>
+        </header>
       </div>
 
       <ul class="home-list">
@@ -86,7 +87,7 @@
       getTime();
 
       fetch(url)
-        .then(response => {
+        .then((response) => {
           if (response.status !== 200) {
             console.log(
               "Looks like there was a problem. Status Code: " + response.status
@@ -95,9 +96,9 @@
           }
 
           // Examine the text in the response
-          response.json().then(data => {
+          response.json().then((data) => {
             console.log(data.articles);
-            data.articles.forEach(article => {
+            data.articles.forEach((article) => {
               let li = document.createElement("li");
               let a = document.createElement("a");
               a.setAttribute("href", `${article.url}`);
@@ -108,7 +109,7 @@
             });
           });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("Fetch Error :-S", err);
         });
     </script>

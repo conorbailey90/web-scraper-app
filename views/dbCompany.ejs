@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="/css/styleHome.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <script
       src="https://kit.fontawesome.com/7577eba8ec.js"
       crossorigin="anonymous"
@@ -18,45 +18,58 @@
   </head>
   <body>
     <div class="container">
-      <div class="cat"><h4>Company Analysis Tool</h4></div>
-      <div class="nav-links">
-        <div class="home-link">
-          <a href="/"><i class="fas fa-home"></i></a>
+    
+        <header>
+          <div class="cat"><h4><a href="/"> Company Analysis Tool</a></h4></div>
+          <div class="nav-links">
+            <div class="ch-link"><a href="/companies">Companies House</a></div>
+            <div class="oc-link">
+              <a href="/opencorporates">Open Corporates</a>
+            </div>
+            <div class="dd-link"><a href="/duedil">DueDil</a></div>
+            <div>
+              <a href="/database">Database</a>
+            </div>
+          </div>
+        </header>
+
+        <div class="mobile-nav">
+          <div class="mobile-logo">COMPANY ANALYSIS TOOL</div>
+          <div class="menu-toggle">MENU</div>
         </div>
-        <div class="ch-link">
-          <a href="/companies">Companies House</a>
+  
+        <div class="mobile-navlinks">
+          <div class="close">CLOSE</div>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/companies">Companies House</a></li> 
+            <li><a href="/opencorporates">Open Corporates</a></li> 
+            <li><a href="/duedil">DueDil</a></li>
+            <li><a href="/database">Database</a></li>  
+          </ul>
         </div>
-        <div class="oc-link">
-          <a href="/opencorporates">Open Corporates</a>
-        </div>
-        <div class="dd-link"><a href="/duedil">Duedil</a></div>
-        <div class="date-time">
-          <p class="time"></p>
-        </div>
+
+      <div class="image">
+        <img class="pattern" src="/images/pattern.png" alt="">
+        <img class="roto loading" src="/images/circle.png" alt="">
       </div>
 
-      <div class="menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <ul class="home-list">
+      <ul class="db-co-list">
 
           <li>
               <% if (isLogged){ %>
-              <a href="/users/dashboard"><i class="fas fa-user"></i>Dashboard</a>
+              <a href="/users/dashboard">Dashboard</a>
               <% }else{ %>
-              <a href="/users/login"><i class="fas fa-user"></i>Sign In</a>
+              <a href="/users/login">Sign In</a>
               <% } %>
             </li>
 
         <li>
-          <a href="/database"><i class="fas fa-database"></i>Company Database</a>
+          <a href="/database">Search Database</a>
         </li>
       </ul>
 
-      <div class="news-container">
+      <div class="co-info-container">
         <h3>
           <%= results[0].company_name %> (<%= results[0].company_number %>)
         </h3></br>
