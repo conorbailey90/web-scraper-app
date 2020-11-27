@@ -11,6 +11,7 @@ const db = require("./queries");
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
+const MemoryStore = require('memorystore')(session)
 
 const app = express();
 
@@ -24,6 +25,9 @@ intitializePassport(passport);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
     resave: false,
     saveUninitialized: false
   })
